@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXORA CEO OS</title>
+<style>
+  :root{
+    --bg:#0B0B0D;
+    --surface-1:#131316;
+    --surface-2:#1A1A1E;
+    --surface-3:#202024;
+    --border:rgba(255,255,255,0.08);
+    --border-strong:rgba(255,255,255,0.16);
+    --gold:#D4AF37;
+    --gold-100:rgba(212,175,55,0.08);
+    --gold-200:rgba(212,175,55,0.18);
+    --gold-400:rgba(212,175,55,0.4);
+    --gold-600:rgba(212,175,55,0.65);
+    --white:#F5F5F5;
+    --text-2:#9B9B9F;
+    --text-3:#6E6E73;
+    --text-4:#4A4A4E;
+    --radius:12px;
+    --radius-sm:8px;
+    --ease:cubic-bezier(0.19,1,0.22,1);
+    --font-ui:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --font-mono:ui-monospace,"SF Mono",Menlo,"Cascadia Code",Consolas,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    background:var(--bg);
+    color:var(--white);
+    font-family:var(--font-ui);
+    font-size:14px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  button{font-family:inherit;color:inherit;background:none;border:none;cursor:pointer;}
+  ::selection{background:var(--gold-200);color:#fff;}
+  ::-webkit-scrollbar{width:9px;height:9px;}
+  ::-webkit-scrollbar-track{background:transparent;}
+  ::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.09);border-radius:8px;}
+  ::-webkit-scrollbar-thumb:hover{background:var(--gold-400);}
+  .mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums;}
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:10.5px;
+    font-weight:500;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--text-3);
+  }
+  :focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:6px;}
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important;transition-duration:0.001ms !important;}
+  }
+
+  /* ===== Layout shell ===== */
+  .shell{display:flex;min-height:100vh;}
+
+  /* ===== Sidebar ===== */
+  .sidebar{
+    width:232px;flex-shrink:0;
+    display:flex;flex-direction:column;
+    border-right:1px solid var(--border);
+    position:fixed;top:0;bottom:0;left:0;
+  }
+  .brand{padding:26px 22px 20px;display:flex;align-items:center;gap:11px;}
+  .brand-mark{
+    width:34px;height:34px;border-radius:9px;flex-shrink:0;
+    background:linear-gradient(160deg,var(--gold-200),var(--gold-100));
+    border:1px solid var(--gold-400);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--gold);font-weight:700;font-size:14px;font-family:var(--font-mono);
+  }
+  .brand-name{font-weight:700;font-size:14.5px;letter-spacing:0.06em;color:var(--white);}
+  .brand-sub{font-family:var(--font-mono);font-size:9.5px;letter-spacing:0.16em;color:var(--text-3);margin-top:3px;text-transform:uppercase;}
+  .nav{flex:1;padding:8px 12px;display:flex;flex-direction:column;gap:1px;}
+  .nav-item{
+    display:flex;align-items:center;gap:11px;padding:9px 11px;border-radius:var(--radius-sm);
+    color:var(--text-2);position:relative;transition:background .15s var(--ease),color .15s var(--ease);
+  }
+  .nav-item svg{width:17px;height:17px;flex-shrink:0;stroke-width:1.6;}
+  .nav-item span{font-size:13px;font-weight:500;}
+  .nav-item:hover{background:var(--surface-1);color:var(--white);}
+  .nav-item.active{background:var(--gold-100);color:var(--gold);}
+  .nav-item.active::before{
+    content:"";position:absolute;left:-12px;top:8px;bottom:8px;width:2.5px;
+    background:var(--gold);border-radius:0 3px 3px 0;
+  }
+  .sidebar-foot{padding:16px 22px 22px;display:flex;align-items:center;gap:8px;}
+  .status-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;}
+  .sidebar-foot span{font-family:var(--font-mono);font-size:10.5px;color:var(--text-3);letter-spacing:0.04em;}
+
+  /* ===== Main ===== */
+  .main{margin-left:232px;flex:1;min-width:0;}
+  .main-inner{max-width:1560px;margin:0 auto;padding:36px 40px 64px;}
+
+  .fade{animation:fade .45s var(--ease) both;}
+  @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+
+  /* ===== Header ===== */
+  .top{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    padding-bottom:24px;margin-bottom:26px;border-bottom:1px solid var(--border);
+    gap:24px;flex-wrap:wrap;
+  }
+  .top-date{margin-bottom:8px;}
+  .top h1{font-size:clamp(1.6rem,2.4vw,2.15rem);font-weight:700;letter-spacing:-0.02em;line-height:1.1;}
+  .top-directive{
+    display:flex;align-items:center;gap:8px;margin-top:10px;
+    font-size:13px;color:var(--text-2);
+  }
+  .top-directive .flag{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;}
+  .top-directive b{color:var(--white);font-weight:600;}
+  .clock{text-align:right;}
+  .clock-time{font-family:var(--font-mono);font-size:1.9rem;font-weight:600;color:var(--gold);letter-spacing:-0.01em;line-height:1;}
+  .clock-label{font-family:var(--font-mono);font-size:10px;color:var(--text-3);margin-top:7px;letter-spacing:0.1em;text-transform:uppercase;}
+
+  /* ===== Generic card ===== */
+  .card{
+    background:var(--surface-1);border:1px solid var(--border);border-radius:var(--radius);
+    padding:20px;min-width:0;
+  }
+  .card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:10px;}
+  .card-head h2{font-size:14.5px;font-weight:600;letter-spacing:-0.005em;}
+  .card-tag{font-family:var(--font-mono);font-size:10px;color:var(--text-3);letter-spacing:0.06em;}
+
+  /* ===== Row layouts ===== */
+  .row{display:flex;gap:18px;margin-bottom:18px;align-items:stretch;flex-wrap:wrap;}
+  .col-stack{display:flex;flex-direction:column;gap:18px;flex:0 0 300px;min-width:280px;}
+  @media (max-width:1180px){ .col-stack{flex:1 1 280px;} }
+
+  /* ===== Trajectory (signature ring) ===== */
+  .trajectory{flex:0 0 296px;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;overflow:hidden;}
+  .trajectory::before{
+    content:"";position:absolute;top:-40%;left:50%;transform:translateX(-50%);
+    width:280px;height:280px;border-radius:50%;
+    background:radial-gradient(circle,var(--gold-100) 0%,transparent 70%);
+    pointer-events:none;
+  }
+  .ring-box{position:relative;width:168px;height:168px;margin:6px 0 14px;}
+  .ring-box svg{transform:rotate(-90deg);width:168px;height:168px;}
+  .ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+  .ring-score{font-family:var(--font-mono);font-size:2.1rem;font-weight:700;color:var(--white);line-height:1;}
+  .ring-score-label{font-family:var(--font-mono);font-size:9px;letter-spacing:0.14em;color:var(--text-3);text-transform:uppercase;margin-top:5px;}
+  .ring-legend{display:flex;flex-direction:column;gap:7px;width:100%;text-align:left;position:relative;z-index:1;}
+  .ring-legend-item{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--text-2);}
+  .ring-legend-item .sw{width:8px;height:8px;border-radius:2px;flex-shrink:0;}
+  .ring-legend-item b{margin-left:auto;color:var(--white);font-family:var(--font-mono);font-weight:600;font-size:11.5px;}
+
+  /* ===== Focus / task list ===== */
+  .focus{flex:1 1 380px;min-width:320px;}
+  .task-list{display:flex;flex-direction:column;gap:8px;}
+  .task-row{
+    display:flex;align-items:center;gap:13px;padding:12px 14px;border-radius:var(--radius-sm);
+    border:1px solid var(--border);background:var(--surface-2);cursor:pointer;position:relative;
+    transition:border-color .15s var(--ease),opacity .15s var(--ease);
+  }
+  .task-row:hover{border-color:var(--gold-400);}
+  .task-row.done{opacity:0.45;}
+  .task-check{
+    width:19px;height:19px;border-radius:50%;flex-shrink:0;border:1.5px solid var(--text-4);
+    display:flex;align-items:center;justify-content:center;transition:all .15s var(--ease);
+  }
+  .task-row:hover .task-check{border-color:var(--gold);}
+  .task-row.done .task-check{background:var(--gold);border-color:var(--gold);}
+  .task-check svg{width:11px;height:11px;color:var(--bg);opacity:0;transition:opacity .1s;}
+  .task-row.done .task-check svg{opacity:1;}
+  .task-body{flex:1;min-width:0;}
+  .task-title{font-size:13.5px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .task-row.done .task-title{text-decoration:line-through;color:var(--text-3);}
+  .task-meta{display:flex;align-items:center;gap:7px;margin-top:4px;font-size:11px;color:var(--text-3);font-family:var(--font-mono);}
+  .p-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;}
+  .p-high .p-dot{background:var(--gold);}
+  .p-med .p-dot{background:var(--text-3);}
+  .p-low .p-dot{background:var(--text-4);}
+  .task-meta .sep{color:var(--text-4);}
+
+  /* ===== Sprint card ===== */
+  .sprint{flex:0 0 336px;min-width:300px;display:flex;flex-direction:column;}
+  .sprint-title{font-size:13.5px;font-weight:600;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .sprint-phase{font-size:11.5px;color:var(--text-2);margin-bottom:16px;}
+  .phase-track{display:flex;gap:4px;margin-bottom:18px;}
+  .phase-seg{flex:1;height:3px;border-radius:3px;background:var(--surface-3);}
+  .phase-seg.done{background:var(--gold-600);}
+  .phase-seg.now{background:var(--gold);}
+  .sprint-bar-row{display:flex;justify-content:space-between;font-size:11.5px;margin-bottom:8px;}
+  .sprint-bar-row span:first-child{color:var(--text-2);}
+  .sprint-bar-row span:last-child{font-family:var(--font-mono);font-weight:600;}
+  .sprint-bar{height:7px;border-radius:7px;background:var(--surface-3);display:flex;overflow:hidden;margin-bottom:16px;}
+  .sprint-bar-seg{height:100%;}
+  .sprint-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:auto;}
+  .sprint-stat{text-align:center;padding:9px 4px;border-radius:8px;background:var(--surface-2);}
+  .sprint-stat .n{font-family:var(--font-mono);font-size:15px;font-weight:700;}
+  .sprint-stat .l{font-size:9.5px;color:var(--text-3);margin-top:4px;letter-spacing:0.02em;}
+
+  /* ===== KPI strip ===== */
+  .kpi-strip{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:18px;}
+  @media (max-width:1180px){ .kpi-strip{grid-template-columns:repeat(3,1fr);} }
+  @media (max-width:640px){ .kpi-strip{grid-template-columns:repeat(2,1fr);} }
+  .kpi{
+    background:var(--surface-1);border:1px solid var(--border);border-radius:var(--radius);
+    padding:15px 16px;transition:border-color .15s var(--ease);
+  }
+  .kpi:hover{border-color:var(--gold-400);}
+  .kpi-label{font-size:10.5px;color:var(--text-2);margin-bottom:9px;font-family:var(--font-mono);letter-spacing:0.03em;}
+  .kpi-value{font-family:var(--font-mono);font-size:1.28rem;font-weight:700;letter-spacing:-0.01em;}
+  .kpi-delta{font-size:10.5px;color:var(--text-3);margin-top:5px;font-family:var(--font-mono);}
+  .kpi-delta.up{color:var(--gold);}
+
+  /* ===== List cards (schedule/meetings/sales/content) ===== */
+  .list{display:flex;flex-direction:column;gap:8px;}
+  .list-row{
+    display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:var(--radius-sm);
+    border:1px solid var(--border);background:var(--surface-2);
+  }
+  .list-row .time{font-family:var(--font-mono);font-size:11px;color:var(--gold);flex-shrink:0;width:50px;}
+  .list-row .name{flex:1;min-width:0;font-size:12.5px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .list-row .sub{font-size:10.5px;color:var(--text-3);flex-shrink:0;}
+  .list-row .dur{font-family:var(--font-mono);font-size:10.5px;color:var(--text-3);flex-shrink:0;}
+  .list-row .p-badge{flex-shrink:0;font-family:var(--font-mono);font-size:9px;letter-spacing:0.04em;padding:2px 6px;border-radius:5px;}
+  .p-badge.high{background:var(--gold-100);color:var(--gold);border:1px solid var(--gold-200);}
+  .p-badge.med{background:var(--surface-3);color:var(--text-2);}
+  .p-badge.low{background:transparent;color:var(--text-3);}
+
+  /* ===== Goals ===== */
+  .goal-row{margin-bottom:14px;}
+  .goal-row:last-child{margin-bottom:0;}
+  .goal-top{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:8px;}
+  .goal-top .name{font-weight:500;}
+  .goal-top .pct{font-family:var(--font-mono);color:var(--gold);font-weight:600;}
+  .goal-bar{height:5px;border-radius:5px;background:var(--surface-3);overflow:hidden;}
+  .goal-fill{height:100%;background:var(--gold);border-radius:5px;transition:width 1s var(--ease);}
+
+  /* ===== Notifications / Activity ===== */
+  .notif-row{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);}
+  .notif-row:last-child{border-bottom:none;padding-bottom:0;}
+  .notif-row .flag{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:6px;}
+  .notif-row p{font-size:12px;color:var(--text-2);line-height:1.4;}
+  .notif-row p b{color:var(--white);font-weight:500;}
+
+  .activity-row{display:flex;gap:10px;padding:8px 0;}
+  .activity-row svg{width:13px;height:13px;color:var(--text-3);flex-shrink:0;margin-top:2px;}
+  .activity-row p{font-size:12px;color:var(--text-2);}
+  .activity-row .t{font-family:var(--font-mono);font-size:10px;color:var(--text-4);margin-left:auto;flex-shrink:0;}
+  .empty{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:22px 0;}
+  .empty svg{width:22px;height:22px;color:var(--text-4);margin-bottom:9px;}
+  .empty p{font-size:11.5px;color:var(--text-3);}
+
+  /* ===== Quick actions ===== */
+  .qa-bar{display:flex;gap:10px;flex-wrap:wrap;}
+  .qa-btn{
+    display:flex;align-items:center;gap:9px;padding:11px 16px;border-radius:var(--radius-sm);
+    border:1px solid var(--border);background:var(--surface-1);font-size:12.5px;font-weight:500;color:var(--text-2);
+    transition:border-color .15s var(--ease),color .15s var(--ease);
+  }
+  .qa-btn:hover{border-color:var(--gold-400);color:var(--white);}
+  .qa-btn svg{width:15px;height:15px;color:var(--gold);}
+
+  /* ===== Placeholder pages ===== */
+  .placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:140px 20px;text-align:center;gap:10px;}
+  .placeholder svg{width:34px;height:34px;color:var(--text-4);}
+  .placeholder h2{font-size:16px;font-weight:600;color:var(--text-2);}
+  .placeholder p{font-size:12.5px;color:var(--text-3);max-width:360px;}
+
+  @media (max-width:900px){
+    .sidebar{position:relative;width:100%;height:auto;border-right:none;border-bottom:1px solid var(--border);}
+    .main{margin-left:0;}
+    .nav{flex-direction:row;overflow-x:auto;}
+    .main-inner{padding:24px 18px 48px;}
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">N</div>
+      <div>
+        <div class="brand-name">NEXORA</div>
+        <div class="brand-sub">CEO OS</div>
+      </div>
+    </div>
+    <nav class="nav" id="nav">
+      <div class="nav-item active" data-page="dashboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"></rect><rect x="14" y="3" width="7" height="5" rx="1.5"></rect><rect x="14" y="12" width="7" height="9" rx="1.5"></rect><rect x="3" y="16" width="7" height="5" rx="1.5"></rect></svg>
+        <span>Dashboard</span>
+      </div>
+      <div class="nav-item" data-page="content">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+        <span>Content Factory</span>
+      </div>
+      <div class="nav-item" data-page="sales">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M14.8 9.2a2.6 2.6 0 0 0-2.6-1.4c-1.6 0-2.7.8-2.7 2s1.1 1.7 2.7 1.9c1.6.2 2.7.7 2.7 2s-1.1 2-2.7 2a2.9 2.9 0 0 1-2.9-1.6"></path><path d="M12 6.6v1.2M12 16.2v1.2"></path></svg>
+        <span>Sales</span>
+      </div>
+      <div class="nav-item" data-page="analytics">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v14a2 2 0 0 0 2 2h14"></path><path d="M18 17V10"></path><path d="M13 17V6"></path><path d="M8 17v-4"></path></svg>
+        <span>Analytics</span>
+      </div>
+      <div class="nav-item" data-page="settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 13a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V19a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H4a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H10a1.7 1.7 0 0 0 1-1.5V4a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V10a1.7 1.7 0 0 0 1.5 1H20a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"></path></svg>
+        <span>Settings</span>
+      </div>
+    </nav>
+    <div class="sidebar-foot"><span class="status-dot"></span><span>LOCAL · OFFLINE · V1.0</span></div>
+  </aside>
+
+  <div class="main">
+    <div class="main-inner" id="app"></div>
+  </div>
+</div>
+
+<script>
+/* ---------- icons ---------- */
+const I = {
+  plus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
+  kpi:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
+  note:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
+  meeting:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/></svg>',
+  empty:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-2.5a2 2 0 0 0-1.9 1.4L16 18l-2-9-2 6-1-2.4H4"/></svg>',
+  activity:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l3-8 4 16 3-11 2 3h4"/></svg>',
+  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>',
+  placeholderContent:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
+  placeholderSales:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"/></svg>',
+  placeholderAnalytics:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v14a2 2 0 0 0 2 2h14"/><path d="M18 17V10M13 17V6M8 17v-4"/></svg>',
+  placeholderSettings:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="3"/></svg>'
+};
+
+/* ---------- state / mock data ---------- */
+const state = {
+  tasks:[
+    {t:"Close Meridian Corp proposal", p:"high", dur:"45m", cat:"Sales", done:false},
+    {t:"Record Q3 product update video", p:"med", dur:"30m", cat:"Content", done:false},
+    {t:"Review runway model with finance lead", p:"high", dur:"20m", cat:"Finance", done:false},
+  ],
+  sprint:{
+    name:"Sprint 04 — Distribution Push",
+    phases:["Plan","Build","Review","Ship","Measure"],
+    phaseIndex:2,
+    planned:18, drafted:11, ready:6, shipped:4
+  },
+  schedule:[
+    {time:"08:00", name:"Deep work — strategy doc", dur:"90m"},
+    {time:"10:00", name:"Sales calls", dur:"60m"},
+    {time:"11:30", name:"Product review", dur:"60m"},
+    {time:"14:00", name:"Content recording", dur:"60m"},
+    {time:"16:00", name:"Admin & inbox", dur:"60m"},
+  ],
+  meetings:[
+    {time:"10:00", name:"Investor sync — Sarah K.", dur:"30m"},
+    {time:"13:00", name:"Product roadmap — Eng team", dur:"45m"},
+    {time:"16:30", name:"Candidate interview — Growth", dur:"30m"},
+  ],
+  salesTasks:[
+    {name:"Follow up — Meridian Corp", p:"high"},
+    {name:"Send proposal — Draymond Labs", p:"med"},
+    {name:"Update CRM notes — 3 accounts", p:"low"},
+  ],
+  contentTasks:[
+    {name:"Record product update video", p:"med"},
+    {name:"Edit LinkedIn post draft", p:"low"},
+    {name:"Schedule newsletter", p:"low"},
+  ],
+  weeklyGoals:[
+    {name:"Ship v1.0 offline release", pct:72},
+    {name:"Close 2 enterprise deals", pct:50},
+    {name:"Publish 3 pieces of content", pct:66},
+  ],
+  monthlyGoals:[
+    {name:"Hit $60k MRR", pct:68},
+    {name:"Ship NEXORA CEO OS V1", pct:85},
+    {name:"Hire growth lead", pct:40},
+  ],
+  kpis:[
+    {label:"Revenue MTD", value:"$41,200", delta:"+6.2% vs last mo."},
+    {label:"New Leads", value:"24", delta:"+3 today"},
+    {label:"Meetings Booked", value:"9", delta:"this week"},
+    {label:"Content Published", value:"6", delta:"this month"},
+    {label:"Active Clients", value:"14", delta:"steady"},
+    {label:"Conversion", value:"18%", delta:"+1.4pt"},
+  ],
+  notifications:[
+    "Sprint phase ends in <b>2 days</b> — 12 items still open.",
+    "<b>2 tasks</b> carried over from yesterday.",
+    "Weekly review is due <b>Friday</b>.",
+  ],
+  activity:[
+    {text:"Weekly team sync marked complete", t:"9:14 AM"},
+    {text:"Logged KPI — New Leads: 24", t:"8:52 AM"},
+  ],
+};
+
+function esc(s){ return s; }
+
+function renderTaskRow(task, idx){
+  const cls = 'task-row' + (task.done ? ' done' : '');
+  return `<div class="${cls}" data-idx="${idx}" role="button" tabindex="0" aria-pressed="${task.done}">
+    <span class="task-check">${I.check}</span>
+    <div class="task-body">
+      <p class="task-title">${task.t}</p>
+      <div class="task-meta p-${task.p}">
+        <span class="p-dot"></span><span>${task.p==='high'?'High':task.p==='med'?'Medium':'Low'}</span>
+        <span class="sep">·</span><span>${task.dur}</span>
+        <span class="sep">·</span><span>${task.cat}</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderListRow(item, withBadge){
+  return `<div class="list-row">
+    <span class="time mono">${item.time}</span>
+    <span class="name">${item.name}</span>
+    <span class="dur mono">${item.dur}</span>
+  </div>`;
+}
+
+function renderTaskBadgeRow(item){
+  return `<div class="list-row">
+    <span class="name">${item.name}</span>
+    <span class="p-badge ${item.p==='high'?'high':item.p==='med'?'med':'low'}">${item.p.toUpperCase()}</span>
+  </div>`;
+}
+
+function renderGoal(g){
+  return `<div class="goal-row">
+    <div class="goal-top"><span class="name">${g.name}</span><span class="pct mono">${g.pct}%</span></div>
+    <div class="goal-bar"><div class="goal-fill" style="width:${g.pct}%"></div></div>
+  </div>`;
+}
+
+function computeScores(){
+  const doneTasks = state.tasks.filter(t=>t.done).length;
+  const taskPct = doneTasks / state.tasks.length;
+  const sprintPct = state.sprint.shipped / state.sprint.planned;
+  const now = new Date();
+  const dayStart = 8, dayEnd = 19;
+  const hoursNow = now.getHours() + now.getMinutes()/60;
+  let dayPct = (hoursNow - dayStart) / (dayEnd - dayStart);
+  dayPct = Math.max(0, Math.min(1, dayPct));
+  const score = Math.round(((taskPct*0.4)+(sprintPct*0.3)+(dayPct*0.3))*100);
+  return {taskPct, sprintPct, dayPct, score};
+}
+
+function ringPath(r, pct, circumference){
+  const offset = circumference * (1 - pct);
+  return offset;
+}
+
+function renderTrajectory(){
+  const {taskPct, sprintPct, dayPct, score} = computeScores();
+  const R1=76, R2=60, R3=44;
+  const C1=2*Math.PI*R1, C2=2*Math.PI*R2, C3=2*Math.PI*R3;
+  const firstTask = state.tasks.find(t=>!t.done);
+  const directive = firstTask ? firstTask.t : "All top priorities cleared — pick your next focus.";
+  return `
+  <div class="card trajectory">
+    <p class="eyebrow">Today's trajectory</p>
+    <div class="ring-box">
+      <svg viewBox="0 0 168 168">
+        <circle cx="84" cy="84" r="${R1}" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="7"/>
+        <circle cx="84" cy="84" r="${R1}" fill="none" stroke="var(--gold)" stroke-width="7" stroke-linecap="round"
+          stroke-dasharray="${C1}" stroke-dashoffset="${ringPath(R1,dayPct,C1)}" opacity="0.9" style="transition:stroke-dashoffset .8s var(--ease)"/>
+        <circle cx="84" cy="84" r="${R2}" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="7"/>
+        <circle cx="84" cy="84" r="${R2}" fill="none" stroke="var(--gold)" stroke-width="7" stroke-linecap="round"
+          stroke-dasharray="${C2}" stroke-dashoffset="${ringPath(R2,taskPct,C2)}" opacity="0.6" style="transition:stroke-dashoffset .8s var(--ease)"/>
+        <circle cx="84" cy="84" r="${R3}" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="7"/>
+        <circle cx="84" cy="84" r="${R3}" fill="none" stroke="var(--gold)" stroke-width="7" stroke-linecap="round"
+          stroke-dasharray="${C3}" stroke-dashoffset="${ringPath(R3,sprintPct,C3)}" opacity="0.35" style="transition:stroke-dashoffset .8s var(--ease)"/>
+      </svg>
+      <div class="ring-center">
+        <div class="ring-score mono">${score}</div>
+        <div class="ring-score-label">Score</div>
+      </div>
+    </div>
+    <div class="ring-legend">
+      <div class="ring-legend-item"><span class="sw" style="background:var(--gold);opacity:0.9"></span>Day elapsed<b>${Math.round(dayPct*100)}%</b></div>
+      <div class="ring-legend-item"><span class="sw" style="background:var(--gold);opacity:0.6"></span>Top 3 done<b>${Math.round(taskPct*100)}%</b></div>
+      <div class="ring-legend-item"><span class="sw" style="background:var(--gold);opacity:0.35"></span>Sprint shipped<b>${Math.round(sprintPct*100)}%</b></div>
+    </div>
+  </div>`;
+}
+
+function renderFocus(){
+  const done = state.tasks.filter(t=>t.done).length;
+  return `
+  <div class="card focus">
+    <div class="card-head"><h2>Today's focus</h2><span class="card-tag mono">${done}/${state.tasks.length} DONE</span></div>
+    <div class="task-list" id="taskList">
+      ${state.tasks.map((t,i)=>renderTaskRow(t,i)).join('')}
+    </div>
+  </div>`;
+}
+
+function renderSprint(){
+  const s = state.sprint;
+  const total = s.planned;
+  const shipW = (s.shipped/total*100).toFixed(1);
+  const readyW = (s.ready/total*100).toFixed(1);
+  const draftW = (s.drafted/total*100).toFixed(1);
+  const phaseHtml = s.phases.map((p,i)=>{
+    const cls = i < s.phaseIndex ? 'done' : i === s.phaseIndex ? 'now' : '';
+    return `<div class="phase-seg ${cls}" title="${p}"></div>`;
+  }).join('');
+  return `
+  <div class="card sprint">
+    <p class="eyebrow" style="margin-bottom:6px;">Current sprint</p>
+    <p class="sprint-title">${s.name}</p>
+    <p class="sprint-phase">Phase ${s.phaseIndex+1} of ${s.phases.length} — ${s.phases[s.phaseIndex]}</p>
+    <div class="phase-track">${phaseHtml}</div>
+    <div class="sprint-bar-row"><span>Sprint progress</span><span class="mono">${s.shipped}/${total} shipped</span></div>
+    <div class="sprint-bar">
+      <div class="sprint-bar-seg" style="width:${shipW}%;background:var(--gold);"></div>
+      <div class="sprint-bar-seg" style="width:${readyW}%;background:var(--gold-600);"></div>
+      <div class="sprint-bar-seg" style="width:${draftW}%;background:var(--gold-400);"></div>
+    </div>
+    <div class="sprint-stats">
+      <div class="sprint-stat"><div class="n mono">${s.planned}</div><div class="l">Planned</div></div>
+      <div class="sprint-stat"><div class="n mono">${s.drafted}</div><div class="l">Drafted</div></div>
+      <div class="sprint-stat"><div class="n mono">${s.ready}</div><div class="l">Ready</div></div>
+      <div class="sprint-stat"><div class="n mono">${s.shipped}</div><div class="l">Shipped</div></div>
+    </div>
+  </div>`;
+}
+
+function renderKPIs(){
+  return `<div class="kpi-strip">${state.kpis.map(k=>`
+    <div class="kpi">
+      <div class="kpi-label">${k.label}</div>
+      <div class="kpi-value">${k.value}</div>
+      <div class="kpi-delta up">${k.delta}</div>
+    </div>`).join('')}</div>`;
+}
+
+function renderSchedule(){
+  return `<div class="card" style="flex:1 1 300px;min-width:280px;">
+    <div class="card-head"><h2>Today's schedule</h2><span class="card-tag mono">${state.schedule.length} BLOCKS</span></div>
+    <div class="list">${state.schedule.map(s=>renderListRow(s)).join('')}</div>
+  </div>`;
+}
+
+function renderMeetings(){
+  return `<div class="card" style="flex:1 1 300px;min-width:280px;">
+    <div class="card-head"><h2>Today's meetings</h2><span class="card-tag mono">${state.meetings.length} TODAY</span></div>
+    <div class="list">${state.meetings.map(m=>renderListRow(m)).join('')}</div>
+  </div>`;
+}
+
+function renderSalesContentStack(){
+  return `<div class="col-stack">
+    <div class="card">
+      <div class="card-head"><h2>Sales tasks</h2></div>
+      <div class="list">${state.salesTasks.map(renderTaskBadgeRow).join('')}</div>
+    </div>
+    <div class="card">
+      <div class="card-head"><h2>Content tasks</h2></div>
+      <div class="list">${state.contentTasks.map(renderTaskBadgeRow).join('')}</div>
+    </div>
+  </div>`;
+}
+
+function renderGoalsRow(){
+  return `<div class="row row-goals">
+    <div class="card" style="flex:1 1 320px;min-width:280px;">
+      <div class="card-head"><h2>Weekly goals</h2></div>
+      ${state.weeklyGoals.map(renderGoal).join('')}
+    </div>
+    <div class="card" style="flex:1 1 320px;min-width:280px;">
+      <div class="card-head"><h2>Monthly goals</h2></div>
+      ${state.monthlyGoals.map(renderGoal).join('')}
+    </div>
+    <div class="col-stack">
+      <div class="card">
+        <div class="card-head"><h2>Notifications</h2></div>
+        ${state.notifications.map(n=>`<div class="notif-row"><span class="flag"></span><p>${n}</p></div>`).join('')}
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>Recent activity</h2></div>
+        ${state.activity.length ? `<div>${state.activity.map(a=>`<div class="activity-row">${I.activity}<p>${a.text}</p><span class="t">${a.t}</span></div>`).join('')}</div>`
+          : `<div class="empty">${I.empty}<p>Nothing logged yet — actions you take appear here.</p></div>`}
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderQuickActions(){
+  return `<div class="card">
+    <div class="card-head"><h2>Quick actions</h2></div>
+    <div class="qa-bar">
+      <button class="qa-btn">${I.plus}Add task</button>
+      <button class="qa-btn">${I.kpi}Log KPI</button>
+      <button class="qa-btn">${I.note}New sprint note</button>
+      <button class="qa-btn">${I.meeting}Add meeting</button>
+    </div>
+  </div>`;
+}
+
+function renderDashboard(){
+  const dateStr = new Date().toLocaleDateString('en-US',{weekday:'long', year:'numeric', month:'long', day:'numeric'});
+  const firstTask = state.tasks.find(t=>!t.done);
+  return `
+  <div class="fade">
+    <div class="top">
+      <div>
+        <p class="eyebrow top-date">${dateStr}</p>
+        <h1>Good morning.</h1>
+        <div class="top-directive"><span class="flag"></span>Priority: <b>${firstTask ? firstTask.t : 'Top 3 cleared — set your next focus'}</b></div>
+      </div>
+      <div class="clock">
+        <div class="clock-time mono" id="clockTime">--:--:--</div>
+        <div class="clock-label">Local time</div>
+      </div>
+    </div>
+
+    <div class="row row-hero">
+      ${renderTrajectory()}
+      ${renderFocus()}
+      ${renderSprint()}
+    </div>
+
+    ${renderKPIs()}
+
+    <div class="row row-secondary">
+      ${renderSchedule()}
+      ${renderMeetings()}
+      ${renderSalesContentStack()}
+    </div>
+
+    ${renderGoalsRow()}
+
+    ${renderQuickActions()}
+  </div>`;
+}
+
+function renderPlaceholder(name, icon){
+  return `<div class="fade placeholder">
+    ${icon}
+    <h2>${name}</h2>
+    <p>This workspace is scaffolded for the next build phase and will follow the same NEXORA design system.</p>
+  </div>`;
+}
+
+const pages = {
+  dashboard: renderDashboard,
+  content: ()=>renderPlaceholder('Content Factory', I.placeholderContent),
+  sales: ()=>renderPlaceholder('Sales', I.placeholderSales),
+  analytics: ()=>renderPlaceholder('Analytics', I.placeholderAnalytics),
+  settings: ()=>renderPlaceholder('Settings', I.placeholderSettings),
+};
+
+let clockInterval = null;
+
+function tickClock(){
+  const el = document.getElementById('clockTime');
+  if(!el) return;
+  const now = new Date();
+  let h = now.getHours();
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  h = h % 12; if(h === 0) h = 12;
+  const m = String(now.getMinutes()).padStart(2,'0');
+  const s = String(now.getSeconds()).padStart(2,'0');
+  el.textContent = `${String(h).padStart(2,'0')}:${m}:${s} ${ampm}`;
+}
+
+function mount(page){
+  document.getElementById('app').innerHTML = pages[page]();
+  if(clockInterval){ clearInterval(clockInterval); clockInterval = null; }
+  if(page === 'dashboard'){
+    tickClock();
+    clockInterval = setInterval(tickClock, 1000);
+    const list = document.getElementById('taskList');
+    if(list){
+      list.addEventListener('click', (e)=>{
+        const row = e.target.closest('.task-row');
+        if(!row) return;
+        toggleTask(+row.dataset.idx);
+      });
+      list.addEventListener('keydown', (e)=>{
+        if(e.key !== 'Enter' && e.key !== ' ') return;
+        const row = e.target.closest('.task-row');
+        if(!row) return;
+        e.preventDefault();
+        toggleTask(+row.dataset.idx);
+      });
+    }
+  }
+}
+
+function toggleTask(idx){
+  const task = state.tasks[idx];
+  task.done = !task.done;
+  if(task.done){
+    const now = new Date();
+    let h = now.getHours(); const ampm = h>=12?'PM':'AM'; h=h%12; if(h===0)h=12;
+    const m = String(now.getMinutes()).padStart(2,'0');
+    state.activity.unshift({text:`Task completed — ${task.t}`, t:`${h}:${m} ${ampm}`});
+    if(state.activity.length > 6) state.activity.pop();
+  }
+  mount('dashboard');
+}
+
+document.getElementById('nav').addEventListener('click', (e)=>{
+  const item = e.target.closest('.nav-item');
+  if(!item) return;
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  item.classList.add('active');
+  mount(item.dataset.page);
+});
+
+mount('dashboard');
+</script>
+</body>
+</html>

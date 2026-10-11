@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>موقعي الأول - عرض قدرات OpenCode</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>مرحباً بيك في موقعك!</h1>
+    <p class="subtitle">اتعمل بواسطة <strong>OpenCode</strong> — الذكاء الاصطناعي في الترمنال</p>
+    <button id="themeToggle" class="btn theme-btn">الوضع الليلي 🌙</button>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>⏱️ العداد</h2>
+      <p class="count" id="count">0</p>
+      <div class="btn-group">
+        <button class="btn" id="decrement">-</button>
+        <button class="btn" id="reset">تصفير</button>
+        <button class="btn" id="increment">+</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>🧮 الآلة الحاسبة</h2>
+      <div class="calc">
+        <input type="number" id="calcA" placeholder="الرقم الأول">
+        <select id="calcOp">
+          <option value="add">+</option>
+          <option value="sub">-</option>
+          <option value="mul">×</option>
+          <option value="div">÷</option>
+        </select>
+        <input type="number" id="calcB" placeholder="الرقم الثاني">
+        <button class="btn" id="calcBtn">احسب =</button>
+        <p class="result" id="calcResult"></p>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>✅ قائمة المهام</h2>
+      <div class="todo-input">
+        <input type="text" id="todoInput" placeholder="اكتب مهمة جديدة...">
+        <button class="btn" id="addTodo">أضف</button>
+      </div>
+      <ul id="todoList"></ul>
+    </section>
+
+    <section class="card">
+      <h2>🕐 الساعة الحية</h2>
+      <p class="clock" id="clock">--:--:--</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>الموقع شغال بالكامل بدون أي سيرفر — كل الكود بيتنفذ في المتصفح.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXORA — Business Growth Platform</title>
+<meta name="description" content="NEXORA — منصة نمو رقمية متكاملة: هوية، مواقع، تسويق، مبيعات، أتمتة وذكاء اصطناعي في نظام واحد مترابط.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Cairo:wght@400;500;600;700;800&family=Noto+Naskh+Arabic:wght@500;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="data:image/png;base64,{{LOGO160}}">
+<style>
+:root{
+  --b0:#020202; --b1:#050505; --b2:#080808;
+  --b3:#0B0B0B; --b4:#101010; --b5:#161616;
+  --gold:#D6C3A5; --gold-s:#CBB89D; --gold-d:#b8a275; --gold-bright:#e8d5b5;
+  --white:#F7F4EF; --silver:#ADADAD; --muted:#666;
+  --line:rgba(255,255,255,0.055);
+  --line-g:rgba(214,195,165,0.2);
+  --line-m:rgba(214,195,165,0.1);
+  --ease:cubic-bezier(.16,1,.3,1);
+  --r:18px; --r-sm:10px; --r-lg:24px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--b0);color:var(--white);font-family:'Cairo',sans-serif;overflow-x:hidden;cursor:none;line-height:1.6;}
+body[data-lang="en"]{font-family:'Inter',sans-serif;}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;border:none;background:none;color:inherit;cursor:none;}
+ul{list-style:none;}
+input,select,textarea{font-family:inherit;cursor:none;}
+::selection{background:var(--gold);color:var(--b0);}
+.logo-lock{font-family:'Inter',sans-serif !important;direction:ltr !important;unicode-bidi:isolate;}
+@media(hover:none){ body{cursor:auto;} button,a{cursor:pointer;} }
+
+.wrap{max-width:1240px;margin:0 auto;padding:0 32px;}
+.kicker{display:inline-flex;align-items:center;gap:8px;font-family:'Inter',sans-serif;font-size:11.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-s);margin-bottom:16px;}
+.kicker::before{content:'';width:18px;height:1px;background:var(--gold-s);}
+h2{font-size:clamp(28px,4vw,44px);font-weight:800;color:var(--white);line-height:1.25;}
+.section-pad{padding:110px 0;}
+.section-sub{color:var(--silver);font-size:16px;max-width:600px;margin-top:14px;}
+.gold-t{color:var(--gold);}
+.center{text-align:center;}
+.mx-auto{margin-left:auto;margin-right:auto;}
+
+/* ============ LOADER ============ */
+#loader{position:fixed;inset:0;background:var(--b0);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .9s var(--ease);}
+#loader.out{opacity:0;pointer-events:none;}
+.ld-mark{width:60px;height:60px;margin-bottom:20px;opacity:0;animation:ldScale 1s var(--ease) forwards;border-radius:50%;}
+.ld-word{font-family:'Inter',sans-serif;font-weight:900;font-size:26px;letter-spacing:.18em;color:var(--gold);opacity:0;animation:ldUp .9s var(--ease) forwards .25s;direction:ltr;}
+.ld-tag{font-family:'Cairo',sans-serif;font-size:12px;color:var(--silver);letter-spacing:.05em;margin-top:8px;opacity:0;animation:ldFade .9s var(--ease) forwards .5s;}
+.ld-bar{width:180px;height:1px;background:rgba(255,255,255,0.08);margin-top:34px;overflow:hidden;position:relative;}
+.ld-bar::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,var(--gold-d),var(--gold),var(--gold-bright),var(--gold),var(--gold-d),transparent);animation:ldGrow 1.4s var(--ease) forwards .7s;transform:scaleX(0);transform-origin:right;}
+@keyframes ldScale{from{opacity:0;transform:scale(.7);}to{opacity:1;transform:scale(1);}}
+@keyframes ldUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+@keyframes ldFade{from{opacity:0;}to{opacity:1;}}
+@keyframes ldGrow{from{transform:scaleX(0);}to{transform:scaleX(1);}}
+
+/* ============ CURSOR ============ */
+.cur-dot,.cur-ring{position:fixed;top:0;left:0;pointer-events:none;z-index:9998;border-radius:50%;transform:translate(-50%,-50%);}
+.cur-dot{width:7px;height:7px;background:var(--gold);transition:width .25s var(--ease),height .25s var(--ease);}
+.cur-ring{width:34px;height:34px;border:1px solid var(--gold);transition:width .3s var(--ease),height .3s var(--ease),opacity .3s;}
+body.c-hover .cur-dot{width:12px;height:12px;}
+body.c-hover .cur-ring{width:52px;height:52px;opacity:.6;}
+body.c-click .cur-dot{transform:translate(-50%,-50%) scale(.4);}
+@media(hover:none){ .cur-dot,.cur-ring{display:none;} }
+
+/* ============ PROGRESS ============ */
+#prog{position:fixed;top:0;inset-inline:0;height:1.5px;z-index:900;background:transparent;}
+#prog i{display:block;height:100%;width:0%;background:linear-gradient(90deg,transparent,var(--gold-d),var(--gold),var(--gold-bright),var(--gold),var(--gold-d),transparent);}
+
+/* ============ NAV ============ */
+header{position:fixed;top:0;left:0;right:0;z-index:800;padding:16px 0;transition:padding .5s var(--ease),background .5s var(--ease),border-color .5s var(--ease);background:transparent;}
+header.scrolled{background:rgba(5,5,5,0.9);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border-bottom:1px solid var(--line);padding:11px 0;}
+nav{display:flex;align-items:center;justify-content:space-between;gap:24px;}
+.brand{display:flex;align-items:center;gap:10px;}
+.brand img{width:38px;height:38px;border-radius:50%;flex-shrink:0;}
+.brand-txt{display:flex;flex-direction:column;direction:ltr;}
+.brand-txt b{font-family:'Inter',sans-serif !important;font-weight:900;font-size:17px;letter-spacing:.14em;color:var(--gold);}
+.brand-txt small{font-family:'Inter',sans-serif !important;font-weight:400;font-size:8.5px;letter-spacing:.22em;color:var(--gold-s);text-transform:uppercase;}
+.nav-links{display:flex;align-items:center;gap:28px;}
+.nav-links a{font-size:13px;color:var(--silver);white-space:nowrap;position:relative;padding-bottom:4px;transition:color .3s;}
+.nav-links a::after{content:'';position:absolute;bottom:0;inset-inline-start:0;width:0;height:1px;background:var(--gold);transition:width .35s var(--ease);}
+.nav-links a:hover{color:var(--gold);}
+.nav-links a:hover::after{width:100%;}
+.nav-right{display:flex;align-items:center;gap:14px;}
+.lang-sw{display:flex;align-items:center;gap:2px;border:1px solid var(--line-g);border-radius:20px;padding:3px;}
+.lang-sw button{font-family:'Inter',sans-serif;font-size:11px;font-weight:700;letter-spacing:.05em;color:var(--muted);padding:6px 12px;border-radius:16px;transition:.3s;}
+.lang-sw button.active{background:var(--gold);color:var(--b0);}
+.btn{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:700;padding:12px 22px;border-radius:10px;white-space:nowrap;transition:transform .35s var(--ease),box-shadow .35s var(--ease),background .35s;}
+.btn-gold{background:linear-gradient(135deg,var(--gold-bright),var(--gold),var(--gold-d));color:var(--b0);}
+.btn-gold:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(214,195,165,.22);}
+.btn-outline{border:1px solid var(--line-g);color:var(--white);}
+.btn-outline:hover{border-color:var(--gold-s);transform:translateY(-3px);}
+.burger{display:none;flex-direction:column;gap:5px;width:26px;}
+.burger span{height:1.5px;background:var(--white);width:100%;transition:transform .35s,opacity .35s;}
+.mob{position:fixed;inset:0;background:rgba(2,2,2,0.97);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);z-index:790;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;opacity:0;visibility:hidden;transform:translateY(-14px);transition:opacity .45s var(--ease),visibility .45s var(--ease),transform .45s var(--ease);}
+.mob.open{opacity:1;visibility:visible;transform:translateY(0);}
+.mob a{font-size:21px;font-weight:700;color:var(--white);}
+.mob .btn{margin-top:10px;}
+@media(max-width:980px){ .nav-links{display:none;} .burger{display:flex;} }
+
+/* ============ REVEAL ============ */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease),transform .9s var(--ease);}
+.reveal.in{opacity:1;transform:translateY(0);}
+.reveal-l{opacity:0;transform:translateX(24px);transition:opacity .9s var(--ease),transform .9s var(--ease);}
+[dir="rtl"] .reveal-l{transform:translateX(24px);}
+[dir="ltr"] .reveal-l{transform:translateX(-24px);}
+.reveal-l.in{opacity:1;transform:translateX(0);}
+
+/* ============ HERO ============ */
+#hero{position:relative;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;padding:140px 0 40px;text-align:center;}
+#hero-canvas{position:absolute;inset:0;opacity:.9;}
+.hero-in{position:relative;z-index:2;max-width:840px;margin:0 auto;display:flex;flex-direction:column;align-items:center;}
+.h-badge{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--line-g);padding:8px 18px;border-radius:30px;font-size:12.5px;color:var(--gold-s);opacity:0;animation:hUp .8s var(--ease) forwards 1900ms;font-family:'Inter',sans-serif;letter-spacing:.02em;}
+.h-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 1.8s infinite;flex-shrink:0;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(214,195,165,.5);}50%{box-shadow:0 0 0 6px rgba(214,195,165,0);}}
+#hero h1{font-weight:800;font-size:clamp(30px,5.2vw,60px);color:var(--white);margin-top:24px;line-height:1.28;opacity:0;animation:hUp .8s var(--ease) forwards 2020ms;max-width:780px;}
+#hero .sub{font-size:clamp(14.5px,1.6vw,17px);color:var(--silver);max-width:660px;margin-top:20px;opacity:0;animation:hUp .8s var(--ease) forwards 2140ms;}
+.h-3lines{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 22px;margin-top:20px;opacity:0;animation:hUp .8s var(--ease) forwards 2260ms;}
+.h-3lines span{font-family:'Inter',sans-serif;font-weight:800;font-size:15.5px;color:var(--gold);letter-spacing:.01em;}
+.h-note{display:flex;align-items:center;gap:9px;margin-top:22px;color:var(--gold-s);font-size:13px;max-width:560px;opacity:0;animation:hUp .8s var(--ease) forwards 2380ms;}
+.h-note svg{width:16px;height:16px;flex-shrink:0;}
+.h-ctas{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap;justify-content:center;opacity:0;animation:hUp .8s var(--ease) forwards 2500ms;}
+@keyframes hUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+.scroll-hint{position:relative;margin-top:70px;display:flex;flex-direction:column;align-items:center;gap:8px;z-index:2;opacity:0;animation:hUp .8s var(--ease) forwards 2650ms;}
+.scroll-hint span{font-size:11px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;font-family:'Inter',sans-serif;}
+.scroll-line{width:1px;height:34px;background:linear-gradient(var(--gold),transparent);animation:slide 1.8s infinite;}
+@keyframes slide{0%{opacity:0;transform:scaleY(0);transform-origin:top;}40%{opacity:1;transform:scaleY(1);transform-origin:top;}60%{transform-origin:bottom;transform:scaleY(1);}100%{opacity:0;transform-origin:bottom;transform:scaleY(0);}}
+
+/* ============ STATS BAR (image-7 style) ============ */
+.stats-bar{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:36px 0;position:relative;z-index:2;background:var(--b0);}
+.stats-bar .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;}
+.stats-bar .item{display:flex;flex-direction:column;align-items:center;gap:8px;flex:1;min-width:110px;position:relative;text-align:center;}
+.stats-bar .item:not(:last-child)::after{content:'';position:absolute;inset-inline-end:-10px;top:50%;transform:translateY(-50%);width:1px;height:34px;background:var(--line);}
+.stats-bar .icon-only{width:26px;height:26px;color:var(--gold);}
+.stats-bar b{font-family:'Inter',sans-serif;font-size:26px;font-weight:800;color:var(--white);}
+.stats-bar span{font-size:11.5px;color:var(--muted);}
+@media(max-width:860px){.stats-bar .wrap{gap:26px 10px;} .stats-bar .item:nth-child(3)::after,.stats-bar .item:nth-child(5)::after{display:none;} .stats-bar .item{min-width:40%;}}
+
+/* ============ TRUST-TAG STRIP under hero (kept small) ============ */
+.trust-mini{text-align:center;padding:14px 0 0;color:var(--muted);font-size:12px;}
+
+/* ============ PROBLEM ============ */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;}
+.prob-list{margin-top:30px;display:flex;flex-direction:column;gap:12px;}
+.prob-list li{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:var(--r-sm);padding:18px 20px;transition:border-color .3s;}
+.prob-list li:hover{border-color:var(--line-g);}
+.prob-list svg{width:18px;height:18px;color:#c96b6b;flex-shrink:0;}
+.prob-list span{color:var(--silver);font-size:14.5px;}
+.panel{position:sticky;top:120px;border:1px solid var(--line-g);border-radius:var(--r-lg);background:linear-gradient(160deg,var(--b3),var(--b1));overflow:hidden;}
+.panel-head{display:flex;align-items:center;gap:10px;padding:16px 20px;border-bottom:1px solid var(--line);}
+.tl-dots{display:flex;gap:6px;}
+.tl-dots i{width:9px;height:9px;border-radius:50%;background:var(--muted);display:block;}
+.panel-head b{font-size:13px;color:var(--silver);}
+.panel-body{padding:18px 20px;display:flex;flex-direction:column;gap:14px;}
+.panel-body .row{display:flex;align-items:center;gap:10px;}
+.panel-body svg{width:15px;height:15px;color:#c96b6b;flex-shrink:0;}
+.panel-body span{font-size:13.5px;color:var(--silver);}
+.panel-cta{margin:0 20px 20px;background:rgba(214,195,165,.08);border:1px solid var(--line-g);border-radius:var(--r-sm);padding:16px;display:flex;gap:10px;align-items:flex-start;}
+.panel-cta svg{width:18px;height:18px;color:var(--gold);flex-shrink:0;margin-top:2px;}
+.panel-cta span{font-size:13px;color:var(--gold-s);}
+@media(max-width:900px){.grid-2{grid-template-columns:1fr;gap:44px;} .panel{position:static;}}
+
+/* ============ SOLUTION ============ */
+.steps{margin-top:30px;display:flex;flex-direction:column;}
+.step{display:flex;gap:18px;padding-bottom:30px;position:relative;}
+.step::after{content:'';position:absolute;inset-inline-start:13px;top:30px;bottom:0;width:1px;background:var(--gold-s);opacity:.3;}
+.step:last-child::after{display:none;}
+.step-n{width:28px;height:28px;border:1px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif;font-size:12px;font-weight:700;color:var(--gold);flex-shrink:0;background:var(--b0);}
+.step h4{font-size:16px;color:var(--white);margin-bottom:6px;}
+.step p{font-size:13.5px;color:var(--muted);}
+.why-card{border:1px solid var(--gold-s);border-radius:var(--r-lg);background:linear-gradient(160deg,var(--b5),var(--b2));padding:8px 26px;}
+.why-row{display:flex;flex-direction:column;gap:4px;padding:22px 0;border-bottom:1px solid var(--line);}
+.why-row:last-child{border-bottom:none;}
+.why-row .old{color:var(--muted);font-size:13px;text-decoration:line-through;}
+.why-row .new{color:var(--gold-s);font-weight:700;font-size:15.5px;}
+
+/* ============ RESULTS ============ */
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+.rcard{position:relative;border:1px solid var(--line);border-radius:var(--r);padding:32px 26px;background:var(--b3);overflow:hidden;transition:border-color .4s,transform .4s;}
+.rcard::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 0%,rgba(214,195,165,.09),transparent 60%);opacity:0;transition:opacity .4s;}
+.rcard:hover{border-color:var(--gold-s);transform:translateY(-5px);}
+.rcard:hover::before{opacity:1;}
+.icon-c{width:44px;height:44px;border:1px solid var(--line-g);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:18px;position:relative;z-index:1;}
+.icon-c svg{width:20px;height:20px;color:var(--gold);}
+.rcard h3{font-size:17px;color:var(--white);margin-bottom:8px;position:relative;z-index:1;}
+.rcard p{font-size:13.5px;color:var(--muted);position:relative;z-index:1;}
+.rcard.feat{border-color:var(--gold-s);background:linear-gradient(160deg,rgba(214,195,165,.08),var(--b3));}
+.rcard.feat .btn{margin-top:16px;}
+
+/* ============ TABS ============ */
+.gs-tabs{display:flex;flex-wrap:wrap;gap:10px;margin-top:32px;}
+.gs-tab{display:flex;align-items:center;gap:8px;border:1px solid var(--line-g);color:var(--silver);background:transparent;padding:11px 18px;border-radius:30px;font-size:13.5px;transition:.3s;}
+.gs-tab svg{width:16px;height:16px;}
+.gs-tab.active,.gs-tab:hover{background:var(--gold);border-color:var(--gold);color:var(--b1);}
+.gs-panel{display:none;grid-template-columns:1fr 1fr;gap:56px;align-items:center;margin-top:46px;}
+.gs-panel.active{display:grid;}
+.gs-panel h3{font-size:26px;color:var(--white);margin-bottom:14px;}
+.gs-items{display:flex;flex-direction:column;gap:12px;margin:20px 0;}
+.gs-items li{display:flex;align-items:center;gap:10px;color:var(--silver);font-size:14px;}
+.gs-items svg{width:16px;height:16px;color:var(--gold);flex-shrink:0;}
+.gs-result{display:flex;gap:10px;align-items:flex-start;background:rgba(214,195,165,.08);border:1px solid var(--line-g);border-radius:var(--r-sm);padding:14px 16px;}
+.gs-result svg{width:18px;height:18px;color:var(--gold);flex-shrink:0;margin-top:2px;}
+.gs-result span{font-size:13px;color:var(--gold-s);}
+.gs-visual{border:1px solid var(--line-g);border-radius:var(--r-lg);aspect-ratio:4/3.2;background:linear-gradient(160deg,var(--b5),var(--b1));display:flex;align-items:center;justify-content:center;}
+.gs-visual svg{width:88px;height:88px;color:var(--gold-s);opacity:.85;}
+@media(max-width:900px){.gs-panel{grid-template-columns:1fr;}}
+
+/* ============ HOW WE WORK ============ */
+.hw-card{border:1px solid var(--line);border-radius:var(--r);padding:30px 26px;position:relative;overflow:hidden;transition:.4s;}
+.hw-card:hover{border-color:var(--gold-s);transform:translateY(-4px);}
+.hw-num{font-family:'Inter',sans-serif;font-size:52px;font-weight:800;color:var(--gold);opacity:.08;position:absolute;top:8px;inset-inline-start:16px;transition:opacity .4s;}
+.hw-card:hover .hw-num{opacity:.18;}
+.hw-card .icon-c{margin-top:10px;}
+.hw-card h4{font-size:16.5px;color:var(--white);margin-bottom:8px;}
+.hw-card p{font-size:13.5px;color:var(--muted);margin-bottom:14px;}
+.hw-note{display:flex;gap:8px;align-items:flex-start;}
+.hw-note svg{width:14px;height:14px;color:var(--gold-s);flex-shrink:0;margin-top:2px;}
+.hw-note em{font-style:italic;font-size:12px;color:var(--gold-s);}
+
+/* ============ ROADMAP ============ */
+.road{border:1px solid var(--line-g);border-radius:var(--r-lg);overflow:hidden;display:grid;grid-template-columns:repeat(6,1fr);}
+.road > div{border-inline-end:1px solid var(--line);padding:26px 18px;transition:background .4s;}
+.road > div:last-child{border-inline-end:none;}
+.road > div:hover{background:var(--b2);}
+.road-n{font-family:'Inter',sans-serif;font-size:11px;color:var(--gold-s);letter-spacing:.1em;}
+.road-icon{width:32px;height:32px;border:1px solid var(--line-g);border-radius:8px;display:flex;align-items:center;justify-content:center;margin:14px 0;}
+.road-icon svg{width:15px;height:15px;color:var(--gold);}
+.road h5{font-size:14.5px;color:var(--white);margin-bottom:10px;}
+.road ul li{font-size:11.5px;color:var(--muted);padding:3px 0;}
+@media(max-width:1000px){.road{grid-template-columns:repeat(2,1fr);} .road>div{border-bottom:1px solid var(--line);}}
+
+/* ============ INDUSTRIES ============ */
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+.ind-card{border:1px solid var(--line);border-radius:var(--r);padding:26px 22px;transition:.4s;}
+.ind-card:hover{border-color:var(--gold-s);transform:translateY(-4px);}
+.ind-box{width:44px;height:44px;border:1px solid var(--line-g);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;transition:background .4s;}
+.ind-card:hover .ind-box{background:rgba(214,195,165,.05);}
+.ind-box svg{width:20px;height:20px;color:var(--gold);}
+.ind-card h4{font-size:15.5px;color:var(--white);margin-bottom:10px;}
+.ind-card .row{display:flex;align-items:center;gap:7px;padding:3px 0;}
+.ind-card .row svg{width:11px;height:11px;color:var(--gold-s);flex-shrink:0;}
+.ind-card .row span{font-size:12.5px;color:var(--muted);}
+@media(max-width:900px){.grid-4{grid-template-columns:repeat(2,1fr);}}
+
+/* ============ PACKAGES ============ */
+.pkg{border:1px solid var(--line);border-radius:var(--r-lg);padding:34px 28px;position:relative;transition:.4s;display:flex;flex-direction:column;}
+.pkg:hover{transform:translateY(-5px);border-color:var(--line-g);box-shadow:0 20px 40px rgba(0,0,0,.3);}
+.pkg.feat{border-color:var(--gold-s);background:linear-gradient(160deg,rgba(214,195,165,.07),var(--b3));}
+.pkg-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--b0);font-family:'Inter',sans-serif;font-size:10.5px;font-weight:800;letter-spacing:.08em;padding:5px 14px;border-radius:20px;text-transform:uppercase;}
+.pkg .icon-c{margin-bottom:14px;}
+.pkg-label{font-family:'Inter',sans-serif;font-size:10.5px;letter-spacing:.14em;color:var(--gold-s);text-transform:uppercase;}
+.pkg h3{font-size:22px;color:var(--white);margin:8px 0 10px;}
+.pkg p{font-size:13.5px;color:var(--muted);margin-bottom:20px;}
+.pkg-list{display:flex;flex-direction:column;gap:10px;margin-bottom:26px;flex-grow:1;}
+.pkg-list li{display:flex;align-items:center;gap:9px;font-size:13.5px;color:var(--silver);}
+.pkg-list svg{width:15px;height:15px;color:var(--gold);flex-shrink:0;}
+.pkg .btn{justify-content:center;}
+.pkg .btn svg{width:14px;height:14px;}
+
+/* ============ ASSESSMENT ============ */
+.assess-card{max-width:680px;margin:44px auto 0;border:1px solid var(--line-g);border-radius:var(--r-lg);background:linear-gradient(160deg,var(--b3),var(--b1));padding:40px 36px;}
+.assess-prog{display:flex;gap:6px;margin-bottom:30px;}
+.assess-prog i{flex:1;height:2px;background:var(--line);display:block;}
+.assess-prog i.done{background:var(--gold);}
+.assess-step{display:none;}
+.assess-step.active{display:block;animation:hUp .5s var(--ease);}
+.a-count{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.14em;color:var(--gold-s);text-transform:uppercase;}
+.a-q{font-size:19px;font-weight:700;color:var(--white);margin:14px 0 24px;}
+.assess-opt{display:flex;align-items:center;gap:12px;width:100%;border:1px solid var(--line);border-radius:var(--r-sm);padding:16px 18px;margin-bottom:10px;text-align:start;transition:.3s;}
+.assess-opt:hover{border-color:var(--gold-s);}
+.assess-opt.sel{border-color:var(--gold);background:rgba(214,195,165,.08);}
+.assess-opt svg{width:18px;height:18px;color:var(--gold-s);flex-shrink:0;}
+.assess-opt span{font-size:14.5px;color:var(--white);}
+.a-result{text-align:center;}
+.a-score{font-family:'Inter',sans-serif;font-size:56px;font-weight:800;color:var(--gold);}
+.a-msg{font-size:15.5px;color:var(--silver);margin:14px 0 26px;}
+.a-restart{display:block;text-align:center;margin-top:16px;font-size:13px;color:var(--muted);text-decoration:underline;}
+
+/* ============ ABOUT ============ */
+.values{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:30px 0;}
+.val{border:1px solid var(--line);border-radius:var(--r-sm);padding:20px;transition:border-color .3s;}
+.val:hover{border-color:var(--gold-s);}
+.val .icon-c{width:34px;height:34px;margin-bottom:12px;}
+.val .icon-c svg{width:16px;height:16px;}
+.val h5{font-size:14px;color:var(--white);margin-bottom:6px;}
+.val p{font-size:12px;color:var(--muted);}
+.about-p{color:var(--silver);font-size:14.5px;margin:16px 0;}
+.about-card{border:1px solid var(--line-g);border-radius:var(--r-lg);background:linear-gradient(160deg,var(--b5),var(--b1));padding:40px;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;}
+.about-card img{width:min(280px,70%);border-radius:50%;filter:drop-shadow(0 0 30px rgba(214,195,165,.25));}
+@media(max-width:900px){.values{grid-template-columns:1fr;}}
+
+/* ============ TESTIMONIALS ============ */
+.testi-wrap{overflow:hidden;margin-top:40px;}
+.testi-track{display:flex;width:max-content;gap:20px;animation:tScroll 36s linear infinite;}
+.testi-wrap:hover .testi-track{animation-play-state:paused;}
+@keyframes tScroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.tcard{width:340px;border:1px solid var(--line);border-radius:var(--r);padding:26px;background:var(--b3);flex-shrink:0;}
+.stars{display:flex;gap:3px;margin-bottom:14px;}
+.stars svg{width:14px;height:14px;color:var(--gold);fill:var(--gold);}
+.tcard p{font-size:13.5px;color:var(--silver);margin-bottom:20px;min-height:70px;}
+.tauthor{display:flex;align-items:center;gap:10px;}
+.avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--gold-bright),var(--gold-d));display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif;font-weight:700;font-size:13px;color:var(--b0);flex-shrink:0;}
+.tauthor b{display:block;font-size:13.5px;color:var(--white);}
+.tauthor span{font-size:11.5px;color:var(--muted);}
+
+/* ============ FAQ ============ */
+.faq-list{max-width:820px;margin:36px auto 0;border-top:1px solid var(--line);}
+.faq-item{border-bottom:1px solid var(--line);}
+.faq-q{width:100%;display:flex;align-items:center;justify-content:space-between;padding:22px 4px;font-size:16px;font-weight:600;color:var(--white);text-align:start;}
+.faq-icon{width:28px;height:28px;border-radius:50%;border:1px solid var(--line-g);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .35s var(--ease);}
+.faq-icon svg{width:12px;height:12px;color:var(--gold);}
+.faq-item.open .faq-icon{transform:rotate(45deg);}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .45s var(--ease);}
+.faq-a p{padding:0 4px 22px;font-size:13.5px;color:var(--muted);max-width:700px;}
+
+/* ============ CONTACT ============ */
+.contact-links{display:flex;flex-direction:column;gap:10px;margin-top:22px;}
+.contact-links a{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--gold-s);}
+.contact-links svg{width:16px;height:16px;}
+.hi-list{display:flex;flex-direction:column;gap:10px;margin:22px 0;}
+.hi-list li{display:flex;align-items:center;gap:9px;font-size:13.5px;color:var(--silver);}
+.hi-list svg{width:15px;height:15px;color:var(--gold);flex-shrink:0;}
+.form-card{border:1px solid var(--line-g);border-radius:var(--r-lg);padding:36px;background:linear-gradient(160deg,var(--b3),var(--b1));}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.f-group{display:flex;flex-direction:column;gap:7px;}
+.f-group label{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--gold-s);}
+.f-group label svg{width:13px;height:13px;}
+.f-group input,.f-group select,.f-group textarea{background:var(--b2);border:1px solid var(--line);border-radius:8px;padding:12px 14px;color:var(--white);font-size:13.5px;outline:none;transition:border-color .3s;}
+.f-group input:focus,.f-group select:focus,.f-group textarea:focus{border-color:var(--gold-s);}
+.f-radios{display:flex;flex-wrap:wrap;gap:8px;}
+.f-radio{border:1px solid var(--line);border-radius:20px;padding:8px 14px;font-size:12.5px;color:var(--silver);transition:.3s;}
+.f-radio.sel{border-color:var(--gold);background:rgba(214,195,165,.08);color:var(--gold-s);}
+.submit-btn{width:100%;justify-content:center;margin-top:8px;}
+.f-success{display:none;flex-direction:column;align-items:center;text-align:center;padding:20px 0;}
+.f-success.show{display:flex;}
+.f-success .icon-c{width:56px;height:56px;margin-bottom:16px;}
+.f-success .icon-c svg{width:26px;height:26px;}
+.f-success h3{font-size:18px;color:var(--white);margin-bottom:8px;}
+.f-success p{font-size:13.5px;color:var(--muted);}
+@media(max-width:900px){.grid-2.contact{grid-template-columns:1fr;} .f-row{grid-template-columns:1fr;}}
+
+/* ============ FINAL CTA ============ */
+.final-cta{text-align:center;padding:160px 0;position:relative;overflow:hidden;}
+.final-cta::before{content:'';position:absolute;bottom:-30%;left:50%;transform:translateX(-50%);width:900px;height:500px;background:radial-gradient(circle,rgba(214,195,165,.08),transparent 70%);}
+.final-cta h2{position:relative;z-index:1;}
+.final-cta p{position:relative;z-index:1;color:var(--silver);max-width:560px;margin:18px auto 34px;font-size:15.5px;}
+.final-cta .h-ctas{justify-content:center;position:relative;z-index:1;}
+.final-cta .sep{margin-top:24px;font-size:12px;color:var(--muted);position:relative;z-index:1;}
+
+/* ============ FOOTER ============ */
+footer{border-top:1px solid var(--line);padding:80px 0 30px;}
+.foot-grid{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:40px;}
+.foot-brand{display:flex;align-items:center;gap:10px;}
+.foot-brand img{width:34px;height:34px;border-radius:50%;flex-shrink:0;}
+.foot-brand-txt p{font-size:13px;color:var(--muted);margin-top:16px;max-width:280px;}
+.foot-head{display:flex;align-items:center;gap:7px;font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-s);margin-bottom:18px;}
+.foot-head svg{width:13px;height:13px;}
+.foot-col ul{display:flex;flex-direction:column;gap:12px;}
+.foot-col a{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--silver);transition:color .3s;}
+.foot-col a:hover{color:var(--gold);}
+.foot-col a svg{width:14px;height:14px;flex-shrink:0;}
+.foot-bottom{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);margin-top:60px;padding-top:26px;flex-wrap:wrap;gap:16px;}
+.foot-bottom span{font-size:12px;color:var(--muted);}
+.socials{display:flex;gap:10px;}
+.socials a{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;transition:.3s;}
+.socials a:hover{border-color:var(--gold-s);color:var(--gold);}
+.socials svg{width:15px;height:15px;}
+@media(max-width:900px){.foot-grid{grid-template-columns:1fr 1fr;row-gap:34px;}}
+@media(max-width:600px){.foot-grid{grid-template-columns:1fr;} .grid-3,.grid-4{grid-template-columns:1fr;}}
+</style>
+</head>
+<body data-lang="ar">
+
+<div id="loader">
+  <img class="ld-mark" src="data:image/png;base64,{{LOGO160}}" alt="NEXORA">
+  <div class="ld-word">NEXORA</div>
+  <div class="ld-tag" data-en="Business Growth Platform" data-ar="منصة النمو للأعمال">منصة النمو للأعمال</div>
+  <div class="ld-bar"></div>
+</div>
+
+<div class="cur-dot" id="curDot"></div>
+<div class="cur-ring" id="curRing"></div>
+<div id="prog"><i id="progBar"></i></div>
+
+<header id="siteHeader">
+  <div class="wrap">
+    <nav>
+      <a href="#hero" class="brand">
+        <img src="data:image/png;base64,{{LOGO160}}" alt="NEXORA logo">
+        <span class="brand-txt logo-lock"><b>NEXORA</b><small data-en="Growth Platform" data-ar="Growth Platform">Growth Platform</small></span>
+      </a>
+      <div class="nav-links">
+        <a href="#solutions" data-en="Solutions" data-ar="حلول النمو">حلول النمو</a>
+        <a href="#how" data-en="How We Work" data-ar="كيف نعمل">كيف نعمل</a>
+        <a href="#industries" data-en="Industries" data-ar="الصناعات">الصناعات</a>
+        <a href="#packages" data-en="Pricing" data-ar="الأسعار">الأسعار</a>
+        <a href="#faq" data-en="FAQ" data-ar="الأسئلة الشائعة">الأسئلة الشائعة</a>
+        <a href="#contact" data-en="Contact" data-ar="تواصل معنا">تواصل معنا</a>
+      </div>
+      <div class="nav-right">
+        <div class="lang-sw" id="langSw">
+          <button type="button" data-lang="ar">AR</button>
+          <button type="button" data-lang="en">EN</button>
+        </div>
+        <a href="#contact" class="btn btn-gold" data-en="Book a Consultation" data-ar="احجز استشارة">احجز استشارة</a>
+        <button class="burger" id="burger" aria-expanded="false" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<div class="mob" id="mobMenu">
+  <a href="#solutions" data-en="Solutions" data-ar="حلول النمو">حلول النمو</a>
+  <a href="#how" data-en="How We Work" data-ar="كيف نعمل">كيف نعمل</a>
+  <a href="#industries" data-en="Industries" data-ar="الصناعات">الصناعات</a>
+  <a href="#packages" data-en="Pricing" data-ar="الأسعار">الأسعار</a>
+  <a href="#faq" data-en="FAQ" data-ar="الأسئلة الشائعة">الأسئلة الشائعة</a>
+  <a href="#contact" data-en="Contact" data-ar="تواصل معنا">تواصل معنا</a>
+  <div class="lang-sw" id="langSwM">
+    <button type="button" data-lang="ar">AR</button>
+    <button type="button" data-lang="en">EN</button>
+  </div>
+  <a href="#contact" class="btn btn-gold" data-en="Book a Consultation" data-ar="احجز استشارة">احجز استشارة</a>
+</div>
+
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-in">
+    <div class="h-badge"><span class="h-dot"></span><span class="logo-lock" data-en="Business Growth Platform — 200+ Digital Solutions" data-ar="Business Growth Platform — أكثر من 200 حل رقمي">Business Growth Platform — أكثر من 200 حل رقمي</span></div>
+    <h1 data-en="We build a growth system for your business that runs itself and brings real customers" data-ar="نبني لشركتك نظام نمو يشتغل لوحده ويجيب عملاء فعليين">نبني لشركتك نظام نمو يشتغل لوحده ويجيب عملاء فعليين</h1>
+    <p class="sub" data-en="NEXORA helps founders and companies build a complete digital ecosystem that drives real growth — from brand building and web development to marketing management, AI and automation." data-ar="NEXORA إحنا بنساعد أصحاب المشاريع والشركات يبنوا منظومة رقمية متكاملة تحقق نمو حقيقي — من بناء العلامة التجارية وتطوير المواقع وإدارة التسويق إلى الذكاء الاصطناعي والأتمتة.">NEXORA إحنا بنساعد أصحاب المشاريع والشركات يبنوا منظومة رقمية متكاملة تحقق نمو حقيقي — من بناء العلامة التجارية وتطوير المواقع وإدارة التسويق إلى الذكاء الاصطناعي والأتمتة.</p>
+    <div class="h-3lines">
+      <span data-en="More customers." data-ar="زيادة العملاء.">زيادة العملاء.</span>
+      <span data-en="More sales." data-ar="زيادة المبيعات.">زيادة المبيعات.</span>
+      <span data-en="An organized business." data-ar="وتنظيم البيزنس.">وتنظيم البيزنس.</span>
+    </div>
+    <div class="h-note">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 2L3 14h7l-1 8 11-13h-7l1-7z"/></svg>
+      <span data-en="We bring together 10+ different ways to grow your revenue, because every business has its own income sources." data-ar="بنجمّع لشركتك أكتر من 10 طرق مختلفة لزيادة الدخل، لأن كل بيزنس وليه مصادر دخل مختلفة.">بنجمّع لشركتك أكتر من 10 طرق مختلفة لزيادة الدخل، لأن كل بيزنس وليه مصادر دخل مختلفة.</span>
+    </div>
+    <div class="h-ctas">
+      <a href="#contact" class="btn btn-gold">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+        <span data-en="Book a Consultation" data-ar="احجز استشارة">احجز استشارة</span>
+      </a>
+      <a href="#solutions" class="btn btn-outline" data-en="See Our Solutions" data-ar="شوف حلولنا">شوف حلولنا</a>
+    </div>
+    <div class="scroll-hint"><span data-en="Scroll" data-ar="تابع">تابع</span><div class="scroll-line"></div></div>
+  </div>
+</section>
+
+<section class="stats-bar">
+  <div class="wrap">
+    <div class="item"><svg class="icon-only" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Professional Execution" data-ar="تنفيذ احترافي">تنفيذ احترافي</span></div>
+    <div class="item"><b>24/7</b><span data-en="Ongoing Support" data-ar="دعم مستمر">دعم مستمر</span></div>
+    <div class="item"><b data-count="200" data-suffix="+">0</b><span data-en="Digital Solutions" data-ar="خدمة وحل رقمي">خدمة وحل رقمي</span></div>
+    <div class="item"><b data-count="98" data-suffix="%">0</b><span data-en="Client Satisfaction" data-ar="رضا العملاء">رضا العملاء</span></div>
+    <div class="item"><b data-count="250" data-suffix="+">0</b><span data-en="Projects Completed" data-ar="مشروع منجز">مشروع منجز</span></div>
+  </div>
+</section>
+
+<section class="section-pad" id="problem">
+  <div class="wrap grid-2">
+    <div class="reveal-l">
+      <div class="kicker" data-en="The Problem" data-ar="المشكلة">المشكلة</div>
+      <h2 data-en="Why do so many companies spend on marketing and see no results?" data-ar="ليه شركات كتير بتصرف على تسويق ومش شايفة نتيجة؟">ليه شركات كتير بتصرف على تسويق ومش شايفة نتيجة؟</h2>
+      <p class="section-sub" data-en="Because marketing without a connected sales and operations system is just spending, not investing. Here are the 6 problems we see every day." data-ar="لأن التسويق من غير نظام مبيعات وعمليات مترابط، بيبقى صرف فلوس مش استثمار. دي أكتر 6 مشاكل بنشوفها كل يوم.">لأن التسويق من غير نظام مبيعات وعمليات مترابط، بيبقى صرف فلوس مش استثمار. دي أكتر 6 مشاكل بنشوفها كل يوم.</p>
+      <ul class="prob-list">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 6L6 18M6 6l12 12"/></svg><span data-en="Ad budget spent without a clear plan" data-ar="ميزانية إعلانات بتتصرف من غير خطة واضحة">ميزانية إعلانات بتتصرف من غير خطة واضحة</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 6L6 18M6 6l12 12"/></svg><span data-en="Leads arrive and get lost before anyone follows up" data-ar="ليدز بتوصل وبتتفقد قبل ما حد يتواصل معاها">ليدز بتوصل وبتتفقد قبل ما حد يتواصل معاها</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 6L6 18M6 6l12 12"/></svg><span data-en="No real reports showing what actually works" data-ar="مفيش تقارير حقيقية توضح إيه اللي شغال">مفيش تقارير حقيقية توضح إيه اللي شغال</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 6L6 18M6 6l12 12"/></svg><span data-en="Content and ads not built on real data" data-ar="محتوى وإعلانات مش مبنية على بيانات فعلية">محتوى وإعلانات مش مبنية على بيانات فعلية</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 6L6 18M6 6l12 12"/></svg><span data-en="Sales team has no system to track customers" data-ar="فريق المبيعات مالوش نظام يتابع بيه العملاء">فريق المبيعات مالوش نظام يتابع بيه العملاء</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 6L6 18M6 6l12 12"/></svg><span data-en="Every part of the company works in isolation" data-ar="كل جزء من الشركة بيشتغل لوحده منفصل عن التاني">كل جزء من الشركة بيشتغل لوحده منفصل عن التاني</span></li>
+      </ul>
+    </div>
+    <div class="panel reveal">
+      <div class="panel-head"><div class="tl-dots"><i></i><i></i><i></i></div><b data-en="Quick Diagnostic" data-ar="لوحة تشخيص سريعة">لوحة تشخيص سريعة</b></div>
+      <div class="panel-body">
+        <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 6L6 18M6 6l12 12"/></svg><span data-en="Marketing without a unified strategy" data-ar="تسويق بدون استراتيجية موحدة">تسويق بدون استراتيجية موحدة</span></div>
+        <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 6L6 18M6 6l12 12"/></svg><span data-en="Sales with no organized follow-up" data-ar="مبيعات بدون متابعة منظمة">مبيعات بدون متابعة منظمة</span></div>
+        <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 6L6 18M6 6l12 12"/></svg><span data-en="Data scattered across different tools" data-ar="بيانات متفرقة على أدوات مختلفة">بيانات متفرقة على أدوات مختلفة</span></div>
+        <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 6L6 18M6 6l12 12"/></svg><span data-en="Content with no clear business goal" data-ar="محتوى بدون هدف تجاري واضح">محتوى بدون هدف تجاري واضح</span></div>
+        <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 6L6 18M6 6l12 12"/></svg><span data-en="Decisions based on gut feeling, not data" data-ar="قرارات مبنية على إحساس مش أرقام">قرارات مبنية على إحساس مش أرقام</span></div>
+        <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 6L6 18M6 6l12 12"/></svg><span data-en="Slow growth despite constant spending" data-ar="نمو بطيء رغم الصرف المستمر">نمو بطيء رغم الصرف المستمر</span></div>
+      </div>
+      <div class="panel-cta">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2L3 14h7l-1 8 11-13h-7l1-7z"/></svg>
+        <span data-en="The solution: one growth system connecting marketing, sales and operations, giving you real data for faster decisions." data-ar="الحل: نظام نمو واحد بيربط التسويق والمبيعات والعمليات مع بعض، وبيدي بيانات حقيقية لقرارات أسرع.">الحل: نظام نمو واحد بيربط التسويق والمبيعات والعمليات مع بعض، وبيدي بيانات حقيقية لقرارات أسرع.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad" id="solution" style="background:var(--b1);">
+  <div class="wrap grid-2">
+    <div class="reveal-l">
+      <div class="kicker" data-en="The Solution" data-ar="الحل">الحل</div>
+      <h2 data-en="A 6-step growth system, built on your data, not on templates" data-ar="نظام نمو من 6 خطوات، مبني على بياناتك أنت مش على قوالب جاهزة">نظام نمو من 6 خطوات، مبني على بياناتك أنت مش على قوالب جاهزة</h2>
+      <p class="section-sub" data-en="Each step feeds the next, so the result is one connected system, not a bundle of separate services." data-ar="كل خطوة بتغذي اللي بعدها، عشان النتيجة تبقى نظام متكامل مش مجموعة خدمات منفصلة.">كل خطوة بتغذي اللي بعدها، عشان النتيجة تبقى نظام متكامل مش مجموعة خدمات منفصلة.</p>
+      <div class="steps">
+        <div class="step"><div class="step-n">1</div><div><h4 data-en="Full diagnosis of the current state" data-ar="تشخيص كامل للوضع الحالي">تشخيص كامل للوضع الحالي</h4><p data-en="We study the market, competitors, and current channel performance before any step." data-ar="بنفهم السوق، المنافسين، وأداء القنوات الحالية قبل أي خطوة.">بنفهم السوق، المنافسين، وأداء القنوات الحالية قبل أي خطوة.</p></div></div>
+        <div class="step"><div class="step-n">2</div><div><h4 data-en="Custom growth strategy" data-ar="استراتيجية نمو مخصصة">استراتيجية نمو مخصصة</h4><p data-en="A clear plan with defined goals and KPIs for every quarter." data-ar="خطة واضحة بأهداف ومؤشرات أداء محددة لكل ربع سنة.">خطة واضحة بأهداف ومؤشرات أداء محددة لكل ربع سنة.</p></div></div>
+        <div class="step"><div class="step-n">3</div><div><h4 data-en="Building the marketing & content system" data-ar="بناء نظام التسويق والمحتوى">بناء نظام التسويق والمحتوى</h4><p data-en="Connected campaigns and channels, each serving a clear business goal." data-ar="حملات وقنوات مترابطة، كل واحدة بتخدم هدف تجاري واضح.">حملات وقنوات مترابطة، كل واحدة بتخدم هدف تجاري واضح.</p></div></div>
+        <div class="step"><div class="step-n">4</div><div><h4 data-en="Activating the sales system" data-ar="تفعيل نظام المبيعات">تفعيل نظام المبيعات</h4><p data-en="Automated lead follow-up so no one falls through the cracks." data-ar="متابعة الليدز أوتوماتيك عشان محدش يضيع بين الخطوات.">متابعة الليدز أوتوماتيك عشان محدش يضيع بين الخطوات.</p></div></div>
+        <div class="step"><div class="step-n">5</div><div><h4 data-en="Continuous measurement & optimization" data-ar="قياس وتحسين مستمر">قياس وتحسين مستمر</h4><p data-en="Weekly and monthly reports with real numbers, not guesswork." data-ar="تقارير أسبوعية وشهرية بأرقام حقيقية مش تخمين.">تقارير أسبوعية وشهرية بأرقام حقيقية مش تخمين.</p></div></div>
+        <div class="step"><div class="step-n">6</div><div><h4 data-en="Scaling the results" data-ar="توسّع وتصعيد النتائج">توسّع وتصعيد النتائج</h4><p data-en="Once we find what works, we scale it with confidence." data-ar="لما نلاقي إيه اللي شغال، بنضاعف فيه بثقة.">لما نلاقي إيه اللي شغال، بنضاعف فيه بثقة.</p></div></div>
+      </div>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-row"><span class="old" data-en="Instead of scattered agencies each working alone" data-ar="بدل ما تتعامل مع وكالات متفرقة كل واحدة بتشتغل لوحدها">بدل ما تتعامل مع وكالات متفرقة كل واحدة بتشتغل لوحدها</span><span class="new" data-en="We build you one unified growth team" data-ar="إحنا بنبني لك فريق نمو واحد متكامل">إحنا بنبني لك فريق نمو واحد متكامل</span></div>
+        <div class="why-row"><span class="old" data-en="Instead of complex reports no one understands" data-ar="بدل تقارير معقدة محدش بيفهمها">بدل تقارير معقدة محدش بيفهمها</span><span class="new" data-en="We give you a clear, simple numbers dashboard" data-ar="إحنا بنديك لوحة أرقام واضحة وبسيطة">إحنا بنديك لوحة أرقام واضحة وبسيطة</span></div>
+        <div class="why-row"><span class="old" data-en="Instead of restrictive year-long contracts" data-ar="بدل عقود سنة كاملة مقيدة">بدل عقود سنة كاملة مقيدة</span><span class="new" data-en="We work with flexibility and prove results first" data-ar="إحنا بنشتغل بمرونة وبنثبت نتيجة الأول">إحنا بنشتغل بمرونة وبنثبت نتيجة الأول</span></div>
+        <div class="why-row"><span class="old" data-en="Instead of a generic strategy for every company" data-ar="بدل استراتيجية عامة لكل الشركات">بدل استراتيجية عامة لكل الشركات</span><span class="new" data-en="We build a plan based on your own data" data-ar="إحنا بنبني خطة مبنية على بياناتك أنت">إحنا بنبني خطة مبنية على بياناتك أنت</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad" id="results">
+  <div class="wrap">
+    <div class="kicker reveal" data-en="Results" data-ar="النتائج">النتائج</div>
+    <h2 class="reveal" data-en="What you actually get when you work with us" data-ar="إيه اللي بتحصل عليه فعليًا لما تشتغل معانا">إيه اللي بتحصل عليه فعليًا لما تشتغل معانا</h2>
+    <div class="grid-3" style="margin-top:44px;">
+      <div class="rcard reveal">
+        <div class="icon-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 3v18h18M7 15l4-6 4 3 5-8"/></svg></div>
+        <h3 data-en="Real growth in sales" data-ar="زيادة حقيقية في المبيعات">زيادة حقيقية في المبيعات</h3><p data-en="Not just page visits — real customers who buy and come back." data-ar="مش زيارات صفحة بس، عملاء فعليين بيشتروا ويرجعوا تاني.">مش زيارات صفحة بس، عملاء فعليين بيشتروا ويرجعوا تاني.</p>
+      </div>
+      <div class="rcard reveal">
+        <div class="icon-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+        <h3 data-en="Saving your team's time" data-ar="توفير وقت فريقك">توفير وقت فريقك</h3><p data-en="Automated systems reduce manual work so your team focuses on what matters." data-ar="أنظمة أوتوماتيك بتقلل الشغل اليدوي وتخلي الفريق يركز في الأهم.">أنظمة أوتوماتيك بتقلل الشغل اليدوي وتخلي الفريق يركز في الأهم.</p>
+      </div>
+      <div class="rcard reveal">
+        <div class="icon-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></div>
+        <h3 data-en="Lower customer acquisition cost" data-ar="خفض تكلفة اكتساب العميل">خفض تكلفة اكتساب العميل</h3><p data-en="Sharper targeting means less spend for the same or better result." data-ar="استهداف أدق يعني صرف أقل مقابل نفس النتيجة أو أفضل.">استهداف أدق يعني صرف أقل مقابل نفس النتيجة أو أفضل.</p>
+      </div>
+      <div class="rcard reveal">
+        <div class="icon-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg></div>
+        <h3 data-en="One unified dashboard" data-ar="لوحة بيانات واحدة">لوحة بيانات واحدة</h3><p data-en="All the numbers that matter, in one place, updated live." data-ar="كل الأرقام المهمة قدامك في مكان واحد، تحديث لحظي.">كل الأرقام المهمة قدامك في مكان واحد، تحديث لحظي.</p>
+      </div>
+      <div class="rcard reveal">
+        <div class="icon-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+        <h3 data-en="Higher customer loyalty" data-ar="ولاء عملاء أعلى">ولاء عملاء أعلى</h3><p data-en="A consistent experience from the first ad to long after purchase." data-ar="تجربة متسقة من أول إعلان لحد بعد الشراء بكتير.">تجربة متسقة من أول إعلان لحد بعد الشراء بكتير.</p>
+      </div>
+      <div class="rcard feat reveal">
+        <div class="icon-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 2L3 14h7l-1 8 11-13h-7l1-7z"/></svg></div>
+        <h3 data-en="Scalable growth" data-ar="نمو قابل للتوسع">نمو قابل للتوسع</h3><p data-en="A system built right from the start, ready to grow with you without breaking." data-ar="نظام مبني صح من البداية، جاهز يكبر مع شركتك من غير ما ينهار.">نظام مبني صح من البداية، جاهز يكبر مع شركتك من غير ما ينهار.</p>
+        <a href="#contact" class="btn btn-gold" data-en="Start Now" data-ar="ابدأ دلوقتي">ابدأ دلوقتي</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad" id="solutions" style="background:var(--b1);">
+  <div class="wrap">
+    <div class="kicker reveal" data-en="Growth Solutions" data-ar="حلول النمو">حلول النمو</div>
+    <h2 class="reveal" data-en="Choose the area you'd like us to focus on" data-ar="اختار المجال اللي عايز نركز فيه معاك">اختار المجال اللي عايز نركز فيه معاك</h2>
+    <div class="gs-tabs reveal">
+      <button class="gs-tab active" data-tab="ads"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 11l18-8-8 18-2-8-8-2z"/></svg> <span data-en="Paid Ads" data-ar="إعلانات ممولة">إعلانات ممولة</span></button>
+      <button class="gs-tab" data-tab="content"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M9 20V9"/></svg> <span data-en="Content & Social" data-ar="محتوى وسوشيال">محتوى وسوشيال</span></button>
+      <button class="gs-tab" data-tab="sales"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> <span data-en="Sales System" data-ar="نظام مبيعات">نظام مبيعات</span></button>
+      <button class="gs-tab" data-tab="web"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 010 18 15 15 0 010-18z"/></svg> <span data-en="Websites & Stores" data-ar="مواقع ومتاجر">مواقع ومتاجر</span></button>
+      <button class="gs-tab" data-tab="brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l3 6 6.5 1-4.7 4.6L18 20l-6-3.2L6 20l1.2-6.4L2.5 9l6.5-1z"/></svg> <span data-en="Brand Identity" data-ar="هوية العلامة">هوية العلامة</span></button>
+    </div>
+
+    <div class="gs-panel active" data-panel="ads">
+      <div class="reveal-l">
+        <h3 data-en="Paid ads that bring customers, not just clicks" data-ar="إعلانات ممولة تجيب عملاء مش بس نقرات">إعلانات ممولة تجيب عملاء مش بس نقرات</h3>
+        <p class="section-sub" data-en="Full management of Google and Meta campaigns, built on precise targeting and constant optimization." data-ar="إدارة كاملة لحملات جوجل وميتا، مبنية على استهداف دقيق وتحسين مستمر.">إدارة كاملة لحملات جوجل وميتا، مبنية على استهداف دقيق وتحسين مستمر.</p>
+        <ul class="gs-items">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Targeting strategy built on market data" data-ar="استراتيجية استهداف مبنية على بيانات السوق">استراتيجية استهداف مبنية على بيانات السوق</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Ad creative that actually converts" data-ar="تصميم إعلانات تحول فعليًا">تصميم إعلانات تحول فعليًا</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Precise tracking of every pound spent" data-ar="تتبع دقيق لكل جنيه بيتصرف">تتبع دقيق لكل جنيه بيتصرف</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Weekly campaign optimization" data-ar="تحسين أسبوعي للحملات">تحسين أسبوعي للحملات</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Clear monthly performance report" data-ar="تقرير شهري واضح بالنتائج">تقرير شهري واضح بالنتائج</span></li>
+        </ul>
+        <div class="gs-result"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2L3 14h7l-1 8 11-13h-7l1-7z"/></svg><span data-en="Our clients see improved acquisition cost within the first 60 days." data-ar="عملاؤنا بيشوفوا تحسن في تكلفة اكتساب العميل خلال أول 60 يوم.">عملاؤنا بيشوفوا تحسن في تكلفة اكتساب العميل خلال أول 60 يوم.</span></div>
+      </div>
+      <div class="gs-visual reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M3 11l18-8-8 18-2-8-8-2z"/></svg></div>
+    </div>
+
+    <div class="gs-panel" data-panel="content">
+      <div class="reveal-l">
+        <h3 data-en="Content that builds trust before it sells" data-ar="محتوى بيبني ثقة قبل ما يبيع">محتوى بيبني ثقة قبل ما يبيع</h3>
+        <p class="section-sub" data-en="A full monthly content plan across every platform, in one consistent brand voice." data-ar="خطة محتوى شهرية على كل المنصات، بصوت واحد متسق لعلامتك.">خطة محتوى شهرية على كل المنصات، بصوت واحد متسق لعلامتك.</p>
+        <ul class="gs-items">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Complete monthly content calendar" data-ar="تقويم محتوى شهري كامل">تقويم محتوى شهري كامل</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Professional filming & editing" data-ar="تصوير ومونتاج احترافي">تصوير ومونتاج احترافي</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Daily engagement management" data-ar="إدارة تفاعل يومي مع الجمهور">إدارة تفاعل يومي مع الجمهور</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Performance analysis for every post" data-ar="تحليل أداء كل منشور">تحليل أداء كل منشور</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Content built around your audience's interests" data-ar="محتوى مبني على اهتمامات جمهورك">محتوى مبني على اهتمامات جمهورك</span></li>
+        </ul>
+        <div class="gs-result"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2L3 14h7l-1 8 11-13h-7l1-7z"/></svg><span data-en="Consistent content builds a real long-term relationship with your audience." data-ar="محتوى متسق بيبني علاقة حقيقية مع جمهورك على المدى الطويل.">محتوى متسق بيبني علاقة حقيقية مع جمهورك على المدى الطويل.</span></div>
+      </div>
+      <div class="gs-visual reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M9 20V9"/></svg></div>
+    </div>
+
+    <div class="gs-panel" data-panel="sales">
+      <div class="reveal-l">
+        <h3 data-en="A sales system that never loses a single lead" data-ar="نظام مبيعات مايضيعش ولا ليد واحد">نظام مبيعات مايضيعش ولا ليد واحد</h3>
+        <p class="section-sub" data-en="Automated follow-up for every prospect, from first contact to closed sale." data-ar="متابعة تلقائية لكل عميل محتمل من أول لحظة تواصل لحد إتمام البيع.">متابعة تلقائية لكل عميل محتمل من أول لحظة تواصل لحد إتمام البيع.</p>
+        <ul class="gs-items">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="CRM system customized for your business" data-ar="نظام CRM مخصص لطبيعة شغلك">نظام CRM مخصص لطبيعة شغلك</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Automated follow-up messages" data-ar="رسائل متابعة أوتوماتيك">رسائل متابعة أوتوماتيك</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Sales team training on the system" data-ar="تدريب فريق المبيعات على النظام">تدريب فريق المبيعات على النظام</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Lead scoring by purchase readiness" data-ar="تصنيف الليدز حسب جاهزيتهم للشراء">تصنيف الليدز حسب جاهزيتهم للشراء</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Weekly sales performance report" data-ar="تقرير أداء مبيعات أسبوعي">تقرير أداء مبيعات أسبوعي</span></li>
+        </ul>
+        <div class="gs-result"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2L3 14h7l-1 8 11-13h-7l1-7z"/></svg><span data-en="An organized follow-up system raises lead-to-customer conversion." data-ar="نظام متابعة منظم بيرفع نسبة تحويل الليدز لعملاء فعليين.">نظام متابعة منظم بيرفع نسبة تحويل الليدز لعملاء فعليين.</span></div>
+      </div>
+      <div class="gs-visual reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+    </div>
+
+    <div class="gs-panel" data-panel="web">
+      <div class="reveal-l">
+        <h3 data-en="Websites and stores designed to sell" data-ar="مواقع ومتاجر مصممة عشان تبيع">مواقع ومتاجر مصممة عشان تبيع</h3>
+        <p class="section-sub" data-en="Fast, clear design built on a user experience that leads to real purchases." data-ar="تصميم سريع، واضح، ومبني على تجربة مستخدم بتقود لعملية شراء فعلية.">تصميم سريع، واضح، ومبني على تجربة مستخدم بتقود لعملية شراء فعلية.</p>
+        <ul class="gs-items">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Professional UX/UI design" data-ar="تصميم واجهة UX/UI احترافي">تصميم واجهة UX/UI احترافي</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="High mobile loading speed" data-ar="سرعة تحميل عالية على الموبايل">سرعة تحميل عالية على الموبايل</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Integration with local payment systems" data-ar="تكامل مع أنظمة الدفع المحلية">تكامل مع أنظمة الدفع المحلية</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Full search engine optimization" data-ar="تهيئة كاملة لمحركات البحث">تهيئة كاملة لمحركات البحث</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Easy dashboard to update it yourself" data-ar="لوحة تحكم سهلة للتحديث بنفسك">لوحة تحكم سهلة للتحديث بنفسك</span></li>
+        </ul>
+        <div class="gs-result"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2L3 14h7l-1 8 11-13h-7l1-7z"/></svg><span data-en="A fast, clear site lowers bounce rate and raises conversion." data-ar="موقع سريع وواضح بيقلل نسبة الخروج ويزود التحويل.">موقع سريع وواضح بيقلل نسبة الخروج ويزود التحويل.</span></div>
+      </div>
+      <div class="gs-visual reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 010 18 15 15 0 010-18z"/></svg></div>
+    </div>
+
+    <div class="gs-panel" data-panel="brand">
+      <div class="reveal-l">
+        <h3 data-en="A visual identity that sets you apart" data-ar="هوية بصرية بتفرقك عن المنافسين">هوية بصرية بتفرقك عن المنافسين</h3>
+        <p class="section-sub" data-en="A complete identity from logo to usage guide, applied consistently everywhere." data-ar="هوية متكاملة من الشعار لحد دليل الاستخدام، بتتكرر بثبات في كل مكان.">هوية متكاملة من الشعار لحد دليل الاستخدام، بتتكرر بثبات في كل مكان.</p>
+        <ul class="gs-items">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Full logo and visual identity design" data-ar="تصميم شعار وهوية بصرية كاملة">تصميم شعار وهوية بصرية كاملة</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Clear usage guide for your team" data-ar="دليل استخدام واضح للفريق">دليل استخدام واضح للفريق</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Defining your brand voice and messaging" data-ar="تعريف صوت العلامة ورسائلها">تعريف صوت العلامة ورسائلها</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Print and digital ready templates" data-ar="تصميمات جاهزة للطباعة والديجيتال">تصميمات جاهزة للطباعة والديجيتال</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Regular brand consistency review" data-ar="مراجعة دورية لاتساق الهوية">مراجعة دورية لاتساق الهوية</span></li>
+        </ul>
+        <div class="gs-result"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2L3 14h7l-1 8 11-13h-7l1-7z"/></svg><span data-en="A strong identity makes your customer recognize you instantly." data-ar="هوية قوية بتخلي عميلك يتعرف عليك من أول نظرة.">هوية قوية بتخلي عميلك يتعرف عليك من أول نظرة.</span></div>
+      </div>
+      <div class="gs-visual reveal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 2l3 6 6.5 1-4.7 4.6L18 20l-6-3.2L6 20l1.2-6.4L2.5 9l6.5-1z"/></svg></div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad" id="how">
+  <div class="wrap">
+    <div class="kicker reveal" data-en="How We Work" data-ar="كيف نعمل">كيف نعمل</div>
+    <h2 class="reveal" data-en="Your journey working with us, step by step" data-ar="رحلة العمل معانا خطوة بخطوة">رحلة العمل معانا خطوة بخطوة</h2>
+    <div class="grid-3" style="margin-top:44px;">
+      <div class="hw-card reveal"><div class="hw-num">01</div><div class="icon-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></div><h4 data-en="Discovery call" data-ar="جلسة اكتشاف">جلسة اكتشاف</h4><p data-en="An initial call where we understand your current state and real goals." data-ar="مكالمة أولى نفهم فيها وضعك الحالي وأهدافك الحقيقية.">مكالمة أولى نفهم فيها وضعك الحالي وأهدافك الحقيقية.</p><div class="hw-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 2L3 14h7l-1 8 11-13h-7l1-7z"/></svg><em data-en="No commitment from you" data-ar="بدون أي التزام من جانبك">بدون أي التزام من جانبك</em></div></div>
+      <div class="hw-card reveal"><div class="hw-num">02</div><div class="icon-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 11H3v10h6M15 11h6v10h-6M9 11V3h6v8"/></svg></div><h4 data-en="Analysis & diagnosis" data-ar="تحليل وتشخيص">تحليل وتشخيص</h4><p data-en="We review your data and current channels and identify weaknesses and opportunities." data-ar="بنراجع بياناتك وقنواتك الحالية ونحدد نقاط الضعف والفرص.">بنراجع بياناتك وقنواتك الحالية ونحدد نقاط الضعف والفرص.</p><div class="hw-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 2L3 14h7l-1 8 11-13h-7l1-7z"/></svg><em data-en="A clear written report" data-ar="تقرير مكتوب واضح">تقرير مكتوب واضح</em></div></div>
+      <div class="hw-card reveal"><div class="hw-num">03</div><div class="icon-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19h16M4 15l4-6 4 3 4-7 4 5"/></svg></div><h4 data-en="Strategic plan" data-ar="خطة استراتيجية">خطة استراتيجية</h4><p data-en="We deliver a clear growth plan with defined steps and a timeline." data-ar="نقدملك خطة نمو واضحة بخطوات وجدول زمني محدد.">نقدملك خطة نمو واضحة بخطوات وجدول زمني محدد.</p><div class="hw-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 2L3 14h7l-1 8 11-13h-7l1-7z"/></svg><em data-en="Built on your own goals" data-ar="مبنية على أهدافك أنت">مبنية على أهدافك أنت</em></div></div>
+      <div class="hw-card reveal"><div class="hw-num">04</div><div class="icon-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2v20M2 12h20"/></svg></div><h4 data-en="Build execution" data-ar="تنفيذ ال build">تنفيذ ال build</h4><p data-en="The team begins actual execution: campaigns, content, sales systems." data-ar="الفريق يبدأ التنفيذ الفعلي: حملات، محتوى، أنظمة مبيعات.">الفريق يبدأ التنفيذ الفعلي: حملات، محتوى، أنظمة مبيعات.</p><div class="hw-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 2L3 14h7l-1 8 11-13h-7l1-7z"/></svg><em data-en="Ongoing communication with you" data-ar="تواصل مستمر معاك">تواصل مستمر معاك</em></div></div>
+      <div class="hw-card reveal"><div class="hw-num">05</div><div class="icon-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 3v18h18M7 15l4-6 4 3 5-8"/></svg></div><h4 data-en="Follow-up & optimization" data-ar="متابعة وتحسين">متابعة وتحسين</h4><p data-en="Weekly review of the numbers and continuous strategy adjustment." data-ar="مراجعة أسبوعية للأرقام وتعديل الاستراتيجية باستمرار.">مراجعة أسبوعية للأرقام وتعديل الاستراتيجية باستمرار.</p><div class="hw-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 2L3 14h7l-1 8 11-13h-7l1-7z"/></svg><em data-en="A live data dashboard" data-ar="لوحة بيانات مباشرة">لوحة بيانات مباشرة</em></div></div>
+      <div class="hw-card reveal"><div class="hw-num">06</div><div class="icon-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 2L3 14h7l-1 8 11-13h-7l1-7z"/></svg></div><h4 data-en="Scale & escalate" data-ar="توسّع وتصعيد">توسّع وتصعيد</h4><p data-en="Once results are proven, we scale investment into what delivers the highest return." data-ar="لما النتائج تثبت، بنكبّر الاستثمار في اللي بيحقق أعلى عائد.">لما النتائج تثبت، بنكبّر الاستثمار في اللي بيحقق أعلى عائد.</p><div class="hw-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 2L3 14h7l-1 8 11-13h-7l1-7z"/></svg><em data-en="Sustainable, not temporary growth" data-ar="نمو مستدام مش مؤقت">نمو مستدام مش مؤقت</em></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad" id="roadmap" style="background:var(--b1);">
+  <div class="wrap">
+    <div class="kicker reveal" data-en="Roadmap" data-ar="خارطة الطريق">خارطة الطريق</div>
+    <h2 class="reveal" data-en="Your first 6 months partnering with us" data-ar="أول 6 شهور من الشراكة معانا">أول 6 شهور من الشراكة معانا</h2>
+    <div class="road reveal" style="margin-top:44px;">
+      <div><div class="road-n" data-en="Month 1" data-ar="شهر 1">شهر 1</div><div class="road-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></div><h5 data-en="Diagnosis" data-ar="التشخيص">التشخيص</h5><ul><li data-en="Market analysis" data-ar="تحليل السوق">تحليل السوق</li><li data-en="Channel review" data-ar="مراجعة القنوات">مراجعة القنوات</li><li data-en="Defining goals" data-ar="تحديد الأهداف">تحديد الأهداف</li></ul></div>
+      <div><div class="road-n" data-en="Month 2" data-ar="شهر 2">شهر 2</div><div class="road-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19h16M4 15l4-6 4 3 4-7 4 5"/></svg></div><h5 data-en="Strategy" data-ar="الاستراتيجية">الاستراتيجية</h5><ul><li data-en="Full growth plan" data-ar="خطة نمو كاملة">خطة نمو كاملة</li><li data-en="Defining channels" data-ar="تحديد القنوات">تحديد القنوات</li><li data-en="Timeline" data-ar="جدول زمني">جدول زمني</li></ul></div>
+      <div><div class="road-n" data-en="Month 3" data-ar="شهر 3">شهر 3</div><div class="road-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2v20M2 12h20"/></svg></div><h5 data-en="Launch" data-ar="الإطلاق">الإطلاق</h5><ul><li data-en="Campaigns start" data-ar="بدء الحملات">بدء الحملات</li><li data-en="Content activation" data-ar="تفعيل المحتوى">تفعيل المحتوى</li><li data-en="Sales system" data-ar="نظام المبيعات">نظام المبيعات</li></ul></div>
+      <div><div class="road-n" data-en="Month 4" data-ar="شهر 4">شهر 4</div><div class="road-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 3v18h18M7 15l4-6 4 3 5-8"/></svg></div><h5 data-en="Optimization" data-ar="التحسين">التحسين</h5><ul><li data-en="Performance analysis" data-ar="تحليل الأداء">تحليل الأداء</li><li data-en="Adjusting targeting" data-ar="تعديل الاستهداف">تعديل الاستهداف</li><li data-en="Raising efficiency" data-ar="رفع الكفاءة">رفع الكفاءة</li></ul></div>
+      <div><div class="road-n" data-en="Month 5" data-ar="شهر 5">شهر 5</div><div class="road-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 2L3 14h7l-1 8 11-13h-7l1-7z"/></svg></div><h5 data-en="Escalation" data-ar="التصعيد">التصعيد</h5><ul><li data-en="Increasing budget" data-ar="زيادة الميزانية">زيادة الميزانية</li><li data-en="Expanding channels" data-ar="توسيع القنوات">توسيع القنوات</li><li data-en="Testing new markets" data-ar="اختبار أسواق جديدة">اختبار أسواق جديدة</li></ul></div>
+      <div><div class="road-n" data-en="Month 6" data-ar="شهر 6">شهر 6</div><div class="road-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 6L9 17l-5-5"/></svg></div><h5 data-en="Stability" data-ar="الاستقرار">الاستقرار</h5><ul><li data-en="Stable growth system" data-ar="نظام نمو ثابت">نظام نمو ثابت</li><li data-en="Quarterly report" data-ar="تقرير ربع سنوي">تقرير ربع سنوي</li><li data-en="Next year's plan" data-ar="خطة السنة الجديدة">خطة السنة الجديدة</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad" id="industries">
+  <div class="wrap">
+    <div class="kicker reveal" data-en="Industries" data-ar="الصناعات">الصناعات</div>
+    <h2 class="reveal" data-en="We work across different industries with real experience" data-ar="شغالين مع صناعات مختلفة بخبرة فعلية">شغالين مع صناعات مختلفة بخبرة فعلية</h2>
+    <div class="grid-4" style="margin-top:44px;">
+      <div class="ind-card reveal"><div class="ind-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M19 14c1.5-1.5 3-3.5 3-6a4 4 0 00-7-2.6A4 4 0 008 5.4c0 2.5 1.5 4.5 3 6l4 4z"/><path d="M12 22v-8"/></svg></div><h4 data-en="Clinics & Medical Centers" data-ar="العيادات والمراكز الطبية">العيادات والمراكز الطبية</h4><div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Online bookings" data-ar="حجوزات أونلاين">حجوزات أونلاين</span></div><div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Trust & credibility" data-ar="ثقة ومصداقية">ثقة ومصداقية</span></div><div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Educational content" data-ar="محتوى تثقيفي">محتوى تثقيفي</span></div></div>
+      <div class="ind-card reveal"><div class="ind-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 002 1.6h9.7a2 2 0 002-1.6L23 6H6"/></svg></div><h4 data-en="E-commerce Stores" data-ar="المتاجر الإلكترونية">المتاجر الإلكترونية</h4><div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Higher conversion rate" data-ar="زيادة معدل التحويل">زيادة معدل التحويل</span></div><div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Abandoned cart recovery" data-ar="سلة متروكة">سلة متروكة</span></div><div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Customer loyalty" data-ar="ولاء العملاء">ولاء العملاء</span></div></div>
+      <div class="ind-card reveal"><div class="ind-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2"/></svg></div><h4 data-en="Companies & B2B" data-ar="الشركات وB2B">الشركات وB2B</h4><div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Qualified leads" data-ar="ليدز مؤهلة">ليدز مؤهلة</span></div><div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Longer sales cycle" data-ar="دورة بيع أطول">دورة بيع أطول</span></div><div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Specialized content" data-ar="محتوى متخصص">محتوى متخصص</span></div></div>
+      <div class="ind-card reveal"><div class="ind-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h1M14 9h1M9 13h1M14 13h1"/></svg></div><h4 data-en="Real Estate" data-ar="العقارات">العقارات</h4><div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Project showcasing" data-ar="عرض المشاريع">عرض المشاريع</span></div><div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Viewing bookings" data-ar="حجوزات معاينة">حجوزات معاينة</span></div><div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Continuous follow-up" data-ar="متابعة مستمرة">متابعة مستمرة</span></div></div>
+      <div class="ind-card reveal"><div class="ind-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 10v6M2 10l10-5 10 5-10 5-10-5zm4 4v4a8 4 0 0012 0v-4"/></svg></div><h4 data-en="Education & Training" data-ar="التعليم والتدريب">التعليم والتدريب</h4><div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Student enrollment" data-ar="تسجيل طلاب">تسجيل طلاب</span></div><div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Educational content" data-ar="محتوى تعليمي">محتوى تعليمي</span></div><div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Building parents' trust" data-ar="بناء ثقة الأهل">بناء ثقة الأهل</span></div></div>
+      <div class="ind-card reveal"><div class="ind-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 11l1-6h16l1 6M4 11v9h16v-9M9 20v-6h6v6"/></svg></div><h4 data-en="Restaurants & Cafés" data-ar="المطاعم والكافيهات">المطاعم والكافيهات</h4><div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Strong local presence" data-ar="حضور محلي قوي">حضور محلي قوي</span></div><div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Visual content" data-ar="محتوى بصري">محتوى بصري</span></div><div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Offers & engagement" data-ar="عروض وتفاعل">عروض وتفاعل</span></div></div>
+      <div class="ind-card reveal"><div class="ind-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 3v4a1 1 0 001 1h4M17 21H7a2 2 0 01-2-2V5a2 2 0 012-2h7l5 5v11a2 2 0 01-2 2z"/></svg></div><h4 data-en="Law Firms" data-ar="المكاتب القانونية">المكاتب القانونية</h4><div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="High credibility" data-ar="مصداقية عالية">مصداقية عالية</span></div><div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Online consultations" data-ar="استشارات أونلاين">استشارات أونلاين</span></div><div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Legal content" data-ar="محتوى قانوني">محتوى قانوني</span></div></div>
+      <div class="ind-card reveal"><div class="ind-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7"/></svg></div><h4 data-en="Government & Initiatives" data-ar="الجهات الحكومية والمبادرات">الجهات الحكومية والمبادرات</h4><div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Community awareness" data-ar="توعية المجتمع">توعية المجتمع</span></div><div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Awareness campaigns" data-ar="حملات توعوية">حملات توعوية</span></div><div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Impact reports" data-ar="تقارير أثر">تقارير أثر</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad" id="packages" style="background:var(--b1);">
+  <div class="wrap">
+    <div class="kicker reveal" data-en="Packages" data-ar="الباقات">الباقات</div>
+    <h2 class="reveal" data-en="Choose the package that fits your company's stage" data-ar="اختار الباقة المناسبة لمرحلة شركتك">اختار الباقة المناسبة لمرحلة شركتك</h2>
+    <div class="grid-3" style="margin-top:44px;">
+      <div class="pkg reveal">
+        <div class="icon-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 2L3 14h7l-1 8 11-13h-7l1-7z"/></svg></div>
+        <span class="pkg-label">Starter</span>
+        <h3 data-en="Launch" data-ar="الإقلاع">الإقلاع</h3>
+        <p data-en="For companies just starting out who want to build the right growth foundation." data-ar="للشركات اللي لسه بادئة وعايزة تبني أساس نمو صح.">للشركات اللي لسه بادئة وعايزة تبني أساس نمو صح.</p>
+        <ul class="pkg-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Management of one ad channel" data-ar="إدارة قناة إعلانية واحدة">إدارة قناة إعلانية واحدة</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Monthly content plan" data-ar="خطة محتوى شهرية">خطة محتوى شهرية</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Monthly performance report" data-ar="تقرير أداء شهري">تقرير أداء شهري</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="WhatsApp support" data-ar="دعم عبر واتساب">دعم عبر واتساب</span></li>
+        </ul>
+        <a href="#contact" class="btn btn-outline"><span data-en="Start This Package" data-ar="ابدأ الباقة">ابدأ الباقة</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <div class="pkg feat reveal">
+        <span class="pkg-badge" data-en="Most Popular" data-ar="الأكثر طلبًا">الأكثر طلبًا</span>
+        <div class="icon-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19h16M4 15l4-6 4 3 4-7 4 5"/></svg></div>
+        <span class="pkg-label">Growth</span>
+        <h3 data-en="Growth" data-ar="النمو">النمو</h3>
+        <p data-en="For companies wanting a full growth system connecting marketing and sales." data-ar="لشركات عايزة تنظام نمو متكامل بين تسويق ومبيعات.">لشركات عايزة تنظام نمو متكامل بين تسويق ومبيعات.</p>
+        <ul class="pkg-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Management of multiple channels" data-ar="إدارة قنوات متعددة">إدارة قنوات متعددة</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Sales system & lead tracking" data-ar="نظام مبيعات ومتابعة ليدز">نظام مبيعات ومتابعة ليدز</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Live data dashboard" data-ar="لوحة بيانات مباشرة">لوحة بيانات مباشرة</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Dedicated account manager" data-ar="مدير حساب مخصص">مدير حساب مخصص</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Weekly strategy review" data-ar="مراجعة استراتيجية أسبوعية">مراجعة استراتيجية أسبوعية</span></li>
+        </ul>
+        <a href="#contact" class="btn btn-gold"><span data-en="Start This Package" data-ar="ابدأ الباقة">ابدأ الباقة</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <div class="pkg reveal">
+        <div class="icon-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 3a15 15 0 010 18 15 15 0 010-18zM3 12h18"/></svg></div>
+        <span class="pkg-label">Enterprise</span>
+        <h3 data-en="Scale" data-ar="التوسع">التوسع</h3>
+        <p data-en="For large companies that need a fully customized growth system." data-ar="للشركات الكبيرة اللي محتاجة نظام نمو مخصص بالكامل.">للشركات الكبيرة اللي محتاجة نظام نمو مخصص بالكامل.</p>
+        <ul class="pkg-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="A fully dedicated growth team" data-ar="فريق نمو مخصص بالكامل">فريق نمو مخصص بالكامل</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Custom automation systems" data-ar="أنظمة أوتوماتيك مخصصة">أنظمة أوتوماتيك مخصصة</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Expansion into new markets" data-ar="توسع في أسواق جديدة">توسع في أسواق جديدة</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Quarterly executive reports" data-ar="تقارير ربع سنوية تنفيذية">تقارير ربع سنوية تنفيذية</span></li>
+        </ul>
+        <a href="#contact" class="btn btn-outline"><span data-en="Contact Us" data-ar="تواصل معنا">تواصل معنا</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad" id="assessment">
+  <div class="wrap center">
+    <div class="kicker reveal mx-auto" style="justify-content:center;" data-en="Quick Assessment" data-ar="تقييم سريع">تقييم سريع</div>
+    <h2 class="reveal" data-en="How ready is your company for growth?" data-ar="إيه مستوى جاهزية شركتك للنمو؟">إيه مستوى جاهزية شركتك للنمو؟</h2>
+    <p class="section-sub reveal mx-auto" data-en="5 simple questions that take less than a minute, giving you a realistic picture of your current state." data-ar="5 أسئلة بسيطة تاخد أقل من دقيقة، وهتديك صورة واقعية عن وضعك الحالي.">5 أسئلة بسيطة تاخد أقل من دقيقة، وهتديك صورة واقعية عن وضعك الحالي.</p>
+
+    <div class="assess-card reveal">
+      <div class="assess-prog">
+        <i class="ap-seg done"></i><i class="ap-seg"></i><i class="ap-seg"></i><i class="ap-seg"></i><i class="ap-seg"></i>
+      </div>
+
+      <div class="assess-step active" data-step="0">
+        <div class="a-count"><span data-en="Question 1 of 5" data-ar="سؤال 1 من 5">سؤال 1 من 5</span></div>
+        <div class="a-q" data-en="When was the last time you reviewed marketing performance with real numbers?" data-ar="إمتى آخر مرة راجعت فيها أداء التسويق بأرقام حقيقية؟">إمتى آخر مرة راجعت فيها أداء التسويق بأرقام حقيقية؟</div>
+        <button class="assess-opt" data-val="2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/></svg><span data-en="This week" data-ar="الأسبوع ده">الأسبوع ده</span></button>
+        <button class="assess-opt" data-val="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/></svg><span data-en="A while ago, not sure exactly" data-ar="من فترة مش فاكر بالظبط">من فترة مش فاكر بالظبط</span></button>
+        <button class="assess-opt" data-val="0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/></svg><span data-en="We don't review numbers at all" data-ar="مش بنراجع أرقام أصلًا">مش بنراجع أرقام أصلًا</span></button>
+      </div>
+
+      <div class="assess-step" data-step="1">
+        <div class="a-count"><span data-en="Question 2 of 5" data-ar="سؤال 2 من 5">سؤال 2 من 5</span></div>
+        <div class="a-q" data-en="Do you have a clear system for following up with prospects?" data-ar="عندك نظام واضح لمتابعة العملاء المحتملين؟">عندك نظام واضح لمتابعة العملاء المحتملين؟</div>
+        <button class="assess-opt" data-val="2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/></svg><span data-en="Yes, a solid, organized system" data-ar="أيوة، نظام ثابت ومنظم">أيوة، نظام ثابت ومنظم</span></button>
+        <button class="assess-opt" data-val="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/></svg><span data-en="Something exists but not ideal" data-ar="في حاجة بس مش مثالية">في حاجة بس مش مثالية</span></button>
+        <button class="assess-opt" data-val="0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/></svg><span data-en="No, everyone does their own thing" data-ar="لأ، كل حد بيتصرف لوحده">لأ، كل حد بيتصرف لوحده</span></button>
+      </div>
+
+      <div class="assess-step" data-step="2">
+        <div class="a-count"><span data-en="Question 3 of 5" data-ar="سؤال 3 من 5">سؤال 3 من 5</span></div>
+        <div class="a-q" data-en="Are your ads and content consistent in messaging?" data-ar="إعلاناتك ومحتواك متسقين مع بعض في الرسالة؟">إعلاناتك ومحتواك متسقين مع بعض في الرسالة؟</div>
+        <button class="assess-opt" data-val="2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/></svg><span data-en="Yes, completely" data-ar="أيوة تمامًا">أيوة تمامًا</span></button>
+        <button class="assess-opt" data-val="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/></svg><span data-en="To some extent" data-ar="لحد ما">لحد ما</span></button>
+        <button class="assess-opt" data-val="0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/></svg><span data-en="No, everything is separate" data-ar="لأ، كل حاجة منفصلة">لأ، كل حاجة منفصلة</span></button>
+      </div>
+
+      <div class="assess-step" data-step="3">
+        <div class="a-count"><span data-en="Question 4 of 5" data-ar="سؤال 4 من 5">سؤال 4 من 5</span></div>
+        <div class="a-q" data-en="If you increased marketing budget today, are you sure it would translate into sales?" data-ar="لو زوّدت ميزانية التسويق دلوقتي، متأكد إنها هتترجم لمبيعات؟">لو زوّدت ميزانية التسويق دلوقتي، متأكد إنها هتترجم لمبيعات؟</div>
+        <button class="assess-opt" data-val="2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/></svg><span data-en="Yes, completely confident" data-ar="أيوة، عندي ثقة كاملة">أيوة، عندي ثقة كاملة</span></button>
+        <button class="assess-opt" data-val="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/></svg><span data-en="Not 100% sure" data-ar="مش متأكد 100%">مش متأكد 100%</span></button>
+        <button class="assess-opt" data-val="0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/></svg><span data-en="Probably not" data-ar="غالبًا لأ">غالبًا لأ</span></button>
+      </div>
+
+      <div class="assess-step" data-step="4">
+        <div class="a-count"><span data-en="Question 5 of 5" data-ar="سؤال 5 من 5">سؤال 5 من 5</span></div>
+        <div class="a-q" data-en="Does your team have time to build and manage new growth systems on their own?" data-ar="فريقك عنده وقت يبني ويدير أنظمة نمو جديدة بنفسه؟">فريقك عنده وقت يبني ويدير أنظمة نمو جديدة بنفسه؟</div>
+        <button class="assess-opt" data-val="2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/></svg><span data-en="Yes, we have time and expertise" data-ar="أيوة عندنا الوقت والخبرة">أيوة عندنا الوقت والخبرة</span></button>
+        <button class="assess-opt" data-val="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/></svg><span data-en="We have time but not enough expertise" data-ar="عندنا وقت بس مش خبرة كافية">عندنا وقت بس مش خبرة كافية</span></button>
+        <button class="assess-opt" data-val="0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/></svg><span data-en="No time or expertise at all" data-ar="مفيش وقت ولا خبرة كفاية">مفيش وقت ولا خبرة كفاية</span></button>
+      </div>
+
+      <div class="assess-step a-result" data-step="5">
+        <div class="a-count"><span data-en="Your Result" data-ar="النتيجة">النتيجة</span></div>
+        <div class="a-score" id="aScoreVal">0%</div>
+        <div class="a-msg" id="aMsgVal">...</div>
+        <a href="#contact" class="btn btn-gold" style="justify-content:center;"><span data-en="Book a Free Consultation" data-ar="احجز استشارة مجانية">احجز استشارة مجانية</span></a>
+        <a href="#" class="a-restart" id="aRestart" data-en="Restart the assessment" data-ar="أعد التقييم من جديد">أعد التقييم من جديد</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad" id="about" style="background:var(--b1);">
+  <div class="wrap grid-2">
+    <div class="reveal-l">
+      <div class="kicker" data-en="Who We Are" data-ar="مين إحنا">مين إحنا</div>
+      <h2 data-en="Real success starts when every part of your company works as one system" data-ar="النجاح الحقيقي بيبدأ لما كل أجزاء شركتك تشتغل كنظام واحد">النجاح الحقيقي بيبدأ لما كل أجزاء شركتك تشتغل كنظام واحد</h2>
+      <p class="about-p" data-en="NEXORA was built on a simple idea: marketing alone isn't enough. Companies that truly grow are the ones connecting marketing, sales, and operations into one integrated system." data-ar="نيكسورا اتبنت على فكرة بسيطة: التسويق لوحده مش كفاية. الشركات اللي بتنمو فعلًا هي اللي بتربط التسويق بالمبيعات بالعمليات في نظام واحد متكامل.">نيكسورا اتبنت على فكرة بسيطة: التسويق لوحده مش كفاية. الشركات اللي بتنمو فعلًا هي اللي بتربط التسويق بالمبيعات بالعمليات في نظام واحد متكامل.</p>
+      <p class="about-p" data-en="For six years we've worked with companies across different industries, building each one a growth system tailored to them — not a ready-made template repeated for everyone." data-ar="من ست سنين وإحنا شغالين مع شركات في صناعات مختلفة، وبنبني لكل واحدة نظام نمو مخصص ليها، مش قالب جاهز بنكرره على الكل.">من ست سنين وإحنا شغالين مع شركات في صناعات مختلفة، وبنبني لكل واحدة نظام نمو مخصص ليها، مش قالب جاهز بنكرره على الكل.</p>
+      <div class="values">
+        <div class="val"><div class="icon-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 6L9 17l-5-5"/></svg></div><h5 data-en="Transparency" data-ar="الشفافية">الشفافية</h5><p data-en="Clear reports, real numbers, nothing hidden." data-ar="تقارير واضحة، أرقام حقيقية، مفيش تفاصيل متخبية.">تقارير واضحة، أرقام حقيقية، مفيش تفاصيل متخبية.</p></div>
+        <div class="val"><div class="icon-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 2L3 14h7l-1 8 11-13h-7l1-7z"/></svg></div><h5 data-en="Speed" data-ar="السرعة">السرعة</h5><p data-en="Fast execution with no wasted time on extra procedures." data-ar="تنفيذ سريع بدون تضييع وقت في إجراءات زيادة.">تنفيذ سريع بدون تضييع وقت في إجراءات زيادة.</p></div>
+        <div class="val"><div class="icon-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 3v18h18M7 15l4-6 4 3 5-8"/></svg></div><h5 data-en="Results" data-ar="النتائج">النتائج</h5><p data-en="Every step is measured with numbers, no guesswork." data-ar="كل خطوة بتتقاس بأرقام، مفيش شغل عشوائي.">كل خطوة بتتقاس بأرقام، مفيش شغل عشوائي.</p></div>
+        <div class="val"><div class="icon-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><h5 data-en="Partnership" data-ar="الشراكة">الشراكة</h5><p data-en="We're an extension of your team, not just a vendor." data-ar="إحنا امتداد لفريقك مش مجرد مورد خدمة.">إحنا امتداد لفريقك مش مجرد مورد خدمة.</p></div>
+      </div>
+      <a href="#contact" class="btn btn-gold" data-en="Learn More About Us" data-ar="تعرف علينا أكتر">تعرف علينا أكتر</a>
+    </div>
+    <div class="about-card reveal">
+      <img src="data:image/png;base64,{{LOGO420}}" alt="NEXORA">
+    </div>
+  </div>
+</section>
+
+<section class="section-pad" id="testimonials">
+  <div class="wrap">
+    <div class="kicker reveal" data-en="Client Reviews" data-ar="آراء العملاء">آراء العملاء</div>
+    <h2 class="reveal" data-en="Companies who trusted us and saw a real difference" data-ar="شركات وثقت فينا وشافت فرق حقيقي">شركات وثقت فينا وشافت فرق حقيقي</h2>
+  </div>
+  <div class="testi-wrap">
+    <div class="testi-track" id="testiTrack"></div>
+  </div>
+</section>
+
+<section class="section-pad" id="faq" style="background:var(--b1);">
+  <div class="wrap center">
+    <div class="kicker reveal mx-auto" style="justify-content:center;" data-en="FAQ" data-ar="الأسئلة الشائعة">الأسئلة الشائعة</div>
+    <h2 class="reveal" data-en="Questions we hear often before we start working together" data-ar="أسئلة بتتكرر كتير قبل ما نبدأ الشغل">أسئلة بتتكرر كتير قبل ما نبدأ الشغل</h2>
+  </div>
+  <div class="wrap">
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span data-en="Is there a long-term contract I have to sign?" data-ar="هل في عقد طويل الأجل لازم أوقعه؟">هل في عقد طويل الأجل لازم أوقعه؟</span><span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg></span></button>
+        <div class="faq-a"><p data-en="No, we work on flexible monthly contracts. We prove results first before talking about any longer commitment." data-ar="لأ، بنشتغل بعقود شهرية مرنة. بنثبت النتيجة الأول قبل ما نتكلم عن التزام أطول.">لأ، بنشتغل بعقود شهرية مرنة. بنثبت النتيجة الأول قبل ما نتكلم عن التزام أطول.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span data-en="How long until I see real results?" data-ar="هستنى قد إيه لحد ما أشوف نتائج فعلية؟">هستنى قد إيه لحد ما أشوف نتائج فعلية؟</span><span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg></span></button>
+        <div class="faq-a"><p data-en="You'll usually see early indicators within 30 days, with clear and stable results within 60 to 90 days." data-ar="غالبًا بتبدأ تشوف مؤشرات أولية خلال 30 يوم، ونتائج واضحة ومستقرة خلال 60 إلى 90 يوم.">غالبًا بتبدأ تشوف مؤشرات أولية خلال 30 يوم، ونتائج واضحة ومستقرة خلال 60 إلى 90 يوم.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span data-en="Can I work with you if I'm still a small company?" data-ar="هل ينفع أعمل معاكم وأنا لسه شركة صغيرة؟">هل ينفع أعمل معاكم وأنا لسه شركة صغيرة؟</span><span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg></span></button>
+        <div class="faq-a"><p data-en="Of course, we have a Launch package designed specifically for startups and small companies." data-ar="أكيد، عندنا باقة الإقلاع مصممة خصيصًا للشركات الناشئة والصغيرة.">أكيد، عندنا باقة الإقلاع مصممة خصيصًا للشركات الناشئة والصغيرة.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span data-en="Can you work with my in-house team?" data-ar="هل هتقدروا تشتغلوا مع الفريق الداخلي عندي؟">هل هتقدروا تشتغلوا مع الفريق الداخلي عندي؟</span><span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg></span></button>
+        <div class="faq-a"><p data-en="Absolutely, we work as an extension of your team, not a replacement for it, and coordinate continuously with any internal team you have." data-ar="طبعًا، إحنا بنشتغل كامتداد لفريقك، مش بديل عنه. بنتنسق باستمرار مع أي فريق داخلي عندك.">طبعًا، إحنا بنشتغل كامتداد لفريقك، مش بديل عنه. بنتنسق باستمرار مع أي فريق داخلي عندك.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span data-en="How will I know the money I'm spending is actually paying off?" data-ar="إزاي هعرف إن الفلوس اللي بصرفها بترجع فعليًا؟">إزاي هعرف إن الفلوس اللي بصرفها بترجع فعليًا؟</span><span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg></span></button>
+        <div class="faq-a"><p data-en="You'll have a live dashboard and regular reports showing exactly where every pound goes and what it returns." data-ar="هتكون عندك لوحة بيانات مباشرة وتقارير دورية، بتوريك بالظبط كل جنيه رايح فين وعائده إيه.">هتكون عندك لوحة بيانات مباشرة وتقارير دورية، بتوريك بالظبط كل جنيه رايح فين وعائده إيه.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span data-en="How do I take the first step with you?" data-ar="إزاي أبدأ الخطوة الأولى معاكم؟">إزاي أبدأ الخطوة الأولى معاكم؟</span><span class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg></span></button>
+        <div class="faq-a"><p data-en="Book a free consultation from the form below, and we'll reach out within 24 hours to schedule the first call." data-ar="احجز استشارة مجانية من الفورم اللي تحت، وهنتواصل معاك خلال 24 ساعة نحدد ميعاد المكالمة الأولى.">احجز استشارة مجانية من الفورم اللي تحت، وهنتواصل معاك خلال 24 ساعة نحدد ميعاد المكالمة الأولى.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad" id="contact">
+  <div class="wrap grid-2 contact">
+    <div class="reveal-l">
+      <div class="kicker" data-en="Contact" data-ar="تواصل معنا">تواصل معنا</div>
+      <h2 data-en="Ready to start your growth system?" data-ar="جاهز تبدأ نظام النمو بتاعك؟">جاهز تبدأ نظام النمو بتاعك؟</h2>
+      <p class="section-sub" data-en="Fill out the form and we'll reach out within 24 hours to schedule your free first consultation." data-ar="املأ الفورم وهنتواصل معاك خلال 24 ساعة نحدد ميعاد الاستشارة الأولى المجانية.">املأ الفورم وهنتواصل معاك خلال 24 ساعة نحدد ميعاد الاستشارة الأولى المجانية.</p>
+      <ul class="hi-list">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="First consultation completely free" data-ar="استشارة أولى مجانية بالكامل">استشارة أولى مجانية بالكامل</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Realistic diagnosis of your current state" data-ar="تشخيص واقعي لوضعك الحالي">تشخيص واقعي لوضعك الحالي</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="Response within 24 hours max" data-ar="رد خلال 24 ساعة كحد أقصى">رد خلال 24 ساعة كحد أقصى</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg><span data-en="No commitment upfront" data-ar="بدون أي التزام مسبق">بدون أي التزام مسبق</span></li>
+      </ul>
+      <div class="contact-links">
+        <a href="https://wa.me/201062264302" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>+201062264302</a>
+        <a href="mailto:nexora01.eg@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg>nexora01.eg@gmail.com</a>
+      </div>
+    </div>
+
+    <div class="form-card reveal">
+      <form id="contactForm">
+        <div class="f-row">
+          <div class="f-group"><label><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span data-en="Name" data-ar="الاسم">الاسم</span></label><input type="text" id="fName" required></div>
+          <div class="f-group"><label><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg><span data-en="Phone" data-ar="رقم الهاتف">رقم الهاتف</span></label><input type="tel" id="fPhone" required></div>
+        </div>
+        <div class="f-row">
+          <div class="f-group"><label><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg><span data-en="Email (optional)" data-ar="البريد الإلكتروني (اختياري)">البريد الإلكتروني (اختياري)</span></label><input type="email" id="fEmail"></div>
+          <div class="f-group"><label><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2"/></svg><span data-en="Company Name" data-ar="اسم الشركة">اسم الشركة</span></label><input type="text" id="fCompany"></div>
+        </div>
+        <div class="f-group" style="margin-bottom:14px;">
+          <label><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span data-en="Your Industry" data-ar="مجال شركتك">مجال شركتك</span></label>
+          <select id="fSector">
+            <option data-en="Select your industry" data-ar="اختار المجال">اختار المجال</option>
+            <option data-en="Clinics & medical centers" data-ar="عيادات ومراكز طبية">عيادات ومراكز طبية</option>
+            <option data-en="E-commerce store" data-ar="متجر إلكتروني">متجر إلكتروني</option>
+            <option data-en="B2B company" data-ar="شركة B2B">شركة B2B</option>
+            <option data-en="Real estate" data-ar="عقارات">عقارات</option>
+            <option data-en="Education & training" data-ar="تعليم وتدريب">تعليم وتدريب</option>
+            <option data-en="Restaurants & cafés" data-ar="مطاعم وكافيهات">مطاعم وكافيهات</option>
+            <option data-en="Other" data-ar="أخرى">أخرى</option>
+          </select>
+        </div>
+        <div class="f-group" style="margin-bottom:14px;">
+          <label><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2L3 14h7l-1 8 11-13h-7l1-7z"/></svg><span data-en="Your Main Goal" data-ar="هدفك الأساسي">هدفك الأساسي</span></label>
+          <div class="f-radios" id="fGoal">
+            <div class="f-radio" data-goal-en="More Sales" data-goal-ar="زيادة المبيعات" data-en="More Sales" data-ar="زيادة المبيعات">زيادة المبيعات</div>
+            <div class="f-radio" data-goal-en="Brand Identity" data-goal-ar="بناء هوية العلامة" data-en="Brand Identity" data-ar="بناء هوية العلامة">بناء هوية العلامة</div>
+            <div class="f-radio" data-goal-en="Organizing Operations" data-goal-ar="تنظيم العمليات" data-en="Organizing Operations" data-ar="تنظيم العمليات">تنظيم العمليات</div>
+            <div class="f-radio" data-goal-en="Not sure yet" data-goal-ar="غير محدد" data-en="Not Sure Yet" data-ar="غير محدد بعد">غير محدد بعد</div>
+          </div>
+        </div>
+        <div class="f-group" style="margin-bottom:20px;">
+          <label><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg><span data-en="Your Message" data-ar="رسالتك">رسالتك</span></label>
+          <textarea id="fMsg" rows="4"></textarea>
+        </div>
+        <button type="submit" class="btn btn-gold submit-btn" id="submitBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+          <span data-en="Send via WhatsApp" data-ar="ابعت عبر واتساب">ابعت عبر واتساب</span>
+        </button>
+      </form>
+      <div class="f-success" id="fSuccess">
+        <div class="icon-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6L9 17l-5-5"/></svg></div>
+        <h3 data-en="Request Received" data-ar="تم استلام طلبك">تم استلام طلبك</h3>
+        <p data-en="WhatsApp will open with a ready message, and we'll reach out within 24 hours." data-ar="هيفتحلك واتساب برسالة جاهزة، وهنتواصل معاك خلال 24 ساعة.">هيفتحلك واتساب برسالة جاهزة، وهنتواصل معاك خلال 24 ساعة.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="final-cta">
+  <div class="wrap">
+    <div class="kicker" style="justify-content:center;" data-en="Ready to Start?" data-ar="جاهز تبدأ؟">جاهز تبدأ؟</div>
+    <h2><span data-en="Let your growth system" data-ar="خلي نظام النمو بتاعك">خلي نظام النمو بتاعك</span> <span class="gold-t" data-en="run starting today" data-ar="يشتغل من دلوقتي">يشتغل من دلوقتي</span></h2>
+    <p data-en="A free first consultation, no commitment. We'll tell you honestly if we're the right fit for your company or not." data-ar="استشارة أولى مجانية، بدون أي التزام. هنقولك بصراحة لو إحنا مناسبين لشركتك ولا لأ.">استشارة أولى مجانية، بدون أي التزام. هنقولك بصراحة لو إحنا مناسبين لشركتك ولا لأ.</p>
+    <div class="h-ctas">
+      <a href="#contact" class="btn btn-gold">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+        <span data-en="Book a Free Consultation" data-ar="احجز استشارة مجانية">احجز استشارة مجانية</span>
+      </a>
+      <a href="https://wa.me/201062264302" target="_blank" rel="noopener" class="btn btn-outline" data-en="Message Us on WhatsApp" data-ar="راسلنا على واتساب">راسلنا على واتساب</a>
+    </div>
+    <div class="sep" data-en="No credit card — no commitment" data-ar="بدون بطاقة ائتمان — بدون التزام">بدون بطاقة ائتمان — بدون التزام</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand">
+          <img src="data:image/png;base64,{{LOGO160}}" alt="NEXORA">
+          <span class="brand-txt logo-lock"><b>NEXORA</b><small>Growth Platform</small></span>
+        </div>
+        <div class="foot-brand-txt"><p data-en="A complete growth platform connecting marketing, sales and operations into one system that works for your business." data-ar="منصة نمو متكاملة بتربط التسويق والمبيعات والعمليات في نظام واحد يشتغل لصالح شركتك.">منصة نمو متكاملة بتربط التسويق والمبيعات والعمليات في نظام واحد يشتغل لصالح شركتك.</p></div>
+      </div>
+      <div class="foot-col">
+        <div class="foot-head"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 010 18 15 15 0 010-18z"/></svg><span data-en="Quick Links" data-ar="روابط سريعة">روابط سريعة</span></div>
+        <ul>
+          <li><a href="#hero"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span data-en="Home" data-ar="الرئيسية">الرئيسية</span></a></li>
+          <li><a href="#how"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span data-en="How We Work" data-ar="كيف نعمل">كيف نعمل</span></a></li>
+          <li><a href="#packages"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span data-en="Pricing" data-ar="الأسعار">الأسعار</span></a></li>
+          <li><a href="#faq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span data-en="FAQ" data-ar="الأسئلة الشائعة">الأسئلة الشائعة</span></a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <div class="foot-head"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2L3 14h7l-1 8 11-13h-7l1-7z"/></svg><span data-en="Our Solutions" data-ar="حلولنا">حلولنا</span></div>
+        <ul>
+          <li><a href="#solutions"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span data-en="Paid Ads" data-ar="إعلانات ممولة">إعلانات ممولة</span></a></li>
+          <li><a href="#solutions"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span data-en="Content & Social" data-ar="محتوى وسوشيال">محتوى وسوشيال</span></a></li>
+          <li><a href="#solutions"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span data-en="Sales System" data-ar="نظام مبيعات">نظام مبيعات</span></a></li>
+          <li><a href="#solutions"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span data-en="Websites & Stores" data-ar="مواقع ومتاجر">مواقع ومتاجر</span></a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <div class="foot-head"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg><span data-en="Contact" data-ar="تواصل">تواصل</span></div>
+        <ul>
+          <li><a href="https://wa.me/201062264302" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>+201062264302</a></li>
+          <li><a href="mailto:nexora01.eg@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg>nexora01.eg@gmail.com</a></li>
+          <li><a href="https://t.me/Nexora_01_eg" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg><span data-en="Telegram" data-ar="تليجرام">تليجرام</span></a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span data-en="© 2026 NEXORA. All rights reserved." data-ar="© 2026 NEXORA. جميع الحقوق محفوظة.">© 2026 NEXORA. جميع الحقوق محفوظة.</span>
+      <div class="socials">
+        <a href="https://whatsapp.com/channel/0029VbDVhPiATRStfzx4Iz39" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></a>
+        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+        <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/><path d="M10 9v12M10 13a4 4 0 018 0v8"/></svg></a>
+        <a href="https://t.me/Nexora_01_eg" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+
+const WHATSAPP = '201062264302';
+const EMAIL = 'nexora01.eg@gmail.com';
+const TELEGRAM = 'https://t.me/Nexora_01_eg';
+
+/* LOADER */
+window.addEventListener('load', function(){
+  setTimeout(function(){
+    const l = document.getElementById('loader');
+    if(l) l.classList.add('out');
+  }, 1700);
+});
+
+/* CURSOR */
+const dot = document.getElementById('curDot');
+const ring = document.getElementById('curRing');
+let mx=0,my=0,rx=0,ry=0;
+window.addEventListener('mousemove', function(e){
+  mx = e.clientX; my = e.clientY;
+  dot.style.left = mx+'px'; dot.style.top = my+'px';
+});
+function ringLoop(){
+  rx += (mx-rx)*0.1; ry += (my-ry)*0.1;
+  ring.style.left = rx+'px'; ring.style.top = ry+'px';
+  requestAnimationFrame(ringLoop);
+}
+ringLoop();
+window.addEventListener('mousedown', ()=>document.body.classList.add('c-click'));
+window.addEventListener('mouseup', ()=>document.body.classList.remove('c-click'));
+function bindHover(){
+  document.querySelectorAll('a,button,input,select,textarea,.assess-opt,.f-radio,.gs-tab,.faq-q').forEach(function(el){
+    el.addEventListener('mouseenter', ()=>document.body.classList.add('c-hover'));
+    el.addEventListener('mouseleave', ()=>document.body.classList.remove('c-hover'));
+  });
+}
+bindHover();
+
+/* PROGRESS BAR */
+const progBar = document.getElementById('progBar');
+window.addEventListener('scroll', function(){
+  const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const p = h > 0 ? (window.scrollY/h)*100 : 0;
+  progBar.style.width = p+'%';
+}, {passive:true});
+
+/* HEADER */
+const header = document.getElementById('siteHeader');
+window.addEventListener('scroll', function(){
+  if(window.scrollY > 60) header.classList.add('scrolled');
+  else header.classList.remove('scrolled');
+}, {passive:true});
+
+/* MOBILE MENU */
+const burger = document.getElementById('burger');
+const mob = document.getElementById('mobMenu');
+burger.addEventListener('click', function(){
+  const open = mob.classList.toggle('open');
+  burger.setAttribute('aria-expanded', open ? 'true':'false');
+});
+mob.querySelectorAll('a').forEach(function(a){
+  a.addEventListener('click', function(){
+    mob.classList.remove('open');
+    burger.setAttribute('aria-expanded','false');
+  });
+});
+
+/* REVEAL */
+const revealObs = new IntersectionObserver(function(entries){
+  entries.forEach(function(entry){
+    if(entry.isIntersecting){
+      entry.target.classList.add('in');
+      revealObs.unobserve(entry.target);
+    }
+  });
+}, {threshold:0.1});
+document.querySelectorAll('.reveal,.reveal-l').forEach(el=>revealObs.observe(el));
+
+/* STAT COUNTERS */
+function easeOutCubic(t){ return 1 - Math.pow(1-t,3); }
+function animateCount(el){
+  const target = parseFloat(el.getAttribute('data-count'));
+  const suffix = el.getAttribute('data-suffix')||'';
+  const decimals = parseInt(el.getAttribute('data-decimal')||'0',10);
+  const dur = 1500;
+  const start = performance.now();
+  function step(now){
+    const t = Math.min(1,(now-start)/dur);
+    const val = target * easeOutCubic(t);
+    el.textContent = (decimals>0 ? val.toFixed(decimals) : Math.round(val)) + suffix;
+    if(t<1) requestAnimationFrame(step);
+    else el.textContent = (decimals>0 ? target.toFixed(decimals) : target) + suffix;
+  }
+  requestAnimationFrame(step);
+}
+const countObs = new IntersectionObserver(function(entries){
+  entries.forEach(function(entry){
+    if(entry.isIntersecting){
+      animateCount(entry.target);
+      countObs.unobserve(entry.target);
+    }
+  });
+}, {threshold:0.3});
+document.querySelectorAll('[data-count]').forEach(el=>countObs.observe(el));
+
+/* HERO CANVAS — smooth engineered "system pulse" network */
+const canvas = document.getElementById('hero-canvas');
+const ctx = canvas.getContext('2d');
+let nodes = [], edges = [], pulses = [];
+let hmx=0, hmy=0, thmx=0, thmy=0;
+
+function resizeCanvas(){
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+}
+function buildNetwork(){
+  nodes = [];
+  edges = [];
+  const cols = Math.max(6, Math.round(canvas.width/140));
+  const rows = Math.max(4, Math.round(canvas.height/140));
+  const cw = canvas.width/cols, rh = canvas.height/rows;
+  for(let r=0;r<=rows;r++){
+    for(let c=0;c<=cols;c++){
+      nodes.push({
+        x: c*cw + (Math.random()-0.5)*cw*0.5,
+        y: r*rh + (Math.random()-0.5)*rh*0.5,
+        phase: Math.random()*Math.PI*2
+      });
+    }
+  }
+  // connect each node to its nearest right/down neighbors (grid-like circuit)
+  const perRow = cols+1;
+  for(let i=0;i<nodes.length;i++){
+    const row = Math.floor(i/perRow), col = i%perRow;
+    if(col < cols && Math.random() > 0.25){ edges.push([i, i+1]); }
+    if(row < rows && Math.random() > 0.35){ edges.push([i, i+perRow]); }
+  }
+  pulses = [];
+  const pulseCount = Math.min(26, Math.round(edges.length*0.35));
+  for(let i=0;i<pulseCount;i++){
+    spawnPulse();
+  }
+}
+function spawnPulse(fromNode){
+  const candidateEdges = fromNode===undefined ? edges : edges.filter(e=>e[0]===fromNode||e[1]===fromNode);
+  const pool = candidateEdges.length ? candidateEdges : edges;
+  const e = pool[Math.floor(Math.random()*pool.length)];
+  if(!e) return;
+  pulses.push({ edge:e, t: fromNode===undefined ? Math.random() : 0, speed: 0.0035 + Math.random()*0.004, reverse: fromNode===e[1] });
+}
+function drawNetwork(time){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  thmx += (hmx-thmx)*0.04; thmy += (hmy-thmy)*0.04;
+  const ox = thmx*14, oy = thmy*10;
+
+  // edges
+  ctx.lineWidth = 1;
+  for(let i=0;i<edges.length;i++){
+    const a = nodes[edges[i][0]], b = nodes[edges[i][1]];
+    ctx.beginPath();
+    ctx.moveTo(a.x+ox, a.y+oy);
+    ctx.lineTo(b.x+ox, b.y+oy);
+    ctx.strokeStyle = 'rgba(214,195,165,0.07)';
+    ctx.stroke();
+  }
+  // nodes
+  for(let i=0;i<nodes.length;i++){
+    const n = nodes[i];
+    const s = 0.5 + Math.sin(time*0.0006 + n.phase)*0.35;
+    ctx.beginPath();
+    ctx.arc(n.x+ox, n.y+oy, 1.3+s*0.6, 0, Math.PI*2);
+    ctx.fillStyle = 'rgba(214,195,165,'+(0.18+s*0.16)+')';
+    ctx.fill();
+  }
+  // pulses traveling with smooth easing
+  for(let i=pulses.length-1;i>=0;i--){
+    const p = pulses[i];
+    p.t += p.speed;
+    if(p.t >= 1){
+      const endNode = p.reverse ? p.edge[0] : p.edge[1];
+      pulses.splice(i,1);
+      spawnPulse(endNode);
+      continue;
+    }
+    const te = p.t*p.t*(3-2*p.t); // smoothstep easing
+    const a = nodes[p.reverse ? p.edge[1] : p.edge[0]];
+    const b = nodes[p.reverse ? p.edge[0] : p.edge[1]];
+    const px = a.x + (b.x-a.x)*te + ox;
+    const py = a.y + (b.y-a.y)*te + oy;
+    const grad = ctx.createRadialGradient(px,py,0,px,py,7);
+    grad.addColorStop(0,'rgba(232,213,181,0.95)');
+    grad.addColorStop(1,'rgba(232,213,181,0)');
+    ctx.beginPath();
+    ctx.arc(px,py,7,0,Math.PI*2);
+    ctx.fillStyle = grad;
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(px,py,1.7,0,Math.PI*2);
+    ctx.fillStyle = '#e8d5b5';
+    ctx.fill();
+  }
+  requestAnimationFrame(drawNetwork);
+}
+document.getElementById('hero').addEventListener('mousemove', function(e){
+  const rect = canvas.getBoundingClientRect();
+  hmx = (e.clientX - rect.left - rect.width/2)/rect.width;
+  hmy = (e.clientY - rect.top - rect.height/2)/rect.height;
+});
+window.addEventListener('resize', function(){ resizeCanvas(); buildNetwork(); });
+resizeCanvas(); buildNetwork(); requestAnimationFrame(drawNetwork);
+
+/* TABS */
+const tabs = document.querySelectorAll('.gs-tab');
+const panels = document.querySelectorAll('.gs-panel');
+tabs.forEach(function(tab){
+  tab.addEventListener('click', function(){
+    tabs.forEach(t=>t.classList.remove('active'));
+    panels.forEach(p=>p.classList.remove('active'));
+    tab.classList.add('active');
+    const target = tab.getAttribute('data-tab');
+    document.querySelector('.gs-panel[data-panel="'+target+'"]').classList.add('active');
+  });
+});
+
+/* FAQ */
+document.querySelectorAll('.faq-item').forEach(function(item){
+  const btn = item.querySelector('.faq-q');
+  const ans = item.querySelector('.faq-a');
+  btn.addEventListener('click', function(){
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(function(other){
+      other.classList.remove('open');
+      other.querySelector('.faq-q').setAttribute('aria-expanded','false');
+      other.querySelector('.faq-a').style.maxHeight = null;
+    });
+    if(!isOpen){
+      item.classList.add('open');
+      btn.setAttribute('aria-expanded','true');
+      ans.style.maxHeight = ans.scrollHeight+'px';
+    }
+  });
+});
+
+/* ASSESSMENT */
+let aStep = 0;
+let aScore = 0;
+const aSteps = document.querySelectorAll('.assess-step');
+const aSegs = document.querySelectorAll('.ap-seg');
+function showAssessStep(n){
+  aSteps.forEach(s=>s.classList.remove('active'));
+  document.querySelector('.assess-step[data-step="'+n+'"]').classList.add('active');
+  aSegs.forEach(function(seg,i){
+    if(i < n) seg.classList.add('done'); else seg.classList.remove('done');
+  });
+}
+document.querySelectorAll('.assess-step[data-step]').forEach(function(stepEl){
+  const opts = stepEl.querySelectorAll('.assess-opt');
+  opts.forEach(function(opt){
+    opt.addEventListener('click', function(){
+      opts.forEach(o=>o.classList.remove('sel'));
+      opt.classList.add('sel');
+      aScore += parseInt(opt.getAttribute('data-val'),10);
+      setTimeout(function(){
+        aStep++;
+        if(aStep < 5){
+          showAssessStep(aStep);
+        } else {
+          aSegs.forEach(seg=>seg.classList.add('done'));
+          const avg = aScore/10;
+          const pct = Math.min(98, Math.round(avg*100));
+          const lang = document.body.dataset.lang;
+          document.getElementById('aScoreVal').textContent = pct+'%';
+          let msgAr, msgEn;
+          if(pct < 40){
+            msgAr = 'شركتك محتاجة تبني أساس نظام نمو من الصفر، إحنا هنساعدك تبدأ صح.';
+            msgEn = 'Your company needs to build a growth system foundation from scratch — we can help you start right.';
+          } else if(pct < 70){
+            msgAr = 'عندك أساس كويس، لكن محتاج ربط أقوى بين التسويق والمبيعات.';
+            msgEn = 'You have a good foundation, but need a stronger link between marketing and sales.';
+          } else {
+            msgAr = 'شركتك جاهزة للتوسع، محتاجة بس نظام يدفعك للمرحلة الجاية.';
+            msgEn = 'Your company is ready to scale, it just needs a system to push it to the next stage.';
+          }
+          document.getElementById('aMsgVal').textContent = lang==='en' ? msgEn : msgAr;
+          document.getElementById('aMsgVal').setAttribute('data-en', msgEn);
+          document.getElementById('aMsgVal').setAttribute('data-ar', msgAr);
+          showAssessStep(5);
+        }
+      }, 260);
+    });
+  });
+});
+document.getElementById('aRestart').addEventListener('click', function(e){
+  e.preventDefault();
+  aStep = 0; aScore = 0;
+  document.querySelectorAll('.assess-opt.sel').forEach(o=>o.classList.remove('sel'));
+  showAssessStep(0);
+});
+
+/* form goal radios */
+let selectedGoal = {en:'', ar:''};
+document.querySelectorAll('.f-radio').forEach(function(r){
+  r.addEventListener('click', function(){
+    document.querySelectorAll('.f-radio').forEach(x=>x.classList.remove('sel'));
+    r.classList.add('sel');
+    selectedGoal.en = r.getAttribute('data-goal-en');
+    selectedGoal.ar = r.getAttribute('data-goal-ar');
+  });
+});
+
+/* CONTACT FORM */
+const contactForm = document.getElementById('contactForm');
+contactForm.addEventListener('submit', function(e){
+  e.preventDefault();
+  const name = document.getElementById('fName').value.trim();
+  const phone = document.getElementById('fPhone').value.trim();
+  const email = document.getElementById('fEmail').value.trim();
+  const company = document.getElementById('fCompany').value.trim();
+  const sector = document.getElementById('fSector').value;
+  const msg = document.getElementById('fMsg').value.trim();
+  const lang = document.body.dataset.lang;
+
+  if(!name || !phone){
+    alert(lang==='en' ? 'Please fill in at least your name and phone number.' : 'من فضلك املأ الاسم ورقم الهاتف على الأقل.');
+    return;
+  }
+
+  let waMsg = (lang==='en' ? 'Hello NEXORA, my name is ' : 'مرحبًا نيكسورا، اسمي ')+name+'.\\n';
+  waMsg += (lang==='en' ? 'Phone: ' : 'رقم الهاتف: ')+phone+'\\n';
+  if(email) waMsg += (lang==='en' ? 'Email: ' : 'البريد الإلكتروني: ')+email+'\\n';
+  if(company) waMsg += (lang==='en' ? 'Company: ' : 'اسم الشركة: ')+company+'\\n';
+  if(sector) waMsg += (lang==='en' ? 'Sector: ' : 'المجال: ')+sector+'\\n';
+  const goalText = lang==='en' ? selectedGoal.en : selectedGoal.ar;
+  if(goalText) waMsg += (lang==='en' ? 'Goal: ' : 'الهدف: ')+goalText+'\\n';
+  if(msg) waMsg += (lang==='en' ? 'Message: ' : 'الرسالة: ')+msg;
+
+  const waLink = 'https://wa.me/'+WHATSAPP+'?text='+encodeURIComponent(waMsg);
+  window.open(waLink, '_blank');
+
+  contactForm.style.display = 'none';
+  document.getElementById('fSuccess').classList.add('show');
+});
+
+/* TESTIMONIALS build (bilingual) */
+const testimonials = [
+  {ar:'خلال 3 شهور بس، مبيعاتنا اتضاعفت وفريق المبيعات بقى منظم لأول مرة.', en:"Within just 3 months, our sales doubled and our sales team became organized for the first time.", nameAr:'مصطفى أحمد', nameEn:'Mostafa Ahmed', roleAr:'مدير تسويق، عيادة النور', roleEn:'Marketing Manager, Al Nour Clinic', init:'مأ'},
+  {ar:'أول مرة أشوف لوحة أرقام واضحة توريني فعليًا فلوسي رايحة فين.', en:"First time I've seen a clear numbers dashboard that actually shows me where my money is going.", nameAr:'هبة سامي', nameEn:'Heba Sami', roleAr:'مؤسسة، متجر لمسة', roleEn:'Founder, Lamsa Store', init:'هس'},
+  {ar:'الفريق بيتعامل معانا كإننا شركة واحدة، مش عميل بس بيدفع فلوس.', en:"The team treats us like one company, not just a client paying money.", nameAr:'كريم طارق', nameEn:'Kareem Tarek', roleAr:'الرئيس التنفيذي، بيلد جروب', roleEn:'CEO, Build Group', init:'كط'},
+  {ar:'تكلفة اكتساب العميل قلّت بشكل ملحوظ خلال أول شهرين بس.', en:"Customer acquisition cost dropped noticeably within just the first two months.", nameAr:'رنا عادل', nameEn:'Rana Adel', roleAr:'مديرة نمو، أكاديمية فكرة', roleEn:'Growth Manager, Fekra Academy', init:'رع'}
+];
+const track = document.getElementById('testiTrack');
+const starsSvg = '<svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.6 6.8L12 16.8 5.8 20.3l1.6-6.8L2.2 8.9l6.9-.6z"/></svg>'.repeat(5);
+function buildTestimonials(){
+  let html = '';
+  const full = testimonials.concat(testimonials);
+  full.forEach(function(t){
+    html += '<div class="tcard"><div class="stars">'+starsSvg+'</div>'+
+      '<p data-en="'+t.en+'" data-ar="'+t.ar+'">'+ (document.body.dataset.lang==='en'?t.en:t.ar) +'</p>'+
+      '<div class="tauthor"><div class="avatar">'+t.init+'</div><div>'+
+      '<b data-en="'+t.nameEn+'" data-ar="'+t.nameAr+'">'+(document.body.dataset.lang==='en'?t.nameEn:t.nameAr)+'</b>'+
+      '<span data-en="'+t.roleEn+'" data-ar="'+t.roleAr+'">'+(document.body.dataset.lang==='en'?t.roleEn:t.roleAr)+'</span>'+
+      '</div></div></div>';
+  });
+  track.innerHTML = html;
+}
+buildTestimonials();
+
+/* ============ LANGUAGE SYSTEM ============ */
+function applyLang(lang){
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  document.body.dataset.lang = lang;
+  document.querySelectorAll('[data-en]').forEach(function(el){
+    const val = el.getAttribute(lang === 'ar' ? 'data-ar' : 'data-en');
+    if(val !== null) el.textContent = val;
+  });
+  document.querySelectorAll('#fSector option[data-en]').forEach(function(o){
+    o.textContent = o.getAttribute(lang==='ar' ? 'data-ar' : 'data-en');
+  });
+  document.querySelectorAll('#langSw button, #langSwM button').forEach(function(b){
+    b.classList.toggle('active', b.getAttribute('data-lang')===lang);
+  });
+  localStorage.setItem('nexora-lang', lang);
+  bindHover();
+}
+document.querySelectorAll('#langSw button, #langSwM button').forEach(function(b){
+  b.addEventListener('click', function(){ applyLang(b.getAttribute('data-lang')); });
+});
+const savedLang = localStorage.getItem('nexora-lang') || 'ar';
+applyLang(savedLang);
+
+})();
+</script>
+</body>
+</html>

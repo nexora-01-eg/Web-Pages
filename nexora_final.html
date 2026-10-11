@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXORA — نبني براندات تبيع</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&family=Noto+Serif+SC:wght@400;600;700&family=Noto+Serif+JP:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+/* ════════════════════════════════════════
+   NEXORA — FINAL UNIFIED VERSION
+   Dark Luxury · Old Money Aesthetic
+   Three Themes · Ten Languages · Full Interactive
+   ════════════════════════════════════════ */
+
+:root {
+  --gold: #C9A84C;
+  --gold2: #e8c96a;
+  --gold-dim: #8a6a2a;
+  --gold-glow: rgba(201,168,76,0.10);
+  --cream: #F0E6C8;
+  --cream2: #d4c8a0;
+  --muted: #7a6a4a;
+  --muted2: #4a3e28;
+  --bg: #080808;
+  --bg2: #0f0f0c;
+  --surface: #111109;
+  --border: #1e1c14;
+  --border2: #2a2718;
+  --burgundy: #5D1E21;
+  --burg-glow: rgba(93,30,33,0.15);
+}
+
+/* THEME VARIANTS */
+body.theme-dark { --bg:#080808; --bg2:#0f0f0c; --surface:#111109; --border:#1e1c14; --border2:#2a2718; --cream:#F0E6C8; --muted:#7a6a4a; }
+body.theme-dusk { --bg:#100e08; --bg2:#18150e; --surface:#1a1710; --border:#2a2410; --border2:#3a3218; --cream:#e8d8b0; --muted:#8a7040; }
+body.theme-light { --bg:#f5edd8; --bg2:#ede0c4; --surface:#fff8ec; --border:#d4c090; --border2:#c0a860; --cream:#2a1e08; --muted:#6a5430; }
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--cream);
+  font-family: 'Amiri Quran', serif;
+  overflow-x: hidden;
+  cursor: none;
+  transition: background 0.5s, color 0.5s;
+}
+
+body[lang="en"], body[lang="de"], body[lang="fr"], body[lang="es"], body[lang="it"], body[lang="pt"], body[lang="ru"] {
+  font-family: 'Cormorant Garamond', serif;
+  direction: ltr;
+}
+body[lang="zh"] { font-family: 'Noto Serif SC', serif; direction: ltr; }
+body[lang="ja"] { font-family: 'Noto Serif JP', serif; direction: ltr; }
+
+/* ── CURSOR ── */
+#nx-cursor {
+  position: fixed; top:0; left:0; z-index:9999; pointer-events:none;
+  width:18px; height:18px; border:1.5px solid var(--gold); border-radius:50%;
+  transform: translate(-50%,-50%);
+  transition: width .25s, height .25s, border-radius .25s, background .2s;
+}
+#nx-cursor.link { width:28px; height:28px; background:var(--gold-glow); }
+#nx-cursor.btn  { width:20px; height:20px; border-radius:0; transform:translate(-50%,-50%) rotate(45deg); }
+#nx-cursor.view { width:60px; height:60px; background:var(--gold-glow); }
+#nx-cursor-label {
+  position:fixed; z-index:9998; pointer-events:none;
+  font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.12em;
+  color:var(--gold); transform:translate(-50%,-50%); display:none;
+}
+
+/* ── NOISE OVERLAY ── */
+body::before {
+  content:''; position:fixed; inset:0; z-index:1; pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity:.022;
+}
+
+/* ── NAV ── */
+nav {
+  position:fixed; inset:0 0 auto 0; z-index:100;
+  padding: 18px 5%;
+  display:flex; align-items:center; justify-content:space-between;
+  transition: background .4s, backdrop-filter .4s, border-bottom .4s;
+}
+nav.scrolled {
+  background: rgba(8,8,6,.88);
+  backdrop-filter: blur(24px);
+  border-bottom: .5px solid var(--border2);
+}
+.nav-logo { display:flex; align-items:center; gap:10px; text-decoration:none; cursor:none; }
+.logo-gem {
+  width:26px; height:26px; border:1.5px solid var(--gold);
+  transform:rotate(45deg); border-radius:3px;
+  display:flex; align-items:center; justify-content:center;
+}
+.logo-gem-inner { width:9px; height:9px; background:var(--gold); border-radius:1px; }
+.logo-name { font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:500; color:var(--gold); letter-spacing:.2em; }
+.nav-links { display:flex; gap:32px; list-style:none; }
+.nav-links a { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.15em; color:var(--muted); text-decoration:none; text-transform:uppercase; transition:color .2s; cursor:none; }
+.nav-links a:hover { color:var(--cream); }
+
+.nav-right { display:flex; align-items:center; gap:12px; }
+
+/* Language Dropdown */
+.lang-wrapper { position:relative; }
+.lang-btn {
+  font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.15em;
+  padding:8px 14px; border:.5px solid var(--border2);
+  color:var(--muted); background:transparent; text-transform:uppercase;
+  cursor:none; display:flex; align-items:center; gap:6px; transition:color .2s, border-color .2s;
+}
+.lang-btn:hover { color:var(--cream); border-color:var(--gold-dim); }
+.lang-dropdown {
+  position:absolute; top:calc(100% + 8px); right:0;
+  background:var(--bg2); border:.5px solid var(--border2);
+  min-width:180px; display:none; z-index:200;
+}
+.lang-dropdown.open { display:block; }
+.lang-opt {
+  padding:10px 16px; font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.1em;
+  color:var(--muted); cursor:none; display:flex; justify-content:space-between; transition:background .15s, color .15s;
+}
+.lang-opt:hover { background:var(--surface); color:var(--cream); }
+.lang-opt.active { color:var(--gold); }
+
+/* Theme Toggle */
+.theme-btn {
+  width:34px; height:34px; border:.5px solid var(--border2);
+  color:var(--muted); background:transparent; display:flex; align-items:center; justify-content:center;
+  font-size:11px; cursor:none; transition:color .2s, border-color .2s;
+}
+.theme-btn:hover { color:var(--gold); border-color:var(--gold-dim); }
+
+.nav-cta {
+  font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.15em;
+  padding:10px 22px; border:.5px solid var(--gold);
+  color:var(--gold); background:transparent; text-decoration:none; text-transform:uppercase;
+  cursor:none; transition:background .2s, color .2s; position:relative; overflow:hidden;
+}
+.nav-cta::before {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(90deg,transparent,rgba(201,168,76,.2),transparent);
+  transform:translateX(-100%); animation:shimmer 3s 2s infinite;
+}
+.nav-cta:hover { background:var(--gold); color:var(--bg); }
+
+/* HAMBURGER */
+.hamburger { display:none; flex-direction:column; gap:5px; padding:8px; cursor:none; }
+.hamburger span { display:block; width:22px; height:1.5px; background:var(--gold); transition:transform .3s, opacity .3s; }
+.hamburger.open span:nth-child(1) { transform:rotate(45deg) translate(4px,4px); }
+.hamburger.open span:nth-child(2) { opacity:0; }
+.hamburger.open span:nth-child(3) { transform:rotate(-45deg) translate(4px,-4px); }
+
+/* ── HERO ── */
+#hero {
+  position:relative; min-height:100vh;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; overflow:hidden; padding:120px 40px 80px;
+}
+.hero-grid {
+  position:absolute; inset:0; pointer-events:none;
+  background-image:linear-gradient(rgba(201,168,76,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,.04) 1px,transparent 1px);
+  background-size:60px 60px;
+}
+.hero-orb {
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-52%);
+  width:700px; height:700px; border-radius:50%;
+  background:radial-gradient(circle,rgba(201,168,76,.09) 0%,rgba(201,168,76,.04) 40%,transparent 70%);
+  pointer-events:none; animation:orbPulse 7s ease-in-out infinite;
+}
+/* Particles canvas */
+#particles-canvas { position:absolute; inset:0; z-index:1; pointer-events:none; }
+
+@keyframes orbPulse { 0%,100%{opacity:.8;transform:translate(-50%,-52%) scale(1)} 50%{opacity:1;transform:translate(-50%,-52%) scale(1.06)} }
+
+.hero-content { position:relative; z-index:2; }
+.hero-badge {
+  display:inline-flex; align-items:center; gap:10px;
+  font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.2em;
+  color:var(--gold); text-transform:uppercase; padding:8px 20px;
+  border:.5px solid var(--border2); margin-bottom:48px;
+  opacity:0; animation:fadeUp .8s .2s forwards;
+}
+.hero-badge-dot { width:6px; height:6px; border-radius:50%; background:var(--gold); animation:blink 1.5s infinite; }
+.hero-h1 {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(56px,9vw,120px); font-weight:700; line-height:.92;
+  color:var(--cream); margin-bottom:8px;
+  opacity:0; animation:fadeUp .8s .4s forwards;
+}
+.hero-h1 span { color:var(--gold); display:block; }
+.hero-tw {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(44px,7vw,96px); font-weight:300; color:var(--gold2);
+  font-style:italic; margin-bottom:32px; min-height:1.2em;
+  display:flex; align-items:center; justify-content:center;
+  opacity:0; animation:fadeUp .8s .6s forwards;
+}
+.tw-cursor { border-right:2px solid var(--gold); animation:blink .8s step-end infinite; }
+.hero-sub {
+  font-size:17px; color:var(--muted); line-height:1.9; max-width:520px; margin:0 auto 56px;
+  opacity:0; animation:fadeUp .8s .8s forwards;
+}
+.hero-cta {
+  display:inline-flex; align-items:center; gap:14px;
+  padding:18px 48px; border:1px solid var(--gold); color:var(--gold);
+  font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.2em;
+  text-transform:uppercase; text-decoration:none; position:relative; overflow:hidden;
+  cursor:none; opacity:0; animation:fadeUp .8s 1s forwards;
+  transition:background .3s, color .3s;
+}
+.hero-cta::before { content:''; position:absolute; inset:0; background:linear-gradient(90deg,transparent,rgba(201,168,76,.2),transparent); transform:translateX(-100%); animation:shimmer 3s 2s infinite; }
+.hero-cta:hover { background:var(--gold); color:var(--bg); }
+.hero-scroll { position:absolute; bottom:40px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:8px; font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.2em; color:var(--muted2); text-transform:uppercase; opacity:0; animation:fadeUp .8s 1.4s forwards; }
+.scroll-line { width:1px; height:50px; background:linear-gradient(to bottom,var(--gold),transparent); animation:scrollLine 2s ease-in-out infinite; }
+
+@keyframes shimmer { to{transform:translateX(100%)} }
+@keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+@keyframes scrollLine { 0%,100%{transform:scaleY(1) translateY(0);opacity:1} 50%{transform:scaleY(.5) translateY(10px);opacity:.4} }
+
+/* ── SECTIONS ── */
+section { position:relative; padding:120px 5%; overflow:hidden; }
+.sec-label { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.25em; color:var(--gold-dim); text-transform:uppercase; margin-bottom:20px; display:flex; align-items:center; gap:12px; }
+.sec-label::before { content:''; flex:0 0 30px; height:1px; background:var(--gold-dim); }
+.sec-title { font-family:'Cormorant Garamond',serif; font-size:clamp(36px,5vw,72px); font-weight:700; line-height:1.05; color:var(--cream); margin-bottom:20px; }
+.sec-title em { color:var(--gold); font-style:italic; }
+
+/* ── PAIN ── */
+#pain { background:var(--bg2); border-top:.5px solid var(--border); border-bottom:.5px solid var(--border); }
+#pain::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 50% 60%,var(--burg-glow) 0%,transparent 55%); pointer-events:none; }
+.pain-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1px; margin-top:72px; border:1px solid var(--border); }
+.pain-card {
+  padding:44px 36px; background:var(--bg2); border-left:.5px solid var(--border);
+  position:relative; overflow:hidden;
+  opacity:0; transform:translateY(40px); transition:opacity .6s,transform .6s,box-shadow .3s;
+}
+.pain-card.visible { opacity:1; transform:translateY(0); }
+.pain-card::before { content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,var(--burgundy),transparent); opacity:0; transition:opacity .4s; }
+.pain-card:hover::before { opacity:1; }
+.pain-card:hover { box-shadow:inset 0 0 60px rgba(93,30,33,.08); }
+.pain-icon { color:var(--gold-dim); font-size:24px; margin-bottom:20px; opacity:.5; transition:opacity .3s; }
+.pain-card:hover .pain-icon { opacity:1; color:var(--gold); }
+.pain-num { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.2em; color:var(--burgundy); margin-bottom:16px; }
+.pain-q { font-family:'Cormorant Garamond',serif; font-size:21px; font-weight:600; color:var(--cream2); line-height:1.4; margin-bottom:12px; }
+.pain-desc { font-size:13px; color:var(--muted); line-height:1.8; }
+
+/* ── PROCESS ── */
+#process { background:var(--bg); }
+.process-wrap { max-width:860px; margin:80px auto 0; position:relative; }
+.process-vline { position:absolute; top:0; bottom:0; left:50%; width:1px; background:linear-gradient(to bottom,transparent,var(--border2),var(--gold-dim),var(--border2),transparent); transform:translateX(-50%); }
+.process-step { display:flex; align-items:flex-start; gap:48px; margin-bottom:72px; opacity:0; transform:translateX(-40px); transition:opacity .6s,transform .6s; }
+.process-step.right { flex-direction:row-reverse; transform:translateX(40px); }
+.process-step.visible { opacity:1; transform:translateX(0); }
+.process-num { font-family:'Cormorant Garamond',serif; font-size:80px; font-weight:700; color:rgba(201,168,76,.07); line-height:1; flex-shrink:0; width:80px; text-align:center; }
+.process-card { flex:1; padding:28px 32px; background:var(--surface); border:.5px solid var(--border2); position:relative; }
+.process-card::after { content:''; position:absolute; top:0; bottom:0; width:2px; background:var(--gold); }
+.process-step:not(.right) .process-card::after { right:-1px; left:auto; }
+.process-step.right .process-card::after { left:-1px; right:auto; }
+.process-dot { position:absolute; top:28px; width:12px; height:12px; border:2px solid var(--gold); border-radius:50%; background:var(--bg); left:50%; transform:translateX(-50%); }
+.process-lbl { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.2em; color:var(--gold); text-transform:uppercase; margin-bottom:10px; }
+.process-t { font-family:'Cormorant Garamond',serif; font-size:24px; font-weight:700; color:var(--cream); margin-bottom:8px; }
+.process-d { font-size:13px; color:var(--muted); line-height:1.8; }
+
+/* ── PORTFOLIO ── */
+#portfolio { background:var(--bg2); }
+.portfolio-header { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:60px; }
+.port-view-all { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.15em; color:var(--gold); text-decoration:none; text-transform:uppercase; cursor:none; display:flex; align-items:center; gap:8px; transition:gap .2s; }
+.port-view-all:hover { gap:14px; }
+.port-grid { display:grid; grid-template-columns:repeat(12,1fr); gap:2px; }
+.project-card { position:relative; overflow:hidden; background:var(--surface); cursor:none; }
+.project-card:nth-child(1) { grid-column:span 7; min-height:420px; }
+.project-card:nth-child(2) { grid-column:span 5; min-height:420px; }
+.project-card:nth-child(3) { grid-column:span 5; min-height:360px; }
+.project-card:nth-child(4) { grid-column:span 4; min-height:360px; }
+.project-card:nth-child(5) { grid-column:span 3; min-height:360px; }
+.project-card:nth-child(6) { grid-column:span 12; min-height:280px; }
+.project-bg { position:absolute; inset:0; transition:transform .6s cubic-bezier(.25,.46,.45,.94); }
+.project-card:hover .project-bg { transform:scale(1.05); }
+.pb1{background:linear-gradient(135deg,#1a150a,#0d0c08,#2a1f0a)}
+.pb2{background:linear-gradient(135deg,#0a100d,#080d08)}
+.pb3{background:linear-gradient(135deg,#120a0a,#1a0d0d)}
+.pb4{background:linear-gradient(135deg,#0a0a12,#0d0d1a)}
+.pb5{background:linear-gradient(135deg,#10100a,#181508)}
+.pb6{background:linear-gradient(135deg,#0d0a14,#100a18)}
+.project-art { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; opacity:.25; pointer-events:none; }
+.project-overlay {
+  position:absolute; inset:0;
+  background:linear-gradient(to top,rgba(8,8,6,.94) 0%,rgba(8,8,6,.15) 55%,transparent 100%);
+  display:flex; flex-direction:column; justify-content:flex-end; padding:32px;
+  transform:translateY(28px); opacity:.65; transition:transform .4s,opacity .4s;
+}
+.project-card:hover .project-overlay { transform:translateY(0); opacity:1; }
+.project-type { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.2em; color:var(--gold); text-transform:uppercase; margin-bottom:8px; }
+.project-name { font-family:'Cormorant Garamond',serif; font-size:26px; font-weight:700; color:var(--cream); }
+.project-growth { font-family:'JetBrains Mono',monospace; font-size:9px; color:var(--gold-dim); margin-top:6px; }
+
+/* ── PROOF ── */
+#proof { background:var(--bg); }
+.metrics-row { display:flex; gap:1px; margin:72px 0 60px; border:.5px solid var(--border2); }
+.metric-block { flex:1; padding:48px 32px; background:var(--surface); text-align:center; border-left:.5px solid var(--border2); }
+.metric-num { font-family:'Cormorant Garamond',serif; font-size:64px; font-weight:700; color:var(--gold); line-height:1; }
+.metric-label { font-size:12px; color:var(--muted); margin-top:10px; letter-spacing:.08em; }
+
+.marquee-wrap { overflow:hidden; border-top:.5px solid var(--border2); border-bottom:.5px solid var(--border2); padding:22px 0; }
+.marquee-track { display:flex; gap:60px; width:max-content; animation:marquee 22s linear infinite; white-space:nowrap; }
+@keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+.marquee-item { display:flex; align-items:center; gap:20px; font-family:'Cormorant Garamond',serif; font-size:17px; font-style:italic; color:var(--muted); flex-shrink:0; }
+.marquee-item::before { content:'◆'; font-size:7px; color:var(--gold); font-style:normal; }
+
+/* Client logos */
+.clients-row { display:flex; flex-wrap:wrap; gap:40px; align-items:center; margin-top:56px; opacity:.35; }
+.client-name { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:300; color:var(--cream); letter-spacing:.1em; }
+
+/* ── DIFF ── */
+#diff { background:var(--bg2); text-align:center; padding:160px 5%; overflow:hidden; }
+.diff-watermark { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-family:'Cormorant Garamond',serif; font-size:clamp(80px,16vw,240px); font-weight:700; color:rgba(201,168,76,.03); white-space:nowrap; pointer-events:none; transition:transform .1s; }
+.diff-title { font-family:'Cormorant Garamond',serif; font-size:clamp(38px,6vw,90px); font-weight:700; color:var(--cream); line-height:1.05; position:relative; z-index:2; }
+.diff-title em { color:var(--gold); font-style:italic; display:block; }
+.diff-sub { font-size:18px; color:var(--muted); max-width:580px; margin:28px auto 0; line-height:1.9; position:relative; z-index:2; }
+
+/* ── CTA ── */
+#cta { background:var(--bg); padding:160px 5%; text-align:center; border-top:.5px solid var(--border2); }
+#cta::before { content:''; position:absolute; top:-1px; left:50%; transform:translateX(-50%); width:240px; height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); }
+.cta-h { font-family:'Cormorant Garamond',serif; font-size:clamp(44px,7vw,100px); font-weight:700; color:var(--cream); line-height:1; margin-bottom:20px; }
+.cta-h em { color:var(--gold); font-style:italic; }
+.cta-sub { font-size:18px; color:var(--muted); margin-bottom:64px; }
+.cta-btn {
+  display:inline-flex; align-items:center; gap:16px;
+  padding:22px 60px; border:1px solid var(--gold); color:var(--gold);
+  font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.2em;
+  text-transform:uppercase; text-decoration:none; cursor:none;
+  position:relative; overflow:hidden; transition:color .35s;
+}
+.cta-btn::before { content:''; position:absolute; inset:0; background:var(--gold); transform:translateX(-101%); transition:transform .4s cubic-bezier(.77,0,.18,1); }
+.cta-btn:hover { color:var(--bg); }
+.cta-btn:hover::before { transform:translateX(0); }
+.cta-btn span { position:relative; z-index:1; }
+.cta-slot { margin-top:48px; font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.15em; color:var(--muted2); text-transform:uppercase; }
+
+/* ── FOOTER ── */
+footer { border-top:.5px solid var(--border2); padding:36px 5%; display:flex; align-items:center; justify-content:space-between; }
+.footer-ticker-wrap { overflow:hidden; flex:1; margin:0 40px; }
+.footer-ticker { display:flex; gap:40px; width:max-content; animation:marquee 14s linear infinite; font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.15em; color:var(--muted2); text-transform:uppercase; }
+.footer-ticker span { flex-shrink:0; }
+.footer-ticker span::after { content:' ·'; margin-left:40px; }
+.footer-social { display:flex; gap:20px; }
+.footer-social a { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.15em; color:var(--muted2); text-decoration:none; text-transform:uppercase; cursor:none; transition:color .2s; }
+.footer-social a:hover { color:var(--gold); }
+
+/* ── MODAL ── */
+.modal-backdrop {
+  position:fixed; inset:0; background:rgba(4,4,3,.95); z-index:1000;
+  display:flex; align-items:center; justify-content:center; padding:24px;
+  opacity:0; pointer-events:none; transition:opacity .3s;
+}
+.modal-backdrop.open { opacity:1; pointer-events:all; }
+.modal-box {
+  background:var(--bg2); border:.5px solid var(--border2); max-width:900px; width:100%;
+  max-height:85vh; overflow-y:auto; position:relative;
+  transform:scale(.94) translateY(20px); transition:transform .4s cubic-bezier(.34,1.56,.64,1);
+}
+.modal-backdrop.open .modal-box { transform:scale(1) translateY(0); }
+.modal-close { position:absolute; top:20px; right:20px; width:32px; height:32px; border:.5px solid var(--border2); background:transparent; color:var(--muted); font-size:16px; cursor:none; display:flex; align-items:center; justify-content:center; transition:color .2s,border-color .2s; }
+.modal-close:hover { color:var(--gold); border-color:var(--gold-dim); }
+.modal-img { width:100%; height:260px; object-fit:cover; }
+.modal-img-placeholder { width:100%; height:260px; display:flex; align-items:center; justify-content:center; }
+.modal-body { padding:40px; }
+.modal-tag { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.2em; color:var(--gold); text-transform:uppercase; margin-bottom:8px; }
+.modal-title { font-family:'Cormorant Garamond',serif; font-size:36px; font-weight:700; color:var(--cream); margin-bottom:32px; }
+.modal-section { margin-bottom:24px; }
+.modal-section-label { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.15em; text-transform:uppercase; padding:4px 10px; margin-bottom:12px; display:inline-block; }
+.modal-section-label.problem { background:rgba(93,30,33,.2); color:var(--burgundy); border:.5px solid var(--burgundy); }
+.modal-section-label.solution { background:rgba(201,168,76,.1); color:var(--gold); border:.5px solid var(--gold-dim); }
+.modal-section-label.results { background:transparent; color:var(--gold2); border:.5px solid var(--gold-dim); }
+.modal-section p { font-size:14px; color:var(--muted); line-height:1.8; }
+.modal-section.results p { font-size:20px; color:var(--gold); font-family:'Cormorant Garamond',serif; font-weight:600; }
+
+/* ── CONTACT MODAL ── */
+.contact-box { background:var(--bg2); border:.5px solid var(--border2); max-width:520px; width:100%; padding:48px; position:relative; }
+.contact-box h3 { font-family:'Cormorant Garamond',serif; font-size:32px; font-weight:700; color:var(--cream); margin-bottom:8px; }
+.contact-box p { font-size:13px; color:var(--muted); margin-bottom:32px; }
+.form-field { margin-bottom:16px; }
+.form-field input, .form-field textarea {
+  width:100%; background:var(--surface); border:.5px solid var(--border2);
+  padding:14px 16px; color:var(--cream); font-family:'Amiri Quran',serif; font-size:14px;
+  outline:none; transition:border-color .2s;
+}
+.form-field input::placeholder, .form-field textarea::placeholder { color:var(--muted2); }
+.form-field input:focus, .form-field textarea:focus { border-color:var(--gold-dim); }
+.form-field textarea { resize:none; height:120px; }
+.form-submit {
+  width:100%; padding:16px; background:var(--gold); color:var(--bg);
+  font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.2em; text-transform:uppercase;
+  border:none; cursor:none; transition:background .2s;
+}
+.form-submit:hover { background:var(--gold2); }
+.form-note { font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.1em; color:var(--muted2); text-align:center; margin-top:16px; }
+.form-success { text-align:center; padding:24px 0; }
+.form-success .check { color:var(--gold); font-size:40px; margin-bottom:16px; }
+.form-success p { color:var(--muted); font-size:14px; }
+
+/* MOBILE NAV PANEL */
+.mobile-nav {
+  position:fixed; inset:0; z-index:90; background:var(--bg2);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:32px;
+  opacity:0; pointer-events:none; transition:opacity .3s;
+}
+.mobile-nav.open { opacity:1; pointer-events:all; }
+.mobile-nav a { font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.2em; color:var(--muted); text-decoration:none; text-transform:uppercase; }
+
+/* RESPONSIVE */
+@media(max-width:768px) {
+  nav { padding:16px 5%; }
+  .nav-links,.nav-right .lang-wrapper,.nav-right .theme-btn { display:none; }
+  .hamburger { display:flex; }
+  #hero { padding:100px 24px 80px; }
+  section { padding:80px 5%; }
+  .process-vline { display:none; }
+  .process-step,.process-step.right { flex-direction:column; transform:none!important; }
+  .process-num { display:none; }
+  .port-grid { grid-template-columns:1fr; }
+  .project-card:nth-child(n) { grid-column:span 1; min-height:260px; }
+  .metrics-row { flex-direction:column; }
+  .metric-block { border-left:none; border-top:.5px solid var(--border2); }
+  footer { flex-direction:column; gap:20px; }
+  .footer-ticker-wrap { margin:0; }
+  .pain-grid { grid-template-columns:1fr; }
+  .portfolio-header { flex-direction:column; gap:16px; }
+  #cursor,#cursor-label { display:none!important; }
+}
+</style>
+</head>
+<body class="theme-dark" lang="ar">
+
+<!-- CURSOR -->
+<div id="nx-cursor"></div>
+<div id="nx-cursor-label">VIEW</div>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobile-nav">
+  <a href="#pain" onclick="closeMobileNav()">المشكلة</a>
+  <a href="#process" onclick="closeMobileNav()">النظام</a>
+  <a href="#portfolio" onclick="closeMobileNav()">الأعمال</a>
+  <a href="#proof" onclick="closeMobileNav()">النتائج</a>
+  <a href="#cta" onclick="closeMobileNav()" style="color:var(--gold)">ابدأ مشروعك</a>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    <div class="logo-gem"><div class="logo-gem-inner"></div></div>
+    <span class="logo-name">NEXORA</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#pain" data-key="nav_pain">المشكلة</a></li>
+    <li><a href="#process" data-key="nav_process">النظام</a></li>
+    <li><a href="#portfolio" data-key="nav_portfolio">الأعمال</a></li>
+    <li><a href="#proof" data-key="nav_proof">النتائج</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-wrapper">
+      <button class="lang-btn" onclick="toggleLang()">
+        <span id="lang-label">AR</span>
+        <i class="fas fa-chevron-down" style="font-size:7px"></i>
+      </button>
+      <div class="lang-dropdown" id="lang-dropdown">
+        <div class="lang-opt active" onclick="setLang('ar')">العربية <span>AR</span></div>
+        <div class="lang-opt" onclick="setLang('en')">English <span>EN</span></div>
+        <div class="lang-opt" onclick="setLang('de')">Deutsch <span>DE</span></div>
+        <div class="lang-opt" onclick="setLang('fr')">Français <span>FR</span></div>
+        <div class="lang-opt" onclick="setLang('ru')">Русский <span>RU</span></div>
+        <div class="lang-opt" onclick="setLang('es')">Español <span>ES</span></div>
+        <div class="lang-opt" onclick="setLang('it')">Italiano <span>IT</span></div>
+        <div class="lang-opt" onclick="setLang('zh')">中文 <span>ZH</span></div>
+        <div class="lang-opt" onclick="setLang('ja')">日本語 <span>JA</span></div>
+        <div class="lang-opt" onclick="setLang('pt')">Português <span>PT</span></div>
+      </div>
+    </div>
+    <button class="theme-btn" onclick="cycleTheme()" title="Theme">
+      <i class="fas fa-moon" id="theme-icon"></i>
+    </button>
+    <a href="#cta" class="nav-cta" data-key="nav_cta">ابدأ مشروعك</a>
+    <button class="hamburger" id="hamburger" onclick="toggleMobileNav()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="particles-canvas"></canvas>
+  <div class="hero-grid"></div>
+  <div class="hero-orb"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="hero-badge-dot"></span><span data-key="hero_badge">Cairo, Egypt · Digital Agency · Est. 2025</span></div>
+    <h1 class="hero-h1">
+      <span data-key="hero_h1_a">نبني براندات</span>
+      <span data-key="hero_h1_b">تبيع.</span>
+    </h1>
+    <div class="hero-tw">
+      <span id="tw-text"></span><span class="tw-cursor">&nbsp;</span>
+    </div>
+    <p class="hero-sub" data-key="hero_sub">من الفكرة لتجربة رقمية متكاملة وقادرة على النمو.</p>
+    <a href="#cta" class="hero-cta">
+      <span data-key="hero_cta">ابدأ مشروعك</span>
+      <span>↗</span>
+    </a>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span data-key="hero_scroll">اسكرول</span>
+  </div>
+</section>
+
+<!-- PAIN -->
+<section id="pain">
+  <div class="sec-label" data-key="pain_label">المشكلة</div>
+  <h2 class="sec-title" data-key="pain_title">بتعرف <em>الإحساس</em> ده؟</h2>
+  <div class="pain-grid">
+    <div class="pain-card">
+      <div class="pain-icon"><i class="fas fa-eye"></i></div>
+      <div class="pain-num">01 / PROBLEM</div>
+      <h3 class="pain-q" data-key="pain_1">براندك شكله كويس بس مش بيبيع؟</h3>
+      <p class="pain-desc" data-key="pain_1_desc">الـ design لوحده مش كفاية. محتاج نظام متكامل بيتكلم مع عميلك ويقنعه.</p>
+    </div>
+    <div class="pain-card">
+      <div class="pain-icon"><i class="fas fa-chart-line"></i></div>
+      <div class="pain-num">02 / PROBLEM</div>
+      <h3 class="pain-q" data-key="pain_2">عندك زيارات بس مفيش مبيعات؟</h3>
+      <p class="pain-desc" data-key="pain_2_desc">الـ traffic مش المشكلة. المشكلة في رحلة العميل من أول ما يدخل لحد ما يشتري.</p>
+    </div>
+    <div class="pain-card">
+      <div class="pain-icon"><i class="fas fa-gem"></i></div>
+      <div class="pain-num">03 / PROBLEM</div>
+      <h3 class="pain-q" data-key="pain_3">سايتك مش بيعكس قيمتك الحقيقية؟</h3>
+      <p class="pain-desc" data-key="pain_3_desc">أول انطباع بيتكون في أقل من ثانية. لو السايت مش محترم، العميل بيمشي.</p>
+    </div>
+    <div class="pain-card">
+      <div class="pain-icon"><i class="fas fa-bullseye"></i></div>
+      <div class="pain-num">04 / PROBLEM</div>
+      <h3 class="pain-q" data-key="pain_4">مش عارف تميز نفسك في السوق؟</h3>
+      <p class="pain-desc" data-key="pain_4_desc">في ألف شركة بتعمل نفس حاجتك. اللي بيفرق هو الـ positioning والـ brand story.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="sec-label" data-key="process_label">النظام</div>
+  <h2 class="sec-title" data-key="process_title">إزاي <em>بنبني</em><br>براندات فعلاً بتنجح</h2>
+  <div class="process-wrap">
+    <div class="process-vline"></div>
+    <div class="process-dot" style="top:24px"></div>
+
+    <div class="process-step">
+      <div class="process-num">01</div>
+      <div class="process-card">
+        <div class="process-lbl">Market Research</div>
+        <h3 class="process-t" data-key="step_1_t">نفهم السوق قبل أي حاجة</h3>
+        <p class="process-d" data-key="step_1_d">بندرس منافسيك، جمهورك المستهدف، وفرص النمو. بنبني على بيانات مش على تخمين.</p>
+      </div>
+    </div>
+
+    <div class="process-step right">
+      <div class="process-num">02</div>
+      <div class="process-card">
+        <div class="process-lbl">Brand Strategy</div>
+        <h3 class="process-t" data-key="step_2_t">نحدد هويتك وصوتك</h3>
+        <p class="process-d" data-key="step_2_d">اسم، قصة، رسالة، وموقع في السوق. براند بيتكلم مع العميل الصح بالطريقة الصح.</p>
+      </div>
+    </div>
+
+    <div class="process-step">
+      <div class="process-num">03</div>
+      <div class="process-card">
+        <div class="process-lbl">UI/UX Design</div>
+        <h3 class="process-t" data-key="step_3_t">نصمم تجربة مش مجرد شكل</h3>
+        <p class="process-d" data-key="step_3_d">كل زرار، كل صفحة، كل كلمة ليها هدف. التصميم بيقود العميل نحو قرار الشراء.</p>
+      </div>
+    </div>
+
+    <div class="process-step right">
+      <div class="process-num">04</div>
+      <div class="process-card">
+        <div class="process-lbl">Development & Launch</div>
+        <h3 class="process-t" data-key="step_4_t">نطلق ونقيس ونحسّن</h3>
+        <p class="process-d" data-key="step_4_d">كود نظيف، سرعة تحميل عالية، وتتبع دقيق للنتائج. بعد الإطلاق بنكمل معاك.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="portfolio-header">
+    <div>
+      <div class="sec-label" data-key="port_label">الأعمال</div>
+      <h2 class="sec-title" data-key="port_title">مشاريع <em>غيّرت</em><br>قواعد اللعبة</h2>
+    </div>
+    <a href="#" class="port-view-all" data-key="port_all">كل الأعمال <i class="fas fa-arrow-left"></i></a>
+  </div>
+  <div class="port-grid">
+    <div class="project-card" onclick="openModal(0)">
+      <div class="project-bg pb1">
+        <div class="project-art">
+          <svg width="50%" height="50%" viewBox="0 0 200 200" fill="none">
+            <rect x="20" y="20" width="160" height="160" stroke="#C9A84C" stroke-width="0.5" opacity="0.4"/>
+            <rect x="45" y="45" width="110" height="110" stroke="#C9A84C" stroke-width="0.5" opacity="0.5"/>
+            <circle cx="100" cy="100" r="38" stroke="#C9A84C" stroke-width="0.5" opacity="0.6"/>
+            <line x1="100" y1="20" x2="100" y2="180" stroke="#C9A84C" stroke-width="0.3" opacity="0.3"/>
+            <line x1="20" y1="100" x2="180" y2="100" stroke="#C9A84C" stroke-width="0.3" opacity="0.3"/>
+            <circle cx="100" cy="100" r="5" fill="#C9A84C" opacity="0.4"/>
+          </svg>
+        </div>
+      </div>
+      <div class="project-overlay">
+        <div class="project-type">Brand Identity · E-Commerce</div>
+        <div class="project-name">LUXE — Luxury Watch Platform</div>
+        <div class="project-growth">↑ +340% Conversion</div>
+      </div>
+    </div>
+
+    <div class="project-card" onclick="openModal(1)">
+      <div class="project-bg pb2">
+        <div class="project-art">
+          <svg width="50%" height="50%" viewBox="0 0 200 200" fill="none">
+            <polygon points="100,20 180,180 20,180" stroke="#C9A84C" stroke-width="0.5" opacity="0.5"/>
+            <polygon points="100,48 162,172 38,172" stroke="#C9A84C" stroke-width="0.5" opacity="0.3"/>
+            <circle cx="100" cy="140" r="18" stroke="#C9A84C" stroke-width="0.5" opacity="0.5"/>
+          </svg>
+        </div>
+      </div>
+      <div class="project-overlay">
+        <div class="project-type">SaaS · UI Design</div>
+        <div class="project-name">APEX — AI Financial Intelligence</div>
+        <div class="project-growth">↑ +210% Engagement</div>
+      </div>
+    </div>
+
+    <div class="project-card" onclick="openModal(2)">
+      <div class="project-bg pb3">
+        <div class="project-art">
+          <svg width="50%" height="50%" viewBox="0 0 200 200" fill="none">
+            <rect x="30" y="78" width="140" height="2" fill="#C9A84C" opacity="0.4"/>
+            <rect x="30" y="100" width="100" height="1" fill="#C9A84C" opacity="0.25"/>
+            <rect x="30" y="118" width="120" height="1" fill="#C9A84C" opacity="0.2"/>
+            <circle cx="100" cy="58" r="28" stroke="#C9A84C" stroke-width="0.5" opacity="0.5"/>
+            <circle cx="100" cy="58" r="14" stroke="#C9A84C" stroke-width="0.5" opacity="0.3"/>
+          </svg>
+        </div>
+      </div>
+      <div class="project-overlay">
+        <div class="project-type">Hospitality · Identity</div>
+        <div class="project-name">VESPER — Private Members Club</div>
+        <div class="project-growth">↑ +180% Waitlist</div>
+      </div>
+    </div>
+
+    <div class="project-card" onclick="openModal(3)">
+      <div class="project-bg pb4">
+        <div class="project-art">
+          <svg width="50%" height="50%" viewBox="0 0 200 200" fill="none">
+            <circle cx="100" cy="100" r="60" stroke="#C9A84C" stroke-width="0.5" opacity="0.3"/>
+            <circle cx="100" cy="100" r="40" stroke="#C9A84C" stroke-width="0.5" opacity="0.45"/>
+            <circle cx="100" cy="100" r="20" stroke="#C9A84C" stroke-width="0.5" opacity="0.6"/>
+            <circle cx="100" cy="100" r="5" fill="#C9A84C" opacity="0.5"/>
+          </svg>
+        </div>
+      </div>
+      <div class="project-overlay">
+        <div class="project-type">Fintech · Branding</div>
+        <div class="project-name">Vault Capital</div>
+        <div class="project-growth">↑ $9.2M ARR in 11 months</div>
+      </div>
+    </div>
+
+    <div class="project-card" onclick="openModal(4)">
+      <div class="project-bg pb5">
+        <div class="project-art">
+          <svg width="50%" height="50%" viewBox="0 0 200 200" fill="none">
+            <rect x="60" y="60" width="80" height="80" stroke="#C9A84C" stroke-width="0.5" opacity="0.5" transform="rotate(45 100 100)"/>
+            <rect x="70" y="70" width="60" height="60" stroke="#C9A84C" stroke-width="0.5" opacity="0.3" transform="rotate(45 100 100)"/>
+            <rect x="82" y="82" width="36" height="36" stroke="#C9A84C" stroke-width="0.5" opacity="0.4" transform="rotate(45 100 100)"/>
+          </svg>
+        </div>
+      </div>
+      <div class="project-overlay">
+        <div class="project-type">Restaurant · Identity</div>
+        <div class="project-name">Noir Bistro</div>
+        <div class="project-growth">↑ Sold out 3 months post-launch</div>
+      </div>
+    </div>
+
+    <div class="project-card" onclick="openModal(5)">
+      <div class="project-bg pb6">
+        <div class="project-art" style="opacity:.15">
+          <svg width="80%" height="60%" viewBox="0 0 400 120" fill="none">
+            <text x="200" y="90" font-family="serif" font-size="80" fill="rgba(201,168,76,0.4)" text-anchor="middle" font-style="italic">NEXORA</text>
+          </svg>
+        </div>
+      </div>
+      <div class="project-overlay">
+        <div class="project-type">Full Campaign · Multi-channel</div>
+        <div class="project-name">Crescendo Music Platform</div>
+        <div class="project-growth">↑ 4× User Growth in 6 months</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROOF -->
+<section id="proof">
+  <div class="sec-label" data-key="proof_label">النتائج</div>
+  <h2 class="sec-title" data-key="proof_title">أرقام <em>حقيقية</em></h2>
+  <div class="metrics-row">
+    <div class="metric-block"><div class="metric-num" data-target="40" data-suffix="%+">0</div><div class="metric-label" data-key="metric_1">متوسط زيادة المبيعات</div></div>
+    <div class="metric-block"><div class="metric-num" data-target="120" data-suffix="+">0</div><div class="metric-label" data-key="metric_2">مشروع مكتمل</div></div>
+    <div class="metric-block"><div class="metric-num" data-target="98" data-suffix="%">0</div><div class="metric-label" data-key="metric_3">نسبة رضا العملاء</div></div>
+    <div class="metric-block"><div class="metric-num" data-target="3" data-suffix="x">0</div><div class="metric-label" data-key="metric_4">متوسط نمو الـ ROI</div></div>
+  </div>
+
+  <div class="marquee-wrap">
+    <div class="marquee-track" id="marquee-track">
+      <div class="marquee-item">"NEXORA didn't just redesign our site — they engineered a revenue machine. +340% in 90 days." — CEO, LUXE</div>
+      <div class="marquee-item">"The most cinematic experience we've launched. Conversion rate tripled." — Founder, APEX AI</div>
+      <div class="marquee-item">"They understood our old-money soul and turned it into modern tech gold." — Managing Partner, Vesper</div>
+      <div class="marquee-item">"أفضل استثمار عملته لبراندي — النتائج تكلمت عن نفسها."</div>
+      <div class="marquee-item">"NEXORA didn't just redesign our site — they engineered a revenue machine. +340% in 90 days." — CEO, LUXE</div>
+      <div class="marquee-item">"The most cinematic experience we've launched. Conversion rate tripled." — Founder, APEX AI</div>
+      <div class="marquee-item">"They understood our old-money soul and turned it into modern tech gold." — Managing Partner, Vesper</div>
+      <div class="marquee-item">"أفضل استثمار عملته لبراندي — النتائج تكلمت عن نفسها."</div>
+    </div>
+  </div>
+
+  <div class="clients-row">
+    <div class="client-name">ROLEX</div>
+    <div class="client-name">PORSCHE</div>
+    <div class="client-name">RITZ</div>
+    <div class="client-name">HERMÈS</div>
+    <div class="client-name">AUDI</div>
+    <div class="client-name">VISA</div>
+  </div>
+</section>
+
+<!-- DIFF -->
+<section id="diff">
+  <div class="diff-watermark" id="diff-watermark">NEXORA</div>
+  <div class="sec-label" style="justify-content:center" data-key="diff_label">ليه Nexora</div>
+  <h2 class="diff-title" data-key="diff_title">
+    مش بنصمم بس.<br>
+    <em>بنبني أنظمة بتبيع.</em>
+  </h2>
+  <p class="diff-sub" data-key="diff_sub">الفرق بيننا وبين غيرنا إننا بنفكر بعقل البيزنس. كل قرار تصميمي مبني على هدف تجاري واضح وقابل للقياس.</p>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="sec-label" style="justify-content:center" data-key="cta_label">الخطوة الجاية</div>
+  <h2 class="cta-h" data-key="cta_title">براندك يستاهل<br><em>أحسن من ده.</em></h2>
+  <p class="cta-sub" data-key="cta_sub">خليني نبني حاجة تفخر بيها.</p>
+  <a href="#" onclick="openContact();return false;" class="cta-btn">
+    <span data-key="cta_btn">ابدأ مشروعك</span>
+    <span>↗</span>
+  </a>
+  <div class="cta-slot" data-key="cta_slot">Next available slot: April 2026</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="nav-logo">
+    <div class="logo-gem" style="width:20px;height:20px"><div class="logo-gem-inner" style="width:7px;height:7px"></div></div>
+    <span class="logo-name" style="font-size:11px">NEXORA</span>
+  </a>
+  <div class="footer-ticker-wrap">
+    <div class="footer-ticker">
+      <span data-key="footer_available">متاح لمشاريع جديدة</span>
+      <span>Cairo, Egypt</span>
+      <span>2025</span>
+      <span>nexora.agency</span>
+      <span data-key="footer_available">متاح لمشاريع جديدة</span>
+      <span>Cairo, Egypt</span>
+      <span>2025</span>
+      <span>nexora.agency</span>
+    </div>
+  </div>
+  <div class="footer-social">
+    <a href="#">Instagram</a>
+    <a href="#">Behance</a>
+    <a href="#">LinkedIn</a>
+  </div>
+</footer>
+
+<!-- PORTFOLIO MODAL -->
+<div class="modal-backdrop" id="portfolio-modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-img-placeholder" id="modal-img-placeholder">
+      <svg width="60%" height="100%" viewBox="0 0 400 260" fill="none" id="modal-svg-art"></svg>
+    </div>
+    <div class="modal-body">
+      <div class="modal-tag" id="modal-type"></div>
+      <h2 class="modal-title" id="modal-title"></h2>
+      <div class="modal-section">
+        <span class="modal-section-label problem">Problem</span>
+        <p id="modal-problem"></p>
+      </div>
+      <div class="modal-section">
+        <span class="modal-section-label solution">Solution</span>
+        <p id="modal-solution"></p>
+      </div>
+      <div class="modal-section results">
+        <span class="modal-section-label results">Results</span>
+        <p id="modal-results"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT MODAL -->
+<div class="modal-backdrop" id="contact-modal" onclick="if(event.target===this)closeContact()">
+  <div class="contact-box">
+    <button class="modal-close" onclick="closeContact()">✕</button>
+    <h3 data-key="contact_title">دعنا نبني شيئًا أسطوريًا</h3>
+    <p data-key="contact_sub">رد خلال 4 ساعات. بدون إزعاج أبدًا.</p>
+    <div id="contact-form">
+      <div class="form-field"><input type="text" data-key-placeholder="contact_name" placeholder="اسمك"></div>
+      <div class="form-field"><input type="email" data-key-placeholder="contact_email" placeholder="بريدك الإلكتروني"></div>
+      <div class="form-field"><textarea data-key-placeholder="contact_msg" placeholder="أخبرنا عن براندك..."></textarea></div>
+      <button class="form-submit" onclick="submitForm()" data-key="contact_send">إرسال الرسالة</button>
+      <p class="form-note" data-key="contact_note">سري. بدون رسائل مزعجة.</p>
+    </div>
+    <div class="form-success" id="contact-success" style="display:none">
+      <div class="check"><i class="fas fa-check-circle"></i></div>
+      <h3 style="font-family:'Cormorant Garamond',serif;color:var(--cream);margin-bottom:8px" data-key="contact_sent">تم الإرسال!</h3>
+      <p data-key="contact_reply">سنرد عليك خلال 4 ساعات.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+// NEXORA — FINAL UNIFIED JS
+// ══════════════════════════════════════════
+
+// ── TRANSLATIONS ──
+const T = {
+  ar:{
+    nav_pain:'المشكلة',nav_process:'النظام',nav_portfolio:'الأعمال',nav_proof:'النتائج',nav_cta:'ابدأ مشروعك',
+    hero_badge:'Cairo, Egypt · Digital Agency · Est. 2025',hero_h1_a:'نبني براندات',hero_h1_b:'تبيع.',
+    hero_tw:['تجارب لا تُنسى','أنظمة تبيع','قصص تُحكى','براندات تتميز'],
+    hero_sub:'من الفكرة لتجربة رقمية متكاملة وقادرة على النمو.',hero_cta:'ابدأ مشروعك',hero_scroll:'اسكرول',
+    pain_label:'المشكلة',pain_title:'بتعرف الإحساس ده؟',
+    pain_1:'براندك شكله كويس بس مش بيبيع؟',pain_1_desc:'الـ design لوحده مش كفاية.',
+    pain_2:'عندك زيارات بس مفيش مبيعات؟',pain_2_desc:'المشكلة في رحلة العميل كاملة.',
+    pain_3:'سايتك مش بيعكس قيمتك؟',pain_3_desc:'أول انطباع في أقل من ثانية.',
+    pain_4:'مش عارف تميز نفسك في السوق؟',pain_4_desc:'الـ positioning هو الفارق.',
+    process_label:'النظام',process_title:'إزاي بنبني براندات بتنجح',
+    step_1_t:'نفهم السوق قبل أي حاجة',step_1_d:'بندرس منافسيك وجمهورك على بيانات.',
+    step_2_t:'نحدد هويتك وصوتك',step_2_d:'اسم، قصة، رسالة، وموقع في السوق.',
+    step_3_t:'نصمم تجربة مش مجرد شكل',step_3_d:'كل زرار ليه هدف.',
+    step_4_t:'نطلق ونقيس ونحسّن',step_4_d:'كود نظيف وتتبع دقيق.',
+    port_label:'الأعمال',port_title:'مشاريع غيّرت قواعد اللعبة',port_all:'كل الأعمال',
+    proof_label:'النتائج',proof_title:'أرقام حقيقية',
+    metric_1:'متوسط زيادة المبيعات',metric_2:'مشروع مكتمل',metric_3:'نسبة رضا العملاء',metric_4:'متوسط نمو الـ ROI',
+    diff_label:'ليه Nexora',diff_title:'مش بنصمم بس.\nبنبني أنظمة بتبيع.',diff_sub:'كل قرار تصميمي مبني على هدف تجاري.',
+    cta_label:'الخطوة الجاية',cta_title:'براندك يستاهل\nأحسن من ده.',cta_sub:'خليني نبني حاجة تفخر بيها.',cta_btn:'ابدأ مشروعك',cta_slot:'Next available slot: April 2026',
+    footer_available:'متاح لمشاريع جديدة',
+    contact_title:'دعنا نبني شيئًا أسطوريًا',contact_sub:'رد خلال 4 ساعات.',contact_name:'اسمك',contact_email:'بريدك الإلكتروني',contact_msg:'أخبرنا عن براندك...',contact_send:'إرسال الرسالة',contact_note:'سري. بدون رسائل مزعجة.',contact_sent:'تم الإرسال!',contact_reply:'سنرد خلال 4 ساعات.'
+  },
+  en:{
+    nav_pain:'Problem',nav_process:'System',nav_portfolio:'Work',nav_proof:'Proof',nav_cta:'Start Project',
+    hero_badge:'Cairo, Egypt · Digital Agency · Est. 2025',hero_h1_a:'We build',hero_h1_b:'brands that sell.',
+    hero_tw:['Brands','Experiences','Systems'],hero_sub:'From idea to a scalable digital experience engineered to convert.',hero_cta:'Start Your Project',hero_scroll:'SCROLL',
+    pain_label:'THE PROBLEM',pain_title:'Sound familiar?',
+    pain_1:'Brand looks great but doesn\'t convert?',pain_1_desc:'Design alone isn\'t enough.',
+    pain_2:'Traffic but no sales?',pain_2_desc:'The problem is the customer journey.',
+    pain_3:'Your site doesn\'t reflect real value?',pain_3_desc:'First impression in under a second.',
+    pain_4:'Can\'t differentiate in the market?',pain_4_desc:'Positioning is the difference maker.',
+    process_label:'OUR SYSTEM',process_title:'How we build brands that succeed',
+    step_1_t:'Understand the market first',step_1_d:'We study your competitors, audience, and growth opportunities.',
+    step_2_t:'Define your identity & voice',step_2_d:'Name, story, message, and positioning.',
+    step_3_t:'Design an experience, not just visuals',step_3_d:'Every pixel has a purpose.',
+    step_4_t:'Launch, measure, optimize',step_4_d:'Clean code and precise tracking.',
+    port_label:'PORTFOLIO',port_title:'Work that changed the game',port_all:'View All',
+    proof_label:'RESULTS',proof_title:'Real numbers',
+    metric_1:'Avg. sales increase',metric_2:'Projects completed',metric_3:'Client satisfaction',metric_4:'Avg. ROI growth',
+    diff_label:'WHY NEXORA',diff_title:'We don\'t design visuals.\nWe build systems that sell.',diff_sub:'Every design decision is built on a clear, measurable business goal.',
+    cta_label:'NEXT STEP',cta_title:'Your brand deserves\nbetter.',cta_sub:'Let\'s build something to be proud of.',cta_btn:'Start Your Project',cta_slot:'Next available slot: April 2026',
+    footer_available:'Available for new projects',
+    contact_title:'Let\'s build something legendary',contact_sub:'Reply within 4 hours. Zero spam. Ever.',contact_name:'Your name',contact_email:'Business email',contact_msg:'Tell us about your brand...',contact_send:'Send message',contact_note:'Confidential. Zero spam.',contact_sent:'Sent!',contact_reply:'We\'ll reply within 4 hours.'
+  },
+  de:{
+    nav_pain:'Problem',nav_process:'System',nav_portfolio:'Projekte',nav_proof:'Beweise',nav_cta:'Projekt starten',
+    hero_badge:'Kairo, Ägypten · Digital Agentur · Seit 2025',hero_h1_a:'Wir bauen',hero_h1_b:'Marken die verkaufen.',
+    hero_tw:['Marken','Erlebnisse','Systeme'],hero_sub:'Von der Idee zur skalierbaren digitalen Experience.',hero_cta:'Projekt starten',hero_scroll:'SCROLLEN',
+    pain_label:'DAS PROBLEM',pain_title:'Kommt Ihnen das bekannt vor?',
+    pain_1:'Gute Optik, aber keine Conversion?',pain_1_desc:'Design allein reicht nicht.',
+    pain_2:'Traffic, aber keine Umsätze?',pain_2_desc:'Das Problem liegt in der Customer Journey.',
+    pain_3:'Website spiegelt Ihren Wert nicht wider?',pain_3_desc:'Erster Eindruck in unter einer Sekunde.',
+    pain_4:'Schwer, sich zu differenzieren?',pain_4_desc:'Positioning ist der entscheidende Unterschied.',
+    process_label:'UNSER SYSTEM',process_title:'Wie wir erfolgreiche Marken aufbauen',
+    step_1_t:'Markt zuerst verstehen',step_1_d:'Wir analysieren Wettbewerber und Zielgruppen.',
+    step_2_t:'Identität und Stimme definieren',step_2_d:'Name, Geschichte, Botschaft, Positionierung.',
+    step_3_t:'Experience, nicht nur Design',step_3_d:'Jedes Element hat einen Zweck.',
+    step_4_t:'Launch, messen, optimieren',step_4_d:'Sauberer Code, genaues Tracking.',
+    port_label:'PORTFOLIO',port_title:'Projekte, die veränderten',port_all:'Alle anzeigen',
+    proof_label:'ERGEBNISSE',proof_title:'Echte Zahlen',
+    metric_1:'Ø Umsatzsteigerung',metric_2:'Abgeschlossene Projekte',metric_3:'Kundenzufriedenheit',metric_4:'Ø ROI-Wachstum',
+    diff_label:'WARUM NEXORA',diff_title:'Wir gestalten nicht.\nWir bauen Systeme, die verkaufen.',diff_sub:'Jede Designentscheidung basiert auf einem klaren Geschäftsziel.',
+    cta_label:'NÄCHSTER SCHRITT',cta_title:'Ihre Marke verdient\nmehr.',cta_sub:'Lassen Sie uns etwas Stolzes bauen.',cta_btn:'Projekt starten',cta_slot:'Nächster Platz: April 2026',
+    footer_available:'Verfügbar für neue Projekte',
+    contact_title:'Lass uns etwas Legendäres bauen',contact_sub:'Antwort innerhalb von 4 Stunden.',contact_name:'Ihr Name',contact_email:'Geschäfts-E-Mail',contact_msg:'Erzählen Sie uns von Ihrer Marke...',contact_send:'Nachricht senden',contact_note:'Vertraulich. Kein Spam.',contact_sent:'Gesendet!',contact_reply:'Wir antworten innerhalb von 4 Stunden.'
+  },
+  fr:{
+    nav_pain:'Problème',nav_process:'Système',nav_portfolio:'Travaux',nav_proof:'Preuves',nav_cta:'Démarrer',
+    hero_badge:'Le Caire, Égypte · Agence Digitale · Fondée en 2025',hero_h1_a:'Nous créons',hero_h1_b:'des marques qui vendent.',
+    hero_tw:['des marques','des expériences','des systèmes'],hero_sub:'De l\'idée à l\'expérience digitale évolutive.',hero_cta:'Lancer le projet',hero_scroll:'DÉFILER',
+    pain_label:'LE PROBLÈME',pain_title:'Vous reconnaissez?',
+    pain_1:'Belle marque mais aucune conversion?',pain_1_desc:'Le design seul ne suffit pas.',
+    pain_2:'Du trafic mais pas de ventes?',pain_2_desc:'Le problème est dans le parcours client.',
+    pain_3:'Votre site ne reflète pas votre vraie valeur?',pain_3_desc:'Première impression en moins d\'une seconde.',
+    pain_4:'Du mal à se différencier?',pain_4_desc:'Le positionnement fait la différence.',
+    process_label:'NOTRE SYSTÈME',process_title:'Comment nous construisons des marques',
+    step_1_t:'Comprendre le marché',step_1_d:'Analyse des concurrents et audiences.',
+    step_2_t:'Définir l\'identité',step_2_d:'Nom, histoire, message, positionnement.',
+    step_3_t:'Concevoir une expérience',step_3_d:'Chaque élément a un objectif.',
+    step_4_t:'Lancer, mesurer, optimiser',step_4_d:'Code propre, suivi précis.',
+    port_label:'PORTFOLIO',port_title:'Projets qui ont changé la donne',port_all:'Voir tout',
+    proof_label:'RÉSULTATS',proof_title:'Chiffres réels',
+    metric_1:'Augmentation moy. des ventes',metric_2:'Projets réalisés',metric_3:'Satisfaction client',metric_4:'Croissance ROI moy.',
+    diff_label:'POURQUOI NEXORA',diff_title:'On ne conçoit pas.\nOn construit des systèmes qui vendent.',diff_sub:'Chaque décision de design est fondée sur un objectif commercial mesurable.',
+    cta_label:'PROCHAINE ÉTAPE',cta_title:'Votre marque mérite\nmieux.',cta_sub:'Construisons quelquoi dont vous êtes fier.',cta_btn:'Lancer le projet',cta_slot:'Prochain créneau: Avril 2026',
+    footer_available:'Disponible pour nouveaux projets',
+    contact_title:'Construisons quelque chose de légendaire',contact_sub:'Réponse sous 4 heures.',contact_name:'Votre nom',contact_email:'E-mail professionnel',contact_msg:'Parlez-nous de votre marque...',contact_send:'Envoyer le message',contact_note:'Confidentiel. Zéro spam.',contact_sent:'Envoyé!',contact_reply:'Nous répondrons sous 4 heures.'
+  },
+  es:{
+    nav_pain:'Problema',nav_process:'Sistema',nav_portfolio:'Trabajos',nav_proof:'Pruebas',nav_cta:'Iniciar',
+    hero_h1_a:'Construimos',hero_h1_b:'marcas que venden.',hero_tw:['marcas','experiencias','sistemas'],hero_sub:'De la idea a la experiencia digital escalable.',hero_cta:'Iniciar proyecto',hero_scroll:'SCROLL',
+    pain_label:'EL PROBLEMA',pain_title:'¿Te suena familiar?',pain_1:'¿Tu marca se ve bien pero no convierte?',pain_1_desc:'El diseño solo no es suficiente.',pain_2:'¿Tráfico pero sin ventas?',pain_2_desc:'El problema está en el recorrido del cliente.',pain_3:'¿Tu web no refleja tu valor real?',pain_3_desc:'Primera impresión en menos de un segundo.',pain_4:'¿Dificultad para diferenciarte?',pain_4_desc:'El posicionamiento es la clave.',
+    process_label:'NUESTRO SISTEMA',process_title:'Cómo construimos marcas exitosas',step_1_t:'Entender el mercado primero',step_1_d:'Analizamos competidores y audiencias.',step_2_t:'Definir identidad y voz',step_2_d:'Nombre, historia, mensaje, posicionamiento.',step_3_t:'Diseñar una experiencia',step_3_d:'Cada elemento tiene un propósito.',step_4_t:'Lanzar, medir, optimizar',step_4_d:'Código limpio, seguimiento preciso.',
+    port_label:'PORTFOLIO',port_title:'Proyectos que cambiaron las reglas',port_all:'Ver todo',
+    proof_label:'RESULTADOS',proof_title:'Números reales',metric_1:'Aumento prom. de ventas',metric_2:'Proyectos completados',metric_3:'Satisfacción del cliente',metric_4:'Crecimiento ROI prom.',
+    diff_label:'POR QUÉ NEXORA',diff_title:'No diseñamos.\nConstruimos sistemas que venden.',diff_sub:'Cada decisión de diseño se basa en un objetivo de negocio medible.',
+    cta_label:'PRÓXIMO PASO',cta_title:'Tu marca merece\nmejor.',cta_sub:'Construyamos algo de lo que enorgullecerte.',cta_btn:'Iniciar proyecto',cta_slot:'Próximo turno: Abril 2026',footer_available:'Disponible para nuevos proyectos',
+    contact_title:'Construyamos algo legendario',contact_sub:'Respuesta en 4 horas.',contact_name:'Tu nombre',contact_email:'Email profesional',contact_msg:'Cuéntanos sobre tu marca...',contact_send:'Enviar mensaje',contact_note:'Confidencial. Sin spam.',contact_sent:'¡Enviado!',contact_reply:'Responderemos en 4 horas.'
+  },
+  it:{
+    nav_pain:'Problema',nav_process:'Sistema',nav_portfolio:'Lavori',nav_proof:'Prove',nav_cta:'Inizia',
+    hero_h1_a:'Costruiamo',hero_h1_b:'brand che vendono.',hero_tw:['brand','esperienze','sistemi'],hero_sub:'Dall\'idea all\'esperienza digitale scalabile.',hero_cta:'Avvia progetto',hero_scroll:'SCORRI',
+    pain_label:'IL PROBLEMA',pain_title:'Ti suona familiare?',pain_1:'Il tuo brand è bello ma non converte?',pain_1_desc:'Il design da solo non basta.',pain_2:'Traffico ma nessuna vendita?',pain_2_desc:'Il problema è nel percorso del cliente.',pain_3:'Il sito non riflette il tuo valore reale?',pain_3_desc:'Prima impressione in meno di un secondo.',pain_4:'Difficoltà a differenziarti?',pain_4_desc:'Il posizionamento è la chiave.',
+    process_label:'IL NOSTRO SISTEMA',process_title:'Come costruiamo brand di successo',step_1_t:'Capire il mercato prima',step_1_d:'Analizziamo concorrenti e pubblici.',step_2_t:'Definire identità e voce',step_2_d:'Nome, storia, messaggio, posizionamento.',step_3_t:'Progettare un\'esperienza',step_3_d:'Ogni elemento ha uno scopo.',step_4_t:'Lanciare, misurare, ottimizzare',step_4_d:'Codice pulito, tracciamento preciso.',
+    port_label:'PORTFOLIO',port_title:'Progetti che hanno cambiato le regole',port_all:'Vedi tutto',
+    proof_label:'RISULTATI',proof_title:'Numeri reali',metric_1:'Aumento medio vendite',metric_2:'Progetti completati',metric_3:'Soddisfazione cliente',metric_4:'Crescita ROI media',
+    diff_label:'PERCHÉ NEXORA',diff_title:'Non progettiamo.\nCostruiamo sistemi che vendono.',diff_sub:'Ogni decisione di design si basa su un obiettivo di business misurabile.',
+    cta_label:'PROSSIMO PASSO',cta_title:'Il tuo brand merita\ndi meglio.',cta_sub:'Costruiamo qualcosa di cui essere orgogliosi.',cta_btn:'Avvia progetto',cta_slot:'Prossimo slot: Aprile 2026',footer_available:'Disponibile per nuovi progetti',
+    contact_title:'Costruiamo qualcosa di leggendario',contact_sub:'Risposta entro 4 ore.',contact_name:'Il tuo nome',contact_email:'Email aziendale',contact_msg:'Raccontaci del tuo brand...',contact_send:'Invia messaggio',contact_note:'Confidenziale. Zero spam.',contact_sent:'Inviato!',contact_reply:'Risponderemo entro 4 ore.'
+  },
+  ru:{
+    nav_pain:'Проблема',nav_process:'Система',nav_portfolio:'Работы',nav_proof:'Доказательства',nav_cta:'Начать проект',
+    hero_h1_a:'Мы создаём',hero_h1_b:'бренды, которые продают.',hero_tw:['Бренды','Опыты','Системы'],hero_sub:'От идеи до масштабируемого цифрового опыта.',hero_cta:'Начать проект',hero_scroll:'ПРОКРУТИТЬ',
+    pain_label:'ПРОБЛЕМА',pain_title:'Знакомо?',pain_1:'Бренд красивый, но не конвертирует?',pain_1_desc:'Дизайна недостаточно.',pain_2:'Трафик есть, продаж нет?',pain_2_desc:'Проблема в пути клиента.',pain_3:'Сайт не отражает реальную ценность?',pain_3_desc:'Первое впечатление — меньше секунды.',pain_4:'Сложно выделиться?',pain_4_desc:'Позиционирование — ключевое.',
+    process_label:'НАША СИСТЕМА',process_title:'Как мы строим успешные бренды',step_1_t:'Понять рынок прежде всего',step_1_d:'Изучаем конкурентов и аудиторию.',step_2_t:'Определить идентичность',step_2_d:'Имя, история, послание, позиционирование.',step_3_t:'Создать опыт, не просто визуал',step_3_d:'Каждый элемент имеет цель.',step_4_t:'Запустить, измерить, улучшить',step_4_d:'Чистый код, точное отслеживание.',
+    port_label:'ПОРТФОЛИО',port_title:'Проекты, изменившие правила',port_all:'Все работы',
+    proof_label:'РЕЗУЛЬТАТЫ',proof_title:'Реальные цифры',metric_1:'Ср. рост продаж',metric_2:'Завершённых проектов',metric_3:'Удовлетворённость',metric_4:'Ср. рост ROI',
+    diff_label:'ПОЧЕМУ NEXORA',diff_title:'Мы не рисуем.\nМы строим системы, которые продают.',diff_sub:'Каждое дизайн-решение основано на чёткой бизнес-цели.',
+    cta_label:'СЛЕДУЮЩИЙ ШАГ',cta_title:'Ваш бренд заслуживает\nлучшего.',cta_sub:'Давайте построим то, чем можно гордиться.',cta_btn:'Начать проект',cta_slot:'Следующий слот: Апрель 2026',footer_available:'Доступен для новых проектов',
+    contact_title:'Построим что-то легендарное',contact_sub:'Ответ в течение 4 часов.',contact_name:'Ваше имя',contact_email:'Рабочий email',contact_msg:'Расскажите о вашем бренде...',contact_send:'Отправить сообщение',contact_note:'Конфиденциально. Без спама.',contact_sent:'Отправлено!',contact_reply:'Ответим в течение 4 часов.'
+  },
+  zh:{
+    nav_pain:'问题',nav_process:'系统',nav_portfolio:'作品',nav_proof:'成果',nav_cta:'开始项目',
+    hero_h1_a:'我们打造',hero_h1_b:'能销售的品牌。',hero_tw:['品牌','体验','系统'],hero_sub:'从想法到可扩展的数字体验。',hero_cta:'开始您的项目',hero_scroll:'向下滚动',
+    pain_label:'问题所在',pain_title:'这听起来熟悉吗？',pain_1:'品牌好看但不转化？',pain_1_desc:'仅有设计是不够的。',pain_2:'有流量但没有销售？',pain_2_desc:'问题在于客户旅程。',pain_3:'网站不反映真实价值？',pain_3_desc:'第一印象不到一秒。',pain_4:'难以在市场中脱颖而出？',pain_4_desc:'定位是关键差异。',
+    process_label:'我们的系统',process_title:'我们如何打造成功品牌',step_1_t:'首先了解市场',step_1_d:'研究竞争对手和目标受众。',step_2_t:'定义身份和声音',step_2_d:'名称、故事、信息、定位。',step_3_t:'设计体验而非仅是视觉',step_3_d:'每个元素都有目的。',step_4_t:'启动、测量、优化',step_4_d:'干净代码，精确跟踪。',
+    port_label:'作品集',port_title:'改变规则的项目',port_all:'查看全部',
+    proof_label:'成果',proof_title:'真实数据',metric_1:'平均销售增长',metric_2:'完成项目',metric_3:'客户满意度',metric_4:'平均ROI增长',
+    diff_label:'为什么选择NEXORA',diff_title:'我们不只是设计。\n我们构建能销售的系统。',diff_sub:'每个设计决策都基于明确可衡量的业务目标。',
+    cta_label:'下一步',cta_title:'您的品牌值得\n更好的。',cta_sub:'让我们建立值得骄傲的东西。',cta_btn:'开始项目',cta_slot:'下一个名额：2026年4月',footer_available:'接受新项目',
+    contact_title:'让我们共建传奇',contact_sub:'4小时内回复。',contact_name:'您的姓名',contact_email:'商务邮箱',contact_msg:'告诉我们您的品牌...',contact_send:'发送消息',contact_note:'保密。零垃圾邮件。',contact_sent:'已发送！',contact_reply:'我们将在4小时内回复。'
+  },
+  ja:{
+    nav_pain:'問題',nav_process:'システム',nav_portfolio:'作品',nav_proof:'実績',nav_cta:'プロジェクト開始',
+    hero_h1_a:'私たちは作る',hero_h1_b:'売れるブランドを。',hero_tw:['ブランド','体験','システム'],hero_sub:'アイデアからスケーラブルなデジタル体験まで。',hero_cta:'プロジェクト開始',hero_scroll:'スクロール',
+    pain_label:'問題点',pain_title:'心当たりはありますか？',pain_1:'ブランドは美しいがコンバートしない？',pain_1_desc:'デザインだけでは不十分です。',pain_2:'トラフィックはあるが売上がない？',pain_2_desc:'問題は顧客旅程にあります。',pain_3:'サイトが真の価値を反映していない？',pain_3_desc:'第一印象は1秒未満。',pain_4:'市場での差別化が難しい？',pain_4_desc:'ポジショニングが鍵です。',
+    process_label:'私たちのシステム',process_title:'成功するブランドの構築方法',step_1_t:'まず市場を理解する',step_1_d:'競合と視聴者を調査します。',step_2_t:'アイデンティティを定義',step_2_d:'名前、ストーリー、メッセージ、ポジショニング。',step_3_t:'体験をデザインする',step_3_d:'すべての要素に目的があります。',step_4_t:'ローンチ、計測、最適化',step_4_d:'クリーンコード、正確な追跡。',
+    port_label:'ポートフォリオ',port_title:'ルールを変えたプロジェクト',port_all:'すべて見る',
+    proof_label:'実績',proof_title:'実際の数字',metric_1:'平均売上増加',metric_2:'完了プロジェクト',metric_3:'顧客満足度',metric_4:'平均ROI成長',
+    diff_label:'なぜNEXORAか',diff_title:'私たちはデザインしない。\n売れるシステムを構築する。',diff_sub:'すべてのデザイン決定は明確なビジネス目標に基づいています。',
+    cta_label:'次のステップ',cta_title:'あなたのブランドは\nもっと良いものを deserve します。',cta_sub:'誇れるものを一緒に作りましょう。',cta_btn:'プロジェクト開始',cta_slot:'次の空き枠：2026年4月',footer_available:'新規プロジェクト受付中',
+    contact_title:'伝説的なものを作りましょう',contact_sub:'4時間以内に返信。',contact_name:'お名前',contact_email:'ビジネスメール',contact_msg:'ブランドについて教えてください...',contact_send:'メッセージを送る',contact_note:'機密。スパムなし。',contact_sent:'送信されました！',contact_reply:'4時間以内に返信します。'
+  },
+  pt:{
+    nav_pain:'Problema',nav_process:'Sistema',nav_portfolio:'Trabalhos',nav_proof:'Prova',nav_cta:'Iniciar',
+    hero_h1_a:'Construímos',hero_h1_b:'marcas que vendem.',hero_tw:['Marcas','Experiências','Sistemas'],hero_sub:'Da ideia à experiência digital escalável.',hero_cta:'Iniciar projeto',hero_scroll:'ROLAR',
+    pain_label:'O PROBLEMA',pain_title:'Soa familiar?',pain_1:'Sua marca é bonita mas não converte?',pain_1_desc:'Design sozinho não basta.',pain_2:'Tráfego mas sem vendas?',pain_2_desc:'O problema está na jornada do cliente.',pain_3:'Seu site não reflete seu valor real?',pain_3_desc:'Primeira impressão em menos de um segundo.',pain_4:'Dificuldade em se diferenciar?',pain_4_desc:'Posicionamento é a chave.',
+    process_label:'NOSSO SISTEMA',process_title:'Como construímos marcas de sucesso',step_1_t:'Entender o mercado primeiro',step_1_d:'Estudamos concorrentes e audiências.',step_2_t:'Definir identidade e voz',step_2_d:'Nome, história, mensagem, posicionamento.',step_3_t:'Projetar uma experiência',step_3_d:'Cada elemento tem um propósito.',step_4_t:'Lançar, medir, otimizar',step_4_d:'Código limpo, rastreamento preciso.',
+    port_label:'PORTFÓLIO',port_title:'Projetos que mudaram as regras',port_all:'Ver tudo',
+    proof_label:'RESULTADOS',proof_title:'Números reais',metric_1:'Aumento médio de vendas',metric_2:'Projetos concluídos',metric_3:'Satisfação do cliente',metric_4:'Crescimento médio de ROI',
+    diff_label:'POR QUE NEXORA',diff_title:'Não projetamos.\nConstruímos sistemas que vendem.',diff_sub:'Cada decisão de design é baseada em objetivo de negócio mensurável.',
+    cta_label:'PRÓXIMO PASSO',cta_title:'Sua marca merece\nmelhor.',cta_sub:'Vamos construir algo para se orgulhar.',cta_btn:'Iniciar projeto',cta_slot:'Próxima vaga: Abril de 2026',footer_available:'Disponível para novos projetos',
+    contact_title:'Vamos construir algo lendário',contact_sub:'Resposta em 4 horas.',contact_name:'Seu nome',contact_email:'Email profissional',contact_msg:'Fale sobre sua marca...',contact_send:'Enviar mensagem',contact_note:'Confidencial. Zero spam.',contact_sent:'Enviado!',contact_reply:'Responderemos em 4 horas.'
+  }
+};
+
+// ── PORTFOLIO DATA ──
+const projects = [
+  { type:'Brand Identity · E-Commerce', title:'LUXE — Luxury Watch Platform', problem:'Generic Shopify store with 1.8% conversion. Brand felt cheap despite $50k+ watches.', solution:'Cinematic 3D product configurator + old-money storytelling system + AI concierge.', results:'+340% conversion · 7× average order value · Featured in Forbes Luxury' },
+  { type:'SaaS · UI Design', title:'APEX — AI Financial Intelligence', problem:'SaaS dashboard looked like every other fintech tool. Zero emotional connection.', solution:'Dark luxury interface with real-time 3D market orbs and predictive storytelling.', results:'+210% user engagement · 4.8× faster onboarding · $9.2M ARR in 11 months' },
+  { type:'Hospitality · Identity', title:'VESPER — Private Members Club', problem:'Website looked like a hotel booking page. No exclusivity or desire.', solution:'Invitation-only cinematic portal with parallax gold grid and member-only experiences.', results:'Waitlist grew 180% · 98% membership conversion · Sold out first year' },
+  { type:'Fintech · Branding', title:'Vault Capital', problem:'Looked like every other fintech. No trust signal for HNW clients.', solution:'Old-money aesthetic meets modern tech. Trust-first UX architecture.', results:'$9.2M ARR in 11 months · 3× client acquisition rate' },
+  { type:'Restaurant · Identity', title:'Noir Bistro', problem:'No cohesive brand identity. Menu design was an afterthought.', solution:'Full luxury brand system: identity, menu, signage, digital presence.', results:'Sold out 3 months post-launch · Featured in Timeout & Condé Nast' },
+  { type:'Full Campaign · Multi-channel', title:'Crescendo Music Platform', problem:'Music platform with zero brand recall in crowded market.', solution:'Cinematic campaign across digital + OOH + social. Sound-driven identity.', results:'4× user growth in 6 months · Viral campaign, 12M impressions' }
+];
+
+// ── CURRENT STATE ──
+let currentLang = 'ar';
+let currentTheme = 0;
+const themes = ['dark','dusk','light'];
+const themeIcons = ['fa-moon','fa-cloud-sun','fa-sun'];
+
+// ── LANGUAGE ──
+function setLang(lang) {
+  currentLang = lang;
+  const t = T[lang] || T.ar;
+  const isRTL = lang === 'ar';
+  document.body.lang = lang;
+  document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
+  document.getElementById('lang-label').textContent = lang.toUpperCase();
+
+  // Update all translatable elements
+  document.querySelectorAll('[data-key]').forEach(el => {
+    const key = el.dataset.key;
+    if (t[key]) {
+      if (key === 'diff_title' || key === 'cta_title') {
+        const parts = t[key].split('\n');
+        el.innerHTML = parts[0] + (parts[1] ? '<br><em>' + parts[1] + '</em>' : '');
+      } else {
+        el.textContent = t[key];
+      }
+    }
+  });
+
+  // Update placeholder attributes
+  document.querySelectorAll('[data-key-placeholder]').forEach(el => {
+    const key = el.dataset.keyPlaceholder;
+    if (t[key]) el.placeholder = t[key];
+  });
+
+  // Close dropdown, update active
+  document.querySelectorAll('.lang-opt').forEach(opt => {
+    opt.classList.toggle('active', opt.onclick?.toString().includes(`'${lang}'`));
+  });
+  document.getElementById('lang-dropdown').classList.remove('open');
+
+  // Restart typewriter with new words
+  twWords = t.hero_tw || T.ar.hero_tw;
+  twIndex = 0; twCharIndex = 0; twDeleting = false;
+}
+
+function toggleLang() {
+  document.getElementById('lang-dropdown').classList.toggle('open');
+}
+
+// ── THEME ──
+function cycleTheme() {
+  currentTheme = (currentTheme + 1) % themes.length;
+  document.body.className = 'theme-' + themes[currentTheme];
+  const icon = document.getElementById('theme-icon');
+  icon.className = 'fas ' + themeIcons[currentTheme];
+}
+
+// ── CURSOR ──
+const cur = document.getElementById('nx-cursor');
+const curLabel = document.getElementById('nx-cursor-label');
+let cx = 0, cy = 0, tx = 0, ty = 0;
+document.addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; });
+(function animCur() {
+  cx += (tx - cx) * 0.14;
+  cy += (ty - cy) * 0.14;
+  cur.style.left = cx + 'px';
+  cur.style.top = cy + 'px';
+  curLabel.style.left = cx + 'px';
+  curLabel.style.top = cy + 'px';
+  requestAnimationFrame(animCur);
+})();
+document.querySelectorAll('a,button,.nav-cta,.hero-cta,.cta-btn,.lang-opt').forEach(el => {
+  el.addEventListener('mouseenter', () => { cur.className = 'btn'; curLabel.style.display = 'none'; });
+  el.addEventListener('mouseleave', () => { cur.className = ''; curLabel.style.display = 'none'; });
+});
+document.querySelectorAll('.project-card').forEach(el => {
+  el.addEventListener('mouseenter', () => { cur.className = 'view'; curLabel.style.display = 'block'; });
+  el.addEventListener('mouseleave', () => { cur.className = ''; curLabel.style.display = 'none'; });
+});
+
+// ── NAVBAR SCROLL ──
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', scrollY > 60);
+});
+
+// ── MOBILE NAV ──
+function toggleMobileNav() {
+  const nav = document.getElementById('mobile-nav');
+  const ham = document.getElementById('hamburger');
+  nav.classList.toggle('open');
+  ham.classList.toggle('open');
+}
+function closeMobileNav() {
+  document.getElementById('mobile-nav').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('open');
+}
+
+// ── TYPEWRITER ──
+let twWords = T.ar.hero_tw;
+let twIndex = 0, twCharIndex = 0, twDeleting = false;
+const twEl = document.getElementById('tw-text');
+function typewrite() {
+  const word = twWords[twIndex];
+  if (!twDeleting) {
+    twEl.textContent = word.slice(0, ++twCharIndex);
+    if (twCharIndex === word.length) { twDeleting = true; setTimeout(typewrite, 2400); return; }
+  } else {
+    twEl.textContent = word.slice(0, --twCharIndex);
+    if (twCharIndex === 0) { twDeleting = false; twIndex = (twIndex + 1) % twWords.length; }
+  }
+  setTimeout(typewrite, twDeleting ? 35 : 70);
+}
+setTimeout(typewrite, 1200);
+
+// ── PARTICLES ──
+(function initParticles() {
+  const canvas = document.getElementById('particles-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  function resize() { canvas.width = innerWidth; canvas.height = innerHeight; }
+  addEventListener('resize', resize); resize();
+  let particles = [];
+  function Particle() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.size = Math.random() * 2 + 0.5;
+    this.vx = (Math.random() - 0.5) * 0.4;
+    this.vy = -(Math.random() * 0.6 + 0.2);
+  }
+  Particle.prototype.update = function() {
+    this.x += this.vx; this.y += this.vy;
+    if (this.y < 0) this.y = canvas.height;
+  };
+  Particle.prototype.draw = function() {
+    ctx.fillStyle = '#C9A84C';
+    ctx.globalAlpha = 0.25;
+    ctx.fillRect(this.x, this.y, this.size, this.size);
+  };
+  for (let i = 0; i < 100; i++) particles.push(new Particle());
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => { p.update(); p.draw(); });
+    if (Math.random() > .95) particles.push(new Particle());
+    if (particles.length > 150) particles.shift();
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
+// ── SCROLL ANIMATIONS ──
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.pain-card,.process-step').forEach(el => obs.observe(el));
+
+// ── COUNTERS ──
+const counterObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target;
+    const target = +el.dataset.target;
+    const suffix = el.dataset.suffix || '';
+    let current = 0;
+    const step = target / 50;
+    const timer = setInterval(() => {
+      current = Math.min(current + step, target);
+      el.textContent = Math.round(current) + suffix;
+      if (current >= target) clearInterval(timer);
+    }, 28);
+    counterObs.unobserve(el);
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.metric-num').forEach(el => counterObs.observe(el));
+
+// ── PARALLAX WATERMARK ──
+const watermark = document.getElementById('diff-watermark');
+const diffSec = document.getElementById('diff');
+addEventListener('scroll', () => {
+  if (!watermark || !diffSec) return;
+  const rect = diffSec.getBoundingClientRect();
+  const progress = (innerHeight / 2 - rect.top) / innerHeight;
+  watermark.style.transform = `translate(-50%, calc(-50% + ${progress * -50}px))`;
+});
+
+// ── PORTFOLIO MODAL ──
+function openModal(index) {
+  const p = projects[index];
+  document.getElementById('modal-type').textContent = p.type;
+  document.getElementById('modal-title').textContent = p.title;
+  document.getElementById('modal-problem').textContent = p.problem;
+  document.getElementById('modal-solution').textContent = p.solution;
+  document.getElementById('modal-results').textContent = p.results;
+  // Color placeholder bg based on project
+  const colors = ['#1a150a','#0a100d','#120a0a','#0a0a12','#10100a','#0d0a14'];
+  document.getElementById('modal-img-placeholder').style.background = colors[index] || '#0f0f0c';
+  document.getElementById('portfolio-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('portfolio-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ── CONTACT ──
+function openContact() {
+  document.getElementById('contact-modal').classList.add('open');
+  document.getElementById('contact-form').style.display = 'block';
+  document.getElementById('contact-success').style.display = 'none';
+  document.body.style.overflow = 'hidden';
+}
+function closeContact() {
+  document.getElementById('contact-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function submitForm() {
+  const btn = document.querySelector('.form-submit');
+  btn.textContent = '...';
+  setTimeout(() => {
+    document.getElementById('contact-form').style.display = 'none';
+    document.getElementById('contact-success').style.display = 'block';
+    setTimeout(closeContact, 3000);
+  }, 1200);
+}
+
+// Close lang dropdown on outside click
+document.addEventListener('click', e => {
+  if (!e.target.closest('.lang-wrapper')) {
+    document.getElementById('lang-dropdown').classList.remove('open');
+  }
+});
+
+// Keyboard shortcuts
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeModal(); closeContact(); }
+});
+
+console.log('%c✦ NEXORA — FINAL UNIFIED v3.0 ✦', 'color:#C9A84C;font-size:14px;font-family:monospace');
+console.log('%c10 Languages · 3 Themes · Full Interactive · Cinematic', 'color:#8a6a2a;font-size:11px');
+</script>
+</body>
+</html>

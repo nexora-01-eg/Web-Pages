@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexora — وكالة إبداعية</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M50 4 C52 30,70 48,96 50 C70 52,52 70,50 96 C48 70,30 52,4 50 C30 48,48 30,50 4Z' fill='%2376220b'/></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --burgundy: #76220b;
+    --cream: #fff9f2;
+    --black: #000000;
+    --light-blue: #aed1ff;
+    --warm-gray-bg: #ebe4e1;
+    --mid-gray: #747474;
+    --ui-gray: #e1e1e1;
+    --white: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--cream);
+    font-family: 'Amiri', serif;
+    font-weight: 400;
+    overflow-x: hidden;
+  }
+
+  /* STICKY WHATSAPP */
+  .wa-sticky {
+    position: fixed; bottom: 28px; left: 28px; z-index: 999;
+    width: 56px; height: 56px; border-radius: 50%;
+    background: #25D366;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.35);
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-decoration: none;
+  }
+  .wa-sticky:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(37,211,102,0.5); }
+  .wa-sticky svg { width: 28px; height: 28px; fill: white; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    padding: 24px 64px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.6) 80%, transparent 100%);
+    backdrop-filter: blur(6px);
+  }
+
+  .logo { display: flex; align-items: center; gap: 12px; }
+
+  .logo-mark {
+    width: 32px; height: 32px;
+    animation: spin-slow 14s linear infinite;
+  }
+
+  @keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .logo-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 23px; font-weight: 500;
+    letter-spacing: 5px; color: var(--cream);
+  }
+
+  .nav-links { display: flex; gap: 36px; list-style: none; align-items: center; }
+
+  .nav-links a {
+    color: var(--mid-gray); text-decoration: none;
+    font-size: 12px; letter-spacing: 2px; transition: color 0.3s;
+    font-family: 'Amiri', serif;
+  }
+
+  .nav-links a:hover { color: var(--cream); }
+
+  .nav-cta {
+    border: 1px solid var(--burgundy) !important;
+    color: var(--white) !important;
+    padding: 9px 24px; border-radius: 2px;
+    background: var(--burgundy) !important;
+  }
+
+  .nav-cta:hover {
+    background: transparent !important;
+    color: var(--burgundy) !important;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 140px 40px 100px;
+    position: relative;
+    background:
+      radial-gradient(ellipse 80% 55% at 50% 100%, #1f0600 0%, transparent 65%),
+      radial-gradient(ellipse 50% 40% at 20% 10%, #00060f 0%, transparent 55%),
+      radial-gradient(ellipse 50% 40% at 80% 5%, #00080f 0%, transparent 55%),
+      #000000;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle, rgba(118,34,11,0.08) 1px, transparent 1px);
+    background-size: 44px 44px;
+    pointer-events: none;
+    mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 20%, transparent 100%);
+  }
+
+  .hero-tag {
+    display: inline-block;
+    font-size: 13px; letter-spacing: 3px;
+    color: var(--light-blue);
+    margin-bottom: 32px;
+    padding: 8px 22px;
+    border: 1px solid rgba(174,209,255,0.18);
+    border-radius: 100px;
+    background: rgba(174,209,255,0.04);
+    opacity: 0;
+    animation: fadeUp 0.9s 0.2s forwards;
+    font-family: 'Amiri', serif;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(54px, 9vw, 110px);
+    font-weight: 300; line-height: 1.02;
+    letter-spacing: -1px; margin-bottom: 28px;
+    opacity: 0; animation: fadeUp 0.9s 0.4s forwards;
+  }
+
+  .hero-title em { font-style: italic; color: var(--burgundy); display: block; }
+
+  .hero-sub {
+    font-size: 17px; color: var(--mid-gray);
+    line-height: 2; max-width: 500px;
+    margin: 0 auto 52px;
+    opacity: 0; animation: fadeUp 0.9s 0.6s forwards;
+    font-family: 'Amiri', serif;
+  }
+
+  .hero-sub strong { color: var(--cream); font-weight: 700; }
+
+  .hero-buttons {
+    display: flex; gap: 14px; justify-content: center;
+    opacity: 0; animation: fadeUp 0.9s 0.8s forwards;
+  }
+
+  .btn-primary {
+    background: var(--burgundy); color: var(--cream);
+    padding: 15px 40px; border: 1px solid var(--burgundy); border-radius: 2px;
+    font-family: 'Amiri', serif; font-size: 16px; letter-spacing: 1px;
+    cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-block;
+  }
+
+  .btn-primary:hover {
+    background: transparent; color: var(--burgundy); transform: translateY(-2px);
+  }
+
+  .btn-outline {
+    border: 1px solid rgba(235,228,225,0.2); color: var(--warm-gray-bg);
+    padding: 15px 40px; border-radius: 2px; font-size: 16px; letter-spacing: 1px;
+    cursor: pointer; background: transparent; transition: all 0.3s;
+    text-decoration: none; display: inline-block; font-family: 'Amiri', serif;
+  }
+
+  .btn-outline:hover { border-color: var(--white); color: var(--white); }
+
+  .hero-scroll {
+    position: absolute; bottom: 44px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    color: var(--mid-gray); font-size: 9px; letter-spacing: 4px;
+    opacity: 0; animation: fadeUp 0.9s 1.2s forwards;
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  .hero-scroll::after {
+    content: ''; width: 1px; height: 44px;
+    background: linear-gradient(to bottom, var(--burgundy), transparent);
+    animation: pulse-line 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-line { 0%,100%{opacity:.3} 50%{opacity:1} }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+
+  /* MARQUEE */
+  .marquee-wrapper {
+    border-top: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    padding: 15px 0; overflow: hidden;
+    background: rgba(0,0,0,0.7);
+  }
+
+  .marquee-track {
+    display: flex; gap: 52px;
+    animation: marquee 45s linear infinite; white-space: nowrap;
+  }
+
+  .marquee-item {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px; letter-spacing: 3px; color: var(--mid-gray);
+    display: flex; align-items: center; gap: 14px;
+  }
+
+  .marquee-dot { width:4px; height:4px; background:var(--burgundy); border-radius:50%; flex-shrink:0; }
+
+  @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-33.333%)} }
+
+  /* SECTION BASE */
+  section { padding: 96px 64px; }
+
+  .section-label {
+    font-size: 12px; letter-spacing: 4px; color: var(--burgundy);
+    text-transform: uppercase; margin-bottom: 16px;
+    display: flex; align-items: center; gap: 14px;
+    font-family: 'Amiri', serif;
+  }
+
+  .section-label::before {
+    content: ''; width: 34px; height: 1px;
+    background: var(--burgundy); flex-shrink: 0;
+    order: -1;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(34px, 5vw, 58px); font-weight: 400;
+    line-height: 1.1; margin-bottom: 14px; color: var(--white);
+  }
+
+  /* SERVICES */
+  #services {
+    background:
+      radial-gradient(ellipse 50% 40% at 90% 0%, #0d0000 0%, transparent 55%),
+      radial-gradient(ellipse 40% 40% at 10% 100%, #000810 0%, transparent 55%),
+      #050505;
+  }
+
+  .services-header { max-width: 520px; margin-bottom: 60px; }
+
+  .services-header .price-note {
+    font-size: 15px; color: var(--mid-gray); line-height: 1.8; margin-top: 10px;
+    font-family: 'Amiri', serif;
+  }
+
+  .services-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 1px; background: rgba(255,255,255,0.03);
+  }
+
+  .service-card {
+    background: #070707; padding: 38px 34px;
+    transition: all 0.4s; position: relative; overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.03);
+  }
+
+  .service-card::after {
+    content: ''; position: absolute; bottom: 0; inset-inline-start: 0; inset-inline-end: 0;
+    height: 2px; background: var(--burgundy);
+    transform: scaleX(0); transform-origin: inline-end; transition: transform 0.4s;
+  }
+
+  .service-card:hover::after { transform: scaleX(1); transform-origin: inline-start; }
+  .service-card:hover { background: #0e0707; transform: translateY(-3px); box-shadow: 0 20px 50px rgba(118,34,11,0.1); }
+
+  .service-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 10px; color: var(--burgundy); letter-spacing: 3px;
+    margin-bottom: 16px; opacity: 0.6;
+  }
+
+  .service-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 21px; font-weight: 500; margin-bottom: 10px;
+    color: var(--white); letter-spacing: 0.3px;
+  }
+
+  .service-price-row { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+
+  .service-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px; color: var(--light-blue); font-weight: 400;
+  }
+
+  .service-delivery {
+    font-size: 11px; color: var(--mid-gray); letter-spacing: 1px;
+    background: rgba(174,209,255,0.06); padding: 3px 10px; border-radius: 100px;
+    font-family: 'Amiri', serif;
+  }
+
+  .service-list {
+    margin-top: 16px; list-style: none; display: flex; flex-direction: column; gap: 6px;
+    padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .service-list li {
+    font-size: 13px; color: var(--mid-gray);
+    padding-inline-end: 16px; position: relative; line-height: 1.6;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: 'Amiri', serif;
+  }
+
+  .service-list li::before {
+    content:'—'; position:absolute; inset-inline-end:0;
+    color:var(--burgundy); opacity:0.5;
+  }
+
+  .service-list .item-name { flex: 1; }
+
+  .service-list .item-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px; color: var(--light-blue);
+    flex-shrink: 0; margin-inline-start: 8px;
+    white-space: nowrap;
+  }
+
+  /* PACKAGES */
+  #packages {
+    background: linear-gradient(160deg, #111 0%, #0d0d0d 40%, #0a0a0a 100%);
+    color: var(--cream);
+  }
+
+  #packages .section-label { color: var(--burgundy); }
+  #packages .section-label::before { background: var(--burgundy); }
+  #packages .section-title { color: var(--white); }
+
+  .packages-sub {
+    font-size: 15px; color: var(--mid-gray); margin-bottom: 56px;
+    max-width: 480px; line-height: 1.9;
+    font-family: 'Amiri', serif;
+  }
+
+  .packages-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; margin-bottom: 28px; }
+
+  .package-card {
+    border: 1px solid rgba(255,255,255,0.07); padding: 42px 34px; border-radius: 3px;
+    background: #111; position: relative; transition: all 0.35s;
+  }
+
+  .package-card:hover { box-shadow: 0 20px 55px rgba(118,34,11,0.15); transform: translateY(-4px); border-color: var(--burgundy); }
+
+  .package-card.featured { background: var(--burgundy); color: var(--cream); border-color: var(--burgundy); }
+  .package-card.featured:hover { box-shadow: 0 20px 55px rgba(118,34,11,0.35); }
+
+  .pkg-badge {
+    position: absolute; top: -12px; inset-inline-end: 28px;
+    background: var(--cream); color: var(--burgundy);
+    font-size: 11px; letter-spacing: 2px; padding: 4px 14px; border-radius: 100px;
+    font-family: 'Amiri', serif; font-weight: 700;
+  }
+
+  .pkg-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px; font-weight: 500; margin-bottom: 5px; color: var(--cream);
+  }
+
+  .pkg-desc { font-size: 13px; color: rgba(255,249,242,0.5); margin-bottom: 24px; letter-spacing: 1px; font-family: 'Amiri', serif; }
+
+  .pkg-price-block { margin-bottom: 4px; }
+
+  .pkg-original {
+    font-family: 'Cormorant Garamond', serif; font-size: 15px;
+    color: rgba(255,249,242,0.35); text-decoration: line-through; margin-bottom: 2px;
+  }
+
+  .pkg-price {
+    font-family: 'Cormorant Garamond', serif; font-size: 50px; font-weight: 300;
+    color: var(--cream); line-height: 1; margin-bottom: 2px;
+    display: flex; align-items: flex-start; gap: 4px;
+  }
+
+  .package-card.featured .pkg-price { color: var(--white); }
+
+  .pkg-price sup { font-size: 19px; margin-top: 10px; }
+
+  .pkg-discount-badge {
+    display: inline-block;
+    background: rgba(174,209,255,0.15); color: var(--light-blue);
+    font-size: 11px; padding: 2px 10px; border-radius: 100px;
+    margin-bottom: 16px; font-family: 'Amiri', serif; letter-spacing: 1px;
+  }
+
+  .package-card.featured .pkg-discount-badge { background: rgba(0,0,0,0.2); color: var(--cream); }
+
+  .pkg-note { font-size: 12px; color: rgba(255,249,242,0.4); margin-bottom: 24px; letter-spacing: 1px; font-family: 'Amiri', serif; }
+
+  .pkg-features {
+    list-style: none; display: flex; flex-direction: column; gap: 10px;
+    padding-top: 22px; border-top: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .pkg-features li {
+    font-size: 14px; color: rgba(255,249,242,0.75);
+    display: flex; justify-content: space-between; align-items: center; gap: 10px;
+    font-family: 'Amiri', serif;
+  }
+
+  .pkg-features li .feat-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px; color: rgba(255,249,242,0.4);
+    text-decoration: line-through; flex-shrink: 0;
+  }
+
+  .pkg-features li::before {
+    content: ''; width: 5px; height: 5px; background: rgba(255,249,242,0.4);
+    border-radius: 50%; flex-shrink: 0; order: 99;
+  }
+
+  .package-card.featured .pkg-features li::before { background: rgba(255,255,255,0.5); }
+
+  .pkg-cta {
+    display: block; text-align: center; margin-top: 28px; padding: 13px;
+    border: 1px solid rgba(255,255,255,0.25); color: var(--cream); text-decoration: none;
+    font-size: 13px; letter-spacing: 2px; border-radius: 2px; transition: all 0.3s;
+    font-family: 'Amiri', serif;
+  }
+
+  .package-card.featured .pkg-cta { background: rgba(0,0,0,0.25); border-color: rgba(255,255,255,0.3); }
+  .pkg-cta:hover { background: rgba(255,255,255,0.1); border-color: var(--white); }
+
+  .custom-package {
+    background: linear-gradient(135deg, #080808 0%, #1a0400 100%);
+    border: 1px solid rgba(118,34,11,0.25);
+    border-radius: 3px; padding: 50px 56px;
+    display: flex; align-items: center; justify-content: space-between; gap: 40px;
+    margin-top: 16px;
+  }
+
+  .custom-left h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 34px; font-weight: 400; color: var(--cream); margin-bottom: 10px;
+  }
+
+  .custom-left h3 em { font-style: italic; color: var(--burgundy); }
+
+  .custom-left p { font-size: 14px; color: var(--mid-gray); line-height: 1.85; max-width: 460px; font-family: 'Amiri', serif; }
+
+  .custom-left .discount-cond {
+    display: inline-block; margin-top: 12px;
+    background: rgba(118,34,11,0.12); border: 1px solid rgba(118,34,11,0.25);
+    color: var(--light-blue); font-size: 12px; padding: 5px 14px;
+    border-radius: 100px; font-family: 'Amiri', serif; letter-spacing: 1px;
+  }
+
+  .custom-right { flex-shrink: 0; text-align: center; }
+
+  .custom-price { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--light-blue); margin-bottom: 4px; letter-spacing: 1px; }
+  .custom-note { font-size: 12px; color: var(--mid-gray); margin-bottom: 20px; letter-spacing: 1px; font-family: 'Amiri', serif; }
+
+  /* WHY */
+  #why {
+    background:
+      radial-gradient(ellipse 60% 60% at 0% 50%, #000810 0%, transparent 60%),
+      #000000;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+  }
+
+  .why-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(255,255,255,0.03); }
+
+  .why-stat {
+    background: #060606; padding: 38px 28px; text-align: center;
+    border: 1px solid rgba(255,255,255,0.03); transition: background 0.3s;
+  }
+
+  .why-stat:hover { background: #0e0606; }
+  .why-stat:nth-child(1) { background: #0a0000; }
+  .why-stat:nth-child(2) { background: rgba(174,209,255,0.04); }
+
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif; font-size: 50px; font-weight: 300;
+    color: var(--burgundy); line-height: 1; margin-bottom: 8px;
+  }
+
+  .why-stat:nth-child(2) .stat-num { color: var(--light-blue); }
+
+  .stat-label { font-size: 12px; letter-spacing: 2px; color: var(--mid-gray); font-family: 'Amiri', serif; }
+
+  .why-points { display: flex; flex-direction: column; }
+
+  .why-point {
+    display: flex; gap: 18px; align-items: flex-start;
+    padding: 26px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .why-point:first-child { padding-top: 0; }
+  .why-point:last-child { border-bottom: none; }
+
+  .point-dot { width:6px; height:6px; background:var(--burgundy); border-radius:50%; flex-shrink:0; margin-top:7px; }
+
+  .point-text h4 { font-family:'Cormorant Garamond',serif; font-size:20px; margin-bottom:5px; color:var(--white); }
+  .point-text p { font-size:14px; color:var(--mid-gray); line-height:1.85; font-family:'Amiri',serif; }
+
+  /* PROCESS */
+  #process {
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 100%, #0a0000 0%, transparent 65%),
+      #040404;
+    text-align: center;
+  }
+
+  .process-header { margin-bottom: 72px; }
+  .process-header .section-label { justify-content: center; }
+  .process-header .section-label::before { display: none; }
+
+  .process-steps { display: grid; grid-template-columns: repeat(4,1fr); position: relative; }
+
+  .process-steps::before {
+    content: ''; position: absolute;
+    top: 34px; right: 12.5%; left: 12.5%; height: 1px;
+    background: linear-gradient(to right, transparent, rgba(118,34,11,0.35) 30%, rgba(174,209,255,0.25) 70%, transparent);
+  }
+
+  .step { padding: 0 22px; }
+
+  .step-circle {
+    width: 68px; height: 68px; border: 1px solid rgba(118,34,11,0.35); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 26px;
+    font-family: 'Cormorant Garamond', serif; font-size: 19px; color: var(--mid-gray);
+    background: #040404; position: relative; z-index: 1; transition: all 0.35s;
+  }
+
+  .step:hover .step-circle {
+    background: var(--burgundy); color: var(--white); border-color: var(--burgundy);
+    box-shadow: 0 0 28px rgba(118,34,11,0.35);
+  }
+
+  .step-title { font-family:'Cormorant Garamond',serif; font-size:20px; margin-bottom:10px; color:var(--white); }
+  .step-desc { font-size:13px; color:var(--mid-gray); line-height:1.9; font-family:'Amiri',serif; }
+
+  /* CTA */
+  #cta {
+    background:
+      radial-gradient(ellipse 70% 60% at 50% 50%, #1f0600 0%, #000000 68%);
+    text-align: center; padding: 120px 40px; position: relative; overflow: hidden;
+  }
+
+  #cta::before {
+    content: 'NEXORA'; position: absolute;
+    font-family: 'Cormorant Garamond', serif; font-size: 170px; font-weight: 700;
+    color: rgba(118,34,11,0.05); top: 50%; left: 50%;
+    transform: translate(-50%,-50%); white-space: nowrap; pointer-events: none;
+    letter-spacing: 20px; user-select: none;
+  }
+
+  #cta .section-label { justify-content: center; }
+  #cta .section-label::before { display: none; }
+  #cta .section-title { color: var(--cream); position: relative; }
+
+  .cta-sub {
+    font-size: 16px; color: var(--mid-gray); margin-bottom: 50px;
+    position: relative; line-height: 2; font-family: 'Amiri', serif;
+  }
+
+  .cta-sub strong { color: var(--light-blue); font-weight: 400; }
+
+  .cta-buttons { display: flex; gap: 14px; justify-content: center; position: relative; }
+
+  /* FOOTER */
+  footer {
+    background: #000000; padding: 48px 64px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .footer-copy { font-size: 12px; color: var(--mid-gray); letter-spacing: 1px; font-family: 'Amiri', serif; }
+
+  .footer-links { display: flex; gap: 28px; list-style: none; }
+
+  .footer-links a {
+    font-size: 12px; color: var(--mid-gray); text-decoration: none;
+    letter-spacing: 2px; transition: color 0.3s; font-family: 'Amiri', serif;
+  }
+
+  .footer-links a:hover { color: var(--cream); }
+
+  /* RESPONSIVE */
+  @media (max-width: 960px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    .wa-sticky { bottom: 20px; left: 16px; width: 50px; height: 50px; }
+    section { padding: 68px 24px; }
+    #why { grid-template-columns: 1fr; gap: 44px; }
+    .packages-grid { grid-template-columns: 1fr; }
+    .process-steps { grid-template-columns: 1fr 1fr; gap: 40px; }
+    .process-steps::before { display: none; }
+    .custom-package { flex-direction: column; text-align: center; padding: 36px 24px; }
+    .custom-left p { max-width: 100%; }
+    footer { flex-direction: column; gap: 20px; text-align: center; }
+    .footer-links { flex-wrap: wrap; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- STICKY WHATSAPP -->
+<a href="https://wa.me/201000025168" target="_blank" class="wa-sticky" title="تواصل على واتساب">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">
+    <svg class="logo-mark" viewBox="0 0 100 100" fill="none">
+      <path d="M50 4 C52 30,70 48,96 50 C70 52,52 70,50 96 C48 70,30 52,4 50 C30 48,48 30,50 4Z" fill="#fff9f2"/>
+      <ellipse cx="50" cy="50" rx="5" ry="9" fill="#000" transform="rotate(-40 50 50)"/>
+    </svg>
+    <span class="logo-text">NEXORA</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#services">الخدمات</a></li>
+    <li><a href="#packages">الباقات</a></li>
+    <li><a href="#why">لماذا نحن</a></li>
+    <li><a href="#process">آلية العمل</a></li>
+    <li><a href="#cta" class="nav-cta">تواصل معنا</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-tag">نصنع الإبداع، بسرعة واحترافية</p>
+  <h1 class="hero-title">
+    نصمّم<br><em>بصمتك الرقمية</em>
+  </h1>
+  <p class="hero-sub">
+    نبتكر، نطوّر، ونطلق علامتك<br>
+    <strong>لتقود.. لا لتنافس فقط</strong>
+  </p>
+  <div class="hero-buttons">
+    <a href="https://wa.me/201000025168" target="_blank" class="btn-primary">تواصل معنا الآن</a>
+    <a href="#services" class="btn-outline">اكتشف خدماتنا</a>
+  </div>
+  <div class="hero-scroll">SCROLL</div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrapper">
+  <div class="marquee-track">
+    <span class="marquee-item"><span class="marquee-dot"></span> تصميم احترافي</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> كتابة إبداعية</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> هوية بصرية</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> مواقع إلكترونية</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> ذكاء اصطناعي</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> تجارة إلكترونية</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> تحليل واستراتيجية</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> خدمات سريعة</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> تصميم احترافي</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> كتابة إبداعية</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> هوية بصرية</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> مواقع إلكترونية</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> ذكاء اصطناعي</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> تجارة إلكترونية</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> تحليل واستراتيجية</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> خدمات سريعة</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> تصميم احترافي</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> كتابة إبداعية</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> هوية بصرية</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> مواقع إلكترونية</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> ذكاء اصطناعي</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> تجارة إلكترونية</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> تحليل واستراتيجية</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> خدمات سريعة</span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-header">
+    <p class="section-label">ما نقدمه</p>
+    <h2 class="section-title">خدماتنا<br><em style="font-style:italic;color:var(--burgundy)">المتكاملة</em></h2>
+    <p class="price-note">تبدأ الأسعار من <strong style="color:var(--light-blue)">3$</strong> — تسليم في أقل من <strong style="color:var(--light-blue)">24 ساعة</strong> — <strong style="color:var(--cream)">تعديل مجاني حتى رضاك</strong></p>
+  </div>
+  <div class="services-grid">
+
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <h3 class="service-name">التصميم الإبداعي</h3>
+      <div class="service-price-row">
+        <span class="service-price">$3 — $25</span>
+        <span class="service-delivery">أقل من 24 ساعة</span>
+      </div>
+      <ul class="service-list">
+        <li><span class="item-name">تصميم بوستات سوشيال ميديا</span><span class="item-price">$5</span></li>
+        <li><span class="item-name">لوجو وهوية بصرية كاملة</span><span class="item-price">$5</span></li>
+        <li><span class="item-name">إعلانات ممولة احترافية</span><span class="item-price">$7</span></li>
+        <li><span class="item-name">منيو وبروشور</span><span class="item-price">$10</span></li>
+        <li><span class="item-name">تعديل وإزالة خلفية الصور</span><span class="item-price">$3</span></li>
+      </ul>
+    </div>
+
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <h3 class="service-name">المحتوى والكوبي</h3>
+      <div class="service-price-row">
+        <span class="service-price">$3 — $25</span>
+        <span class="service-delivery">أقل من 24 ساعة</span>
+      </div>
+      <ul class="service-list">
+        <li><span class="item-name">بوستات سوشيال ميديا</span><span class="item-price">$3</span></li>
+        <li><span class="item-name">إعلانات تسويقية وسكريبتات</span><span class="item-price">$7</span></li>
+        <li><span class="item-name">وصف منتجات احترافي</span><span class="item-price">$5</span></li>
+        <li><span class="item-name">Hooks جذابة وأفكار جاهزة</span><span class="item-price">$5</span></li>
+        <li><span class="item-name">Bio وإعادة صياغة المحتوى</span><span class="item-price">$3</span></li>
+      </ul>
+    </div>
+
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <h3 class="service-name">موشن جرافيك</h3>
+      <div class="service-price-row">
+        <span class="service-price">$10 — $25</span>
+        <span class="service-delivery">أقل من 24 ساعة</span>
+      </div>
+      <ul class="service-list">
+        <li><span class="item-name">موشن جرافيك للمنتجات</span><span class="item-price">$10</span></li>
+        <li><span class="item-name">فيديوهات إعلانية متحركة</span><span class="item-price">$12</span></li>
+        <li><span class="item-name">تأثيرات وانتقالات احترافية</span><span class="item-price">$10</span></li>
+      </ul>
+    </div>
+
+    <div class="service-card">
+      <div class="service-num">04</div>
+      <h3 class="service-name">المواقع الإلكترونية</h3>
+      <div class="service-price-row">
+        <span class="service-price">$15 — $25</span>
+        <span class="service-delivery">أقل من 24 ساعة</span>
+      </div>
+      <ul class="service-list">
+        <li><span class="item-name">Landing Page احترافية</span><span class="item-price">$20</span></li>
+        <li><span class="item-name">صفحات بيع المنتجات</span><span class="item-price">$15</span></li>
+        <li><span class="item-name">Link-in-bio وصفحات Notion</span><span class="item-price">$20</span></li>
+        <li><span class="item-name">مواقع تعريفية وتعديل جاهز</span><span class="item-price">$15</span></li>
+      </ul>
+    </div>
+
+    <div class="service-card">
+      <div class="service-num">05</div>
+      <h3 class="service-name">التجارة الإلكترونية</h3>
+      <div class="service-price-row">
+        <span class="service-price">$4 — $25</span>
+        <span class="service-delivery">أقل من 24 ساعة</span>
+      </div>
+      <ul class="service-list">
+        <li><span class="item-name">وصف منتجات يبيع فعلاً</span><span class="item-price">$5</span></li>
+        <li><span class="item-name">تصميم صور المنتجات</span><span class="item-price">$7</span></li>
+        <li><span class="item-name">تحليل منتجات الترند</span><span class="item-price">$4</span></li>
+        <li><span class="item-name">رفع المنتجات وتحسين الصفحة</span><span class="item-price">$10</span></li>
+      </ul>
+    </div>
+
+    <div class="service-card">
+      <div class="service-num">06</div>
+      <h3 class="service-name">خدمات الذكاء الاصطناعي</h3>
+      <div class="service-price-row">
+        <span class="service-price">$3 — $20</span>
+        <span class="service-delivery">أقل من 24 ساعة</span>
+      </div>
+      <ul class="service-list">
+        <li><span class="item-name">توليد أفكار المحتوى بالـ AI</span><span class="item-price">$3</span></li>
+        <li><span class="item-name">توليد صور وبرومبتات جاهزة</span><span class="item-price">$5</span></li>
+        <li><span class="item-name">تحويل أفكار لخطط محتوى</span><span class="item-price">$7</span></li>
+        <li><span class="item-name">تحسين النصوص بالذكاء الاصطناعي</span><span class="item-price">$3</span></li>
+      </ul>
+    </div>
+
+    <div class="service-card">
+      <div class="service-num">07</div>
+      <h3 class="service-name">التحليل والاستراتيجية</h3>
+      <div class="service-price-row">
+        <span class="service-price">$7 — $25</span>
+        <span class="service-delivery">أقل من 24 ساعة</span>
+      </div>
+      <ul class="service-list">
+        <li><span class="item-name">تحليل حسابات السوشيال ميديا</span><span class="item-price">$10</span></li>
+        <li><span class="item-name">مراجعة المحتوى وتحليل المنافسين</span><span class="item-price">$15</span></li>
+        <li><span class="item-name">خطة محتوى 7 أيام</span><span class="item-price">$7</span></li>
+        <li><span class="item-name">تقارير PDF مفصّلة</span><span class="item-price">$10</span></li>
+      </ul>
+    </div>
+
+    <div class="service-card">
+      <div class="service-num">08</div>
+      <h3 class="service-name">المهام السريعة</h3>
+      <div class="service-price-row">
+        <span class="service-price">$3 — $15</span>
+        <span class="service-delivery">أقل من 24 ساعة</span>
+      </div>
+      <ul class="service-list">
+        <li><span class="item-name">ترجمة نصوص وتفريغ فيديوهات</span><span class="item-price">$5</span></li>
+        <li><span class="item-name">تحويل ملفات PDF / Word</span><span class="item-price">$3</span></li>
+        <li><span class="item-name">كتابة من صور وإدخال بيانات</span><span class="item-price">$4</span></li>
+        <li><span class="item-name">ترتيب وتنظيم الملفات</span><span class="item-price">$7</span></li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- PACKAGES -->
+<section id="packages">
+  <p class="section-label">وفّر أكثر</p>
+  <h2 class="section-title">الباقات<br><em style="font-style:italic;color:var(--burgundy)">المميزة</em></h2>
+  <p class="packages-sub">خدمات مجمّعة بخصم <strong style="color:var(--light-blue)">25%</strong> — اختر ما يناسبك أو صمّم باقتك بنفسك</p>
+
+  <div class="packages-grid">
+
+    <!-- STARTER -->
+    <div class="package-card">
+      <h3 class="pkg-name">Starter</h3>
+      <p class="pkg-desc">4 خدمات أساسية</p>
+      <div class="pkg-price-block">
+        <div class="pkg-original">$14</div>
+        <div class="pkg-price"><sup>$</sup>10.50</div>
+        <span class="pkg-discount-badge">خصم 25%</span>
+      </div>
+      <p class="pkg-note">تسليم في أقل من 24 ساعة</p>
+      <ul class="pkg-features">
+        <li><span>تصميم بوستات سوشيال</span><span class="feat-price">$5</span></li>
+        <li><span>بوستات كوبي سوشيال</span><span class="feat-price">$3</span></li>
+        <li><span>Bio وإعادة صياغة</span><span class="feat-price">$3</span></li>
+        <li><span>تعديل وإزالة خلفية</span><span class="feat-price">$3</span></li>
+      </ul>
+      <a href="https://wa.me/201000025168" target="_blank" class="pkg-cta">اطلب الآن</a>
+    </div>
+
+    <!-- GROWTH -->
+    <div class="package-card featured">
+      <div class="pkg-badge">الأكثر طلبًا</div>
+      <h3 class="pkg-name">Growth</h3>
+      <p class="pkg-desc">5 خدمات متميزة</p>
+      <div class="pkg-price-block">
+        <div class="pkg-original">$28</div>
+        <div class="pkg-price"><sup>$</sup>21</div>
+        <span class="pkg-discount-badge">خصم 25%</span>
+      </div>
+      <p class="pkg-note">تسليم في أقل من 24 ساعة</p>
+      <ul class="pkg-features">
+        <li><span>لوجو وهوية بصرية</span><span class="feat-price">$5</span></li>
+        <li><span>إعلانات تسويقية وسكريبت</span><span class="feat-price">$7</span></li>
+        <li><span>توليد صور وبرومبتات</span><span class="feat-price">$5</span></li>
+        <li><span>تحليل منتجات الترند</span><span class="feat-price">$4</span></li>
+        <li><span>خطة محتوى 7 أيام</span><span class="feat-price">$7</span></li>
+      </ul>
+      <a href="https://wa.me/201000025168" target="_blank" class="pkg-cta">اطلب الآن</a>
+    </div>
+
+    <!-- PRO -->
+    <div class="package-card">
+      <h3 class="pkg-name">Pro</h3>
+      <p class="pkg-desc">4 خدمات متقدمة</p>
+      <div class="pkg-price-block">
+        <div class="pkg-original">$55</div>
+        <div class="pkg-price"><sup>$</sup>41.25</div>
+        <span class="pkg-discount-badge">خصم 25%</span>
+      </div>
+      <p class="pkg-note">تسليم في أقل من 24 ساعة</p>
+      <ul class="pkg-features">
+        <li><span>Landing Page احترافية</span><span class="feat-price">$20</span></li>
+        <li><span>موشن جرافيك للمنتجات</span><span class="feat-price">$10</span></li>
+        <li><span>تحليل المحتوى والمنافسين</span><span class="feat-price">$15</span></li>
+        <li><span>تقارير PDF مفصّلة</span><span class="feat-price">$10</span></li>
+      </ul>
+      <a href="https://wa.me/201000025168" target="_blank" class="pkg-cta">اطلب الآن</a>
+    </div>
+  </div>
+
+  <!-- CUSTOM PACKAGE -->
+  <div class="custom-package">
+    <div class="custom-left">
+      <h3>باقة <em>مخصصة</em> لك</h3>
+      <p>اختر الخدمات اللي تحتاجها وهنبني ليك باقة بسعر خاص — بدون قيود، أنت تحدد، نحن ننفذ</p>
+      <span class="discount-cond">✦ فوق $50؟ خصم 30% أوتوماتيك على الباقة كلها</span>
+    </div>
+    <div class="custom-right">
+      <div class="custom-price">باقة مفتوحة بلا سقف</div>
+      <div class="custom-note">أنت تختار، نحن ننفذ</div>
+      <a href="https://wa.me/201000025168" target="_blank" class="btn-primary">صمّم باقتك</a>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section id="why">
+  <div>
+    <p class="section-label">لماذا Nexora</p>
+    <h2 class="section-title">نختلف في<br><em style="font-style:italic;color:var(--burgundy)">كل تفصيلة</em></h2>
+    <div class="why-points">
+      <div class="why-point">
+        <div class="point-dot"></div>
+        <div class="point-text">
+          <h4>جودة لا تُساوم</h4>
+          <p>كل مشروع نتعامل معه كأنه علامتنا التجارية — أعلى معايير وأدق تفاصيل</p>
+        </div>
+      </div>
+      <div class="why-point">
+        <div class="point-dot"></div>
+        <div class="point-text">
+          <h4>تسليم في أقل من 24 ساعة</h4>
+          <p>نحترم وقتك بقدر احترامنا لعملنا — سرعة بدون تنازل عن الجودة</p>
+        </div>
+      </div>
+      <div class="why-point">
+        <div class="point-dot"></div>
+        <div class="point-text">
+          <h4>أسعار في متناول الجميع</h4>
+          <p>من 3$ فقط تحصل على خدمة احترافية — لأن الإبداع حق للجميع</p>
+        </div>
+      </div>
+      <div class="why-point">
+        <div class="point-dot"></div>
+        <div class="point-text">
+          <h4>تعديل مجاني حتى رضاك الكامل</h4>
+          <p>ما نسلّمش الشغل إلا لما تكون راضي تماماً — مراجعات غير محدودة حتى تحصل على ما تريد</p>
+        </div>
+      </div>
+      <div class="why-point">
+        <div class="point-dot"></div>
+        <div class="point-text">
+          <h4>فريق متخصص ومتكامل</h4>
+          <p>مصممون، كتّاب، مبرمجون، ومحللون — تحت سقف واحد لخدمتك الكاملة</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="why-stat-grid">
+    <div class="why-stat">
+      <div class="stat-num">8+</div>
+      <div class="stat-label">خدمة متكاملة</div>
+    </div>
+    <div class="why-stat">
+      <div class="stat-num">24h</div>
+      <div class="stat-label">أقصى وقت تسليم</div>
+    </div>
+    <div class="why-stat">
+      <div class="stat-num">3$</div>
+      <div class="stat-label">تبدأ من</div>
+    </div>
+    <div class="why-stat" style="border:1px solid rgba(118,34,11,0.18)">
+      <div class="stat-num" style="color:var(--light-blue)">∞</div>
+      <div class="stat-label">تعديل حتى رضاك</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="process-header">
+    <p class="section-label">آلية العمل</p>
+    <h2 class="section-title">أربع خطوات<br><em style="font-style:italic;color:var(--burgundy)">لنتيجة مثالية</em></h2>
+  </div>
+  <div class="process-steps">
+    <div class="step">
+      <div class="step-circle">01</div>
+      <h3 class="step-title">التواصل</h3>
+      <p class="step-desc">راسلنا على واتساب وشاركنا فكرتك واحتياجاتك بشكل مفصّل</p>
+    </div>
+    <div class="step">
+      <div class="step-circle">02</div>
+      <h3 class="step-title">التحليل</h3>
+      <p class="step-desc">ندرس مشروعك ونضع خطة عمل واضحة مع جدول زمني دقيق</p>
+    </div>
+    <div class="step">
+      <div class="step-circle">03</div>
+      <h3 class="step-title">التنفيذ</h3>
+      <p class="step-desc">فريقنا يعمل بأعلى معايير الجودة لتسليم نتيجة تتجاوز توقعاتك</p>
+    </div>
+    <div class="step">
+      <div class="step-circle">04</div>
+      <h3 class="step-title">التسليم</h3>
+      <p class="step-desc">نسلّم في الموعد مع مراجعة كاملة ودعم ما بعد التسليم</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <p class="section-label">ابدأ رحلتك معنا</p>
+  <h2 class="section-title" style="margin-bottom:14px">
+    جاهز تبني<br><em style="font-style:italic;color:var(--burgundy)">بصمتك الرقمية؟</em>
+  </h2>
+  <p class="cta-sub">
+    راسلنا الآن على واتساب — <strong>01000025168</strong><br>
+    ونبدأ مشروعك في أقل من 24 ساعة
+  </p>
+  <div class="cta-buttons">
+    <a href="https://wa.me/201000025168" target="_blank" class="btn-primary" style="font-size:16px;padding:17px 50px">تواصل على واتساب</a>
+    <a href="#services" class="btn-outline" style="font-size:16px;padding:17px 40px">تصفّح الخدمات</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">
+    <svg style="width:28px;height:28px;animation:spin-slow 14s linear infinite" viewBox="0 0 100 100" fill="none">
+      <path d="M50 4 C52 30,70 48,96 50 C70 52,52 70,50 96 C48 70,30 52,4 50 C30 48,48 30,50 4Z" fill="#fff9f2"/>
+    </svg>
+    <span class="logo-text">NEXORA</span>
+  </div>
+  <ul class="footer-links">
+    <li><a href="#services">الخدمات</a></li>
+    <li><a href="#packages">الباقات</a></li>
+    <li><a href="#why">من نحن</a></li>
+    <li><a href="https://wa.me/201000025168" target="_blank">تواصل</a></li>
+  </ul>
+  <p class="footer-copy">2025 Nexora — جميع الحقوق محفوظة</p>
+</footer>
+
+</body>
+</html>
